@@ -1,4 +1,4 @@
-Alledia Joomla Framework
+Alledia Joomla Library
 ======================
 
-Alledia Joomla Framework for extensions development
+Alledia Joomla Library for extensions development
