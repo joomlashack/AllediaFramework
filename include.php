@@ -1,0 +1,32 @@
+<?php
+/**
+ * @package   Alledia
+ * @contact   www.ostraining.com, support@ostraining.com
+ * @copyright 2014 Open Source Training, LLC. All rights reserved
+ * @license   http://www.gnu.org/licenses/gpl.html GNU/GPL
+ */
+
+use \Alledia;
+
+defined('_JEXEC') or die();
+
+jimport('joomla.filesystem.folder');
+
+if (!defined('ALLEDIA_LOADED')) {
+    define('ALLEDIA_LOADED', 1);
+    define('ALLEDIA_VERSION', '1.0.0');
+
+    define('ALLEDIA_PATH_LIBRARY', realpath(__DIR__ . '/..'));
+
+    // Setup autoloaded libraries
+    var_dump(ALLEDIA_PATH_LIBRARY);
+    require_once ALLEDIA_PATH_LIBRARY . '/Psr4AutoLoader.php';
+    $loader = new Psr4AutoLoader();
+
+    $loader->register();
+    $loader->addNamespace('Alledia', ALLEDIA_PATH_LIBRARY . '/alledia');
+
+    // Define Pro/Free version
+    // define('')
+    var_dump(2); die();
+}
