@@ -16,17 +16,11 @@ if (!defined('ALLEDIA_LOADED')) {
     define('ALLEDIA_LOADED', 1);
     define('ALLEDIA_VERSION', '1.0.0');
 
-    define('ALLEDIA_PATH_LIBRARY', realpath(__DIR__ . '/..'));
+    define('ALLEDIA_PATH_LIBRARY', __DIR__);
 
     // Setup autoloaded libraries
-    var_dump(ALLEDIA_PATH_LIBRARY);
     require_once ALLEDIA_PATH_LIBRARY . '/Psr4AutoLoader.php';
     $loader = new Psr4AutoLoader();
-
     $loader->register();
     $loader->addNamespace('Alledia', ALLEDIA_PATH_LIBRARY . '/alledia');
-
-    // Define Pro/Free version
-    // define('')
-    var_dump(2); die();
 }
