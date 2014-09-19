@@ -1,0 +1,23 @@
+{
+    "name"             : "alledia/alledia",
+    "description"      : "Alledia",
+    "minimum-stability": "stable",
+    "license"          : "GPL-2+",
+    "type"             : "joomla.library",
+    "extra"            : {
+        "element"        : "lib_alledia",
+        "element-short"  : "alledia",
+        "name"           : "Alledia",
+        "client"         : "site",
+        "package-license": "free"
+    },
+    "authors"          : [
+        {
+            "name" : "Alledia",
+            "email": "hello@alledia.com"
+        }
+    ],
+    "require"          : {
+        "php"       : ">= 5.3"
+    }
+}
