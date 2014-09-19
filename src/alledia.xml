@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="library" version="2.5" method="upgrade">
+    <name>Alledia</name>
+    <libraryname>alledia</libraryname>
+    <author>Alledia</author>
+    <creationDate>September 19 2014</creationDate>
+    <copyright>Copyright (C) 2014 alledia.com</copyright>
+    <license>GPL v3</license>
+    <authorEmail>hello@alledia.com</authorEmail>
+    <authorUrl>https://www.alledia.com</authorUrl>
+    <version>1.0.0</version>
+    <description>Alledia Library</description>
+
+    <files>
+        <filename>include.php</filename>
+        <filename>Psr4AutoLoader.php</filename>
+    </files>
+</extension>
