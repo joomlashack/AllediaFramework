@@ -24,6 +24,3 @@ if (!defined('ALLEDIA_LOADED')) {
     $loader->register();
     $loader->addNamespace('Alledia', ALLEDIA_PATH_LIBRARY . '/alledia');
 }
-
-
-// Fixed here
