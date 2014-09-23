@@ -22,18 +22,22 @@ abstract class Factory extends \JFactory
     /**
      * Get an extension
      *
-     * @param  string $element The extension element
+     * @param  string $namespace The extension namespace
+     * @param  string $type      The extension type
+     * @param  string $folder    The extension folder (plugins only)
      *
-     * @return object            The license instance
+     * @return object            The extension instance
      */
-    public static function getExtension($element)
+    public static function getExtension($namespace, $type, $folder = null)
     {
-        if (empty(self::$extensionInstances[$element])) {
-            $instance = new Extension($element);
+        $key = $namespace . $type . $folder;
 
-            self::$extensionInstances[$element] = $instance;
+        if (empty(self::$extensionInstances[$key])) {
+            $instance = new Extension($namespace, $type, $folder);
+
+            self::$extensionInstances[$key] = $instance;
         }
 
-        return self::$extensionInstances[$element];
+        return self::$extensionInstances[$key];
     }
 }
