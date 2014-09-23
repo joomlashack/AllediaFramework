@@ -13,27 +13,27 @@ defined('_JEXEC') or die();
 abstract class Factory extends \JFactory
 {
     /**
-     * Instances of licenses, by extension
+     * Instances of extensions
      *
      * @var array
      */
-    protected static $licenseInstances;
+    protected static $extensionInstances;
 
     /**
-     * Get the license for a specific extension
+     * Get an extension
      *
      * @param  string $element The extension element
      *
      * @return object            The license instance
      */
-    public static function getLicense($element)
+    public static function getExtension($element)
     {
-        if (empty(self::$licenseInstances[$element])) {
-            $instance = new License($element);
+        if (empty(self::$extensionInstances[$element])) {
+            $instance = new Extension($element);
 
-            self::$licenseInstances[$element] = $instance;
+            self::$extensionInstances[$element] = $instance;
         }
 
-        return self::$licenseInstances[$element];
+        return self::$extensionInstances[$element];
     }
 }

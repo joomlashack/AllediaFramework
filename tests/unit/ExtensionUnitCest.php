@@ -1,9 +1,9 @@
 <?php
 use \UnitTester;
-use Alledia\License;
+use Alledia\Extension;
 use \Codeception\Util\Stub;
 
-class LicenseUnitCest
+class ExtensionUnitCest
 {
     private $includeSubPath;
 
@@ -18,73 +18,73 @@ class LicenseUnitCest
 
     public function getProIncludePathForComponent(UnitTester $I)
     {
-        $license = new License('com_myextension');
-        $path = $license->getProIncludePathForElement();
+        $extension = new Extension('component', 'myextension');
+        $path = $extension->getProIncludePathForElement();
 
         $I->assertEquals(JPATH_SITE . '/administrator/components/myextension' . $this->includeSubPath, $path);
     }
 
     public function getProIncludePathForContentPlugin(UnitTester $I)
     {
-        $license = new License('plg_content_myextension');
-        $path = $license->getProIncludePathForElement();
+        $extension = new Extension('plugin', 'myextension', 'content');
+        $path = $extension->getProIncludePathForElement();
 
         $I->assertEquals(JPATH_SITE . '/plugins/content/myextension' . $this->includeSubPath, $path);
     }
 
     public function getProIncludePathForSystemPlugin(UnitTester $I)
     {
-        $license = new License('plg_system_myextension');
-        $path = $license->getProIncludePathForElement();
+        $extension = new Extension('plugin', 'myextension', 'system');
+        $path = $extension->getProIncludePathForElement();
 
         $I->assertEquals(JPATH_SITE . '/plugins/system/myextension' . $this->includeSubPath, $path);
     }
 
     public function getProIncludePathForModule(UnitTester $I)
     {
-        $license = new License('mod_myextension');
-        $path = $license->getProIncludePathForElement();
+        $extension = new Extension('module', 'myextension');
+        $path = $extension->getProIncludePathForElement();
 
         $I->assertEquals(JPATH_SITE . '/modules/mod_myextension' . $this->includeSubPath, $path);
     }
 
     public function getProIncludePathForLibrary(UnitTester $I)
     {
-        $license = new License('lib_myextension');
-        $path = $license->getProIncludePathForElement();
+        $extension = new Extension('library', 'myextension');
+        $path = $extension->getProIncludePathForElement();
 
         $I->assertEquals(JPATH_SITE . '/libraries/myextension' . $this->includeSubPath, $path);
     }
 
     public function getProIncludePathForTemplates(UnitTester $I)
     {
-        $license = new License('tpl_myextension');
-        $path = $license->getProIncludePathForElement();
+        $extension = new Extension('template', 'myextension');
+        $path = $extension->getProIncludePathForElement();
 
         $I->assertEquals(JPATH_SITE . '/templates/myextension' . $this->includeSubPath, $path);
     }
 
     public function getProIncludePathForCli(UnitTester $I)
     {
-        $license = new License('cli_myextension');
-        $path = $license->getProIncludePathForElement();
+        $extension = new Extension('cli', 'myextension');
+        $path = $extension->getProIncludePathForElement();
 
         $I->assertEquals(JPATH_SITE . '/cli/myextension' . $this->includeSubPath, $path);
     }
 
     public function getIsProFromProComponent(UnitTester $I)
     {
-        $license = new License('com_myproextension', __DIR__ . '/../_support/joomla');
-        $license->getProIncludePathForElement();
+        $extension = new Extension('component', 'myproextension', null, __DIR__ . '/../_support/joomla');
+        $extension->getProIncludePathForElement();
 
-        $I->assertTrue($license->isPro());
+        $I->assertTrue($extension->isPro());
     }
 
     public function getIsProFromFreeComponent(UnitTester $I)
     {
-        $license = new License('com_myfreeextension', __DIR__ . '/../_support/joomla');
-        $license->getProIncludePathForElement();
+        $extension = new Extension('component', 'myfreeextension', null, __DIR__ . '/../_support/joomla');
+        $extension->getProIncludePathForElement();
 
-        $I->assertFalse($license->isPro());
+        $I->assertFalse($extension->isPro());
     }
 }
