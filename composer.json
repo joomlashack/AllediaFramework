@@ -1,13 +1,13 @@
 {
     "name"             : "alledia/alledia",
-    "description"      : "Alledia",
+    "description"      : "AllediaLibrary",
     "minimum-stability": "stable",
     "license"          : "GPL-2+",
     "type"             : "joomla.library",
     "extra"            : {
-        "element"        : "lib_alledia",
-        "element-short"  : "alledia",
-        "name"           : "Alledia",
+        "element"        : "lib_alledialibrary",
+        "element-short"  : "alledialibrary",
+        "name"           : "AllediaLibrary",
         "client"         : "site",
         "package-license": "free"
     },
@@ -19,5 +19,9 @@
     ],
     "require"          : {
         "php"       : ">= 5.3"
+    },
+    "require-dev"      : {
+        "phing/phing": "*",
+        "codeception/codeception": "*"
     }
 }
