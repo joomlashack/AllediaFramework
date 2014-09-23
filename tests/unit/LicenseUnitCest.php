@@ -1,6 +1,7 @@
 <?php
 use \UnitTester;
 use Alledia\License;
+use \Codeception\Util\Stub;
 
 class LicenseUnitCest
 {
@@ -69,5 +70,21 @@ class LicenseUnitCest
         $path = $license->getProIncludePathForElement();
 
         $I->assertEquals(JPATH_SITE . '/cli/myextension' . $this->includeSubPath, $path);
+    }
+
+    public function getIsProFromProComponent(UnitTester $I)
+    {
+        $license = new License('com_myproextension', __DIR__ . '/../_support/joomla');
+        $license->getProIncludePathForElement();
+
+        $I->assertTrue($license->isPro());
+    }
+
+    public function getIsProFromFreeComponent(UnitTester $I)
+    {
+        $license = new License('com_myfreeextension', __DIR__ . '/../_support/joomla');
+        $license->getProIncludePathForElement();
+
+        $I->assertFalse($license->isPro());
     }
 }
