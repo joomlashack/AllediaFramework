@@ -14,7 +14,6 @@ jimport('joomla.filesystem.folder');
 
 if (!defined('ALLEDIA_LOADED')) {
     define('ALLEDIA_LOADED', 1);
-    define('ALLEDIA_VERSION', '1.0.0');
 
     define('ALLEDIA_PATH_LIBRARY', __DIR__);
 
