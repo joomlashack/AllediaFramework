@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension type="library" version="2.5" method="upgrade">
-    <name>Alledia</name>
-    <libraryname>alledia</libraryname>
+    <name>Alledia Framework</name>
+    <libraryname>allediaframework</libraryname>
     <author>Alledia</author>
     <creationDate>September 19 2014</creationDate>
     <copyright>Copyright (C) 2014 alledia.com</copyright>
@@ -9,12 +9,11 @@
     <authorEmail>hello@alledia.com</authorEmail>
     <authorUrl>https://www.alledia.com</authorUrl>
     <version>1.0.0</version>
-    <description>Alledia Library</description>
+    <description>Shared library for Alledia extensions</description>
 
     <files>
         <filename>include.php</filename>
         <filename>Psr4AutoLoader.php</filename>
         <folder>Alledia</folder>
-
     </files>
 </extension>

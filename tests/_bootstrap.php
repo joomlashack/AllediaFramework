@@ -68,5 +68,5 @@ require_once JPATH_CONFIGURATION . '/configuration.php';
 // Instantiate some needed objects
 JFactory::getApplication('site');
 
-// Bootstrap Alledia Library
+// Bootstrap Alledia Framework
 require_once ALLEDIA_SOURCE_PATH . '/include.php';

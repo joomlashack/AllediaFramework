@@ -1,13 +1,13 @@
 {
-    "name"             : "alledia/alledia",
-    "description"      : "AllediaLibrary",
+    "name"             : "alledia/allediaframework",
+    "description"      : "AllediaFramework",
     "minimum-stability": "stable",
     "license"          : "GPL-2+",
     "type"             : "joomla.library",
     "extra"            : {
-        "element"        : "lib_alledialibrary",
-        "element-short"  : "alledialibrary",
-        "name"           : "AllediaLibrary",
+        "element"        : "lib_allediaframework",
+        "element-short"  : "allediaframework",
+        "name"           : "AllediaFramework",
         "client"         : "site",
         "package-license": "free"
     },

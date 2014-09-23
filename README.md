@@ -1,4 +1,4 @@
-Alledia Library
+Alledia Framework
 ======================
 
-Shared Alledia Library for extensions development
+Shared libraries for extensions development
