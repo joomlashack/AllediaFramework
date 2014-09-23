@@ -17,7 +17,7 @@ abstract class Factory extends \JFactory
      *
      * @var array
      */
-    protected static $extensionInstances;
+    protected static $extensionInstances = array();
 
     /**
      * Get an extension
