@@ -22,5 +22,5 @@ if (!defined('ALLEDIA_LOADED')) {
     require_once ALLEDIA_PATH_LIBRARY . '/Psr4AutoLoader.php';
     $loader = new Psr4AutoLoader();
     $loader->register();
-    $loader->addNamespace('Alledia', ALLEDIA_PATH_LIBRARY . '/alledia');
+    $loader->addNamespace('Alledia', ALLEDIA_PATH_LIBRARY . '/Alledia');
 }

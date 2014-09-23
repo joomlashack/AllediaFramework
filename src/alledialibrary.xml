@@ -14,5 +14,7 @@
     <files>
         <filename>include.php</filename>
         <filename>Psr4AutoLoader.php</filename>
+        <folder>Alledia</folder>
+
     </files>
 </extension>
