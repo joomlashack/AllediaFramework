@@ -2,5 +2,5 @@
 <project name="Alledia Library Builder" default="">
     <property file="../build.global.properties" />
 
-    <import file="${phingscripts.path}/src/build.xml"/>
+    <import file="${builder.path}/src/build.xml"/>
 </project>
