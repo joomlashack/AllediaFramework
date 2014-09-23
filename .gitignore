@@ -1,2 +1,4 @@
 packages/*
 !packages/.gitkeep
+tests/_output/*
+tests/config.yml
