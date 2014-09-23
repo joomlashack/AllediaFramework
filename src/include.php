@@ -10,8 +10,6 @@ use \Alledia;
 
 defined('_JEXEC') or die();
 
-jimport('joomla.filesystem.folder');
-
 if (!defined('ALLEDIA_FRAMEWORK_LOADED')) {
     define('ALLEDIA_FRAMEWORK_LOADED', 1);
 
