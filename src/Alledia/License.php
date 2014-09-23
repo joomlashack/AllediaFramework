@@ -25,6 +25,11 @@ class License
     protected $type;
 
     /**
+     * Base path
+     */
+    protected $basePath;
+
+    /**
      * The include path for the pro library
      */
     protected $proIncludePath;
@@ -34,9 +39,10 @@ class License
      *
      * @param string $element The element for extension
      */
-    public function __construct($element)
+    public function __construct($element, $basePath = JPATH_SITE)
     {
         $this->element = $element;
+        $this->basePath = $basePath;
 
         $this->getProIncludePathForElement();
 
@@ -75,7 +81,7 @@ class License
                 'mod' => 'modules'
             );
 
-            $basePath = JPATH_SITE . '/' . $folders[$extensionType];
+            $basePath = $this->basePath . '/' . $folders[$extensionType];
 
             $element = str_replace($extensionType . '_', '/', $element);
             if ($extensionType === 'plg') {
