@@ -151,6 +151,37 @@ class Extension extends Object
     }
 
     /**
+     * Get the path for the extension
+     *
+     * @return string The path
+     */
+    public function getExtensionPath()
+    {
+        $basePath = '';
+
+        $folders = array(
+            'component' => 'administrator/components/',
+            'plugin'    => 'plugins/',
+            'template'  => 'templates/',
+            'library'   => 'libraries/',
+            'cli'       => 'cli/',
+            'module'    => 'modules/'
+        );
+
+        $basePath = $this->basePath . '/' . $folders[$this->type];
+
+        if ($this->type === 'plugin') {
+            $basePath .= $this->folder . '/' . $this->element;
+        } elseif ($this->type === 'module') {
+            $basePath .= 'mod_' . $this->element;
+        } else {
+            $basePath .= $this->element;
+        }
+
+        return $basePath;
+    }
+
+    /**
      * Get the include path for the include on the pro library, based on the extension type
      *
      * @return string The path for pro
@@ -158,26 +189,7 @@ class Extension extends Object
     public function getProLibraryPath()
     {
         if (empty($this->proLibraryPath)) {
-            $basePath = '';
-
-            $folders = array(
-                'component' => 'administrator/components/',
-                'plugin'    => 'plugins/',
-                'template'  => 'templates/',
-                'library'   => 'libraries/',
-                'cli'       => 'cli/',
-                'module'    => 'modules/'
-            );
-
-            $basePath = $this->basePath . '/' . $folders[$this->type];
-
-            if ($this->type === 'plugin') {
-                $basePath .= $this->folder . '/' . $this->element;
-            } elseif ($this->type === 'module') {
-                $basePath .= 'mod_' . $this->element;
-            } else {
-                $basePath .= $this->element;
-            }
+            $basePath = $this->getExtensionPath();
 
             $this->proLibraryPath = $basePath . '/library/pro';
         }
@@ -229,4 +241,34 @@ class Extension extends Object
 
         return $this->fullElement;
     }
+
+    /**
+     * Get extension information
+     *
+     * @return JRegistry
+     */
+    public function getInfo()
+    {
+        $info = new \JRegistry();
+
+        jimport('joomla.installer.installer');
+
+        $installer = \JInstaller::getInstance();
+        $installer->setPath('source', $this->getExtensionPath());
+        $installer->getManifest();
+        $manifestPath = $installer->getPath('manifest');
+
+        if (file_exists($manifestPath)) {
+            $xml = \JFactory::getXML($manifestPath);
+
+            foreach ($xml->children() as $e) {
+                if (!$e->children()) {
+                    $info->set($e->getName(), (string)$e);
+                }
+            }
+        }
+
+        return $info;
+    }
+
 }
