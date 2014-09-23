@@ -10,7 +10,7 @@ namespace Alledia;
 
 defined('_JEXEC') or die();
 
-class Extension extends \JObject
+class Extension extends Object
 {
     /**
      * The extension namespace
@@ -122,7 +122,7 @@ class Extension extends \JObject
         $row = $db->loadObject();
 
         if (!is_object($row)) {
-            throw new \Exception("Extension not found: {$this->element}, {$this->type}, {$this->folder}");
+            throw new Exception("Extension not found: {$this->element}, {$this->type}, {$this->folder}");
         }
 
         $this->name = $row->name;
@@ -191,7 +191,7 @@ class Extension extends \JObject
             $proLibraryPath = $this->getProLibraryPath();
 
             if (!file_exists($proLibraryPath)) {
-                throw new \Exception("Pro library not found: {$this->extension->type}, {$this->extension->element}");
+                throw new Exception("Pro library not found: {$this->extension->type}, {$this->extension->element}");
             }
 
             // Setup autoloaded libraries
