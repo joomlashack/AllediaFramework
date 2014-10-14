@@ -27,6 +27,13 @@ class Extension extends Object
     protected $type;
 
     /**
+     * The extension id
+     *
+     * @var int
+     */
+    protected $id;
+
+    /**
      * The extension name
      *
      * @var string
@@ -106,6 +113,7 @@ class Extension extends Object
         $db = \JFactory::getDbo();
         $query = $db->getQuery(true)
             ->select(array(
+                $db->quoteName('extension_id'),
                 $db->quoteName('name'),
                 $db->quoteName('enabled'),
                 $db->quoteName('params')
@@ -125,6 +133,7 @@ class Extension extends Object
             throw new Exception("Extension not found: {$this->element}, {$this->type}, {$this->folder}");
         }
 
+        $this->id = $row->extension_id;
         $this->name = $row->name;
         $this->enabled = (bool) $row->enabled;
         $this->params = new \JRegistry($row->params);
@@ -197,6 +206,11 @@ class Extension extends Object
         return $this->proLibraryPath;
     }
 
+    /**
+     * Loads the Pro library, if existent
+     *
+     * @return bool
+     */
     public function loadProLibrary()
     {
         if ($this->isPro()) {
@@ -271,4 +285,52 @@ class Extension extends Object
         return $info;
     }
 
+    /**
+     * Returns the update URL from database
+     *
+     * @return string
+     */
+    public function getUpdateURL()
+    {
+        $db = \JFactory::getDbo();
+        $query = $db->getQuery(true)
+            ->select('sites.location')
+            ->from('#__update_sites AS sites')
+            ->join('LEFT', '#__update_sites_extensions AS extensions ON (sites.update_site_id = extensions.update_site_id)')
+            ->where('extensions.extension_id = ' . $this->id);
+        $db->setQuery($query);
+        $row = $db->loadResult();
+
+        return $row;
+    }
+
+    /**
+     * Set the update URL
+     *
+     * @param string $url
+     */
+    public function setUpdateURL($url)
+    {
+        $db = \JFactory::getDbo();
+
+        // Get the update site id
+        $join = $db->quoteName('#__update_sites_extensions') . ' AS extensions '
+            . 'ON (sites.update_site_id = extensions.update_site_id)';
+        $query = $db->getQuery(true)
+            ->select('sites.update_site_id')
+            ->from($db->quoteName('#__update_sites') . ' AS sites')
+            ->join('LEFT', $join)
+            ->where('extensions.extension_id = ' . $this->id);
+        $db->setQuery($query);
+        $siteId = (int) $db->loadResult();
+
+        if (!empty($siteId)) {
+            $query = $db->getQuery(true)
+                ->update($db->quoteName('#__update_sites'))
+                ->set($db->quoteName('location') . ' = ' . $db->quote($url))
+                ->where($db->quoteName('update_site_id') . ' = ' . $siteId);
+            $db->setQuery($query);
+            $db->execute();
+        }
+    }
 }
