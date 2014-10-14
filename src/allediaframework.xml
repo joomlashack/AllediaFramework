@@ -11,7 +11,22 @@
     <version>1.0.0</version>
     <description>Shared library for Alledia extensions</description>
 
-    <element>allediaframework</element>
+    <alledia>
+        <element>allediaframework</element>
+
+        <namespace>Alledia</namespace>
+
+        <relatedExtensions>
+            <extension
+                type="plugin"
+                group="system"
+                element="oscarootcertificates"
+                publish="true"
+                ordering="first">OSCARootCertificates</extension>
+        </relatedExtensions>
+
+        <obsoleteItems/>
+    </alledia>
 
     <files>
         <filename>include.php</filename>
