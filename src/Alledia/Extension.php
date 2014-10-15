@@ -109,6 +109,8 @@ class Extension extends Object
      */
     protected function getDataFromDatabase()
     {
+        $element = $this->getElementToDb($this->type, $this->element);
+
         // Load the extension info from database
         $db = \JFactory::getDbo();
         $query = $db->getQuery(true)
@@ -120,7 +122,7 @@ class Extension extends Object
             ))
             ->from('#__extensions')
             ->where($db->quoteName('type') . ' = ' . $db->quote($this->type))
-            ->where($db->quoteName('element') . ' = ' . $db->quote($this->element));
+            ->where($db->quoteName('element') . ' = ' . $db->quote($element));
 
         if ($this->type === 'plugin') {
             $query->where($db->quoteName('folder') . ' = ' . $db->quote($this->folder));
@@ -254,6 +256,31 @@ class Extension extends Object
         }
 
         return $this->fullElement;
+    }
+
+    /**
+     * Get the element to match the database records.
+     * Only components and modules have the prefix.
+     *
+     * @param  string $type
+     * @param  string $element
+     * @return string The element
+     */
+    public function getElementToDb($type, $element)
+    {
+        $prefixes = array(
+            'component' => 'com_',
+            'module'    => 'mod_'
+        );
+
+        $fullElement = '';
+        if (array_key_exists($type, $prefixes)) {
+            $fullElement = $prefixes[$type];
+        }
+
+        $fullElement .= $element;
+
+        return $fullElement;
     }
 
     /**
