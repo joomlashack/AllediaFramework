@@ -225,7 +225,7 @@ class Extension extends Object
             // Setup autoloaded libraries
             $loader = new \Psr4AutoLoader();
             $loader->register();
-            $loader->addNamespace($this->namespace . 'Pro', $proLibraryPath);
+            $loader->addNamespace('Alledia\\' . $this->namespace . 'Pro', $proLibraryPath);
 
             return true;
         }
