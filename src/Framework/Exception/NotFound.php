@@ -6,9 +6,9 @@
  * @license   http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
  */
 
-namespace Alledia\Exception;
+namespace Alledia\Framework\Exception;
 
-use Alledia\Exception;
+use Alledia\Framework\Exception;
 
 defined('_JEXEC') or die();
 

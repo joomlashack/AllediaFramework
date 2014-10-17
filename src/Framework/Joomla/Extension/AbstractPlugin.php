@@ -6,9 +6,9 @@
  * @license   http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
  */
 
-namespace Alledia\Joomla\Extension;
+namespace Alledia\Framework\Joomla\Extension;
 
-use Alledia\Factory;
+use Alledia\Framework\Factory;
 
 defined('_JEXEC') or die();
 

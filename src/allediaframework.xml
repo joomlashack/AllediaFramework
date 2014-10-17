@@ -15,17 +15,6 @@
         <element>allediaframework</element>
 
         <namespace>Alledia</namespace>
-
-        <relatedExtensions>
-            <extension
-                type="plugin"
-                group="system"
-                element="oscarootcertificates"
-                publish="true"
-                ordering="first">OSCARootCertificates</extension>
-        </relatedExtensions>
-
-        <obsoleteItems/>
     </alledia>
 
     <files>

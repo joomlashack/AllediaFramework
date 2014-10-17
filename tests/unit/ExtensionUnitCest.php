@@ -1,6 +1,6 @@
 <?php
 use \UnitTester;
-use Alledia\Extension;
+use Alledia\Framework\Extension;
 use \Codeception\Util\Stub;
 
 class ExtensionUnitCest
@@ -19,7 +19,7 @@ class ExtensionUnitCest
     public function getProLibraryPathForComponent(UnitTester $I)
     {
         $extension = Stub::construct(
-            'Alledia\Extension',
+            'Alledia\Framework\Extension',
             array(
                 'namespace' => 'MyExtension',
                 'type'      => 'component'
@@ -34,7 +34,7 @@ class ExtensionUnitCest
     public function getProLibraryPathForContentPlugin(UnitTester $I)
     {
         $extension = Stub::construct(
-            'Alledia\Extension',
+            'Alledia\Framework\Extension',
             array(
                 'namespace' => 'MyExtension',
                 'type'      => 'plugin',
@@ -50,7 +50,7 @@ class ExtensionUnitCest
     public function getProLibraryPathForSystemPlugin(UnitTester $I)
     {
         $extension = Stub::construct(
-            'Alledia\Extension',
+            'Alledia\Framework\Extension',
             array(
                 'namespace' => 'MyExtension',
                 'type'      => 'plugin',
@@ -66,7 +66,7 @@ class ExtensionUnitCest
     public function getProLibraryPathForModule(UnitTester $I)
     {
         $extension = Stub::construct(
-            'Alledia\Extension',
+            'Alledia\Framework\Extension',
             array(
                 'namespace' => 'MyExtension',
                 'type'      => 'module'
@@ -81,7 +81,7 @@ class ExtensionUnitCest
     public function getProLibraryPathForLibrary(UnitTester $I)
     {
         $extension = Stub::construct(
-            'Alledia\Extension',
+            'Alledia\Framework\Extension',
             array(
                 'namespace' => 'MyExtension',
                 'type'      => 'library'
@@ -96,7 +96,7 @@ class ExtensionUnitCest
     public function getProLibraryPathForTemplates(UnitTester $I)
     {
         $extension = Stub::construct(
-            'Alledia\Extension',
+            'Alledia\Framework\Extension',
             array(
                 'namespace' => 'MyExtension',
                 'type'      => 'template'
@@ -111,7 +111,7 @@ class ExtensionUnitCest
     public function getProLibraryPathForCli(UnitTester $I)
     {
         $extension = Stub::construct(
-            'Alledia\Extension',
+            'Alledia\Framework\Extension',
             array(
                 'namespace' => 'MyExtension',
                 'type'      => 'cli'
@@ -126,7 +126,7 @@ class ExtensionUnitCest
     public function getIsProFromProComponent(UnitTester $I)
     {
         $extension = Stub::construct(
-            'Alledia\Extension',
+            'Alledia\Framework\Extension',
             array(
                 'namespace' => 'MyProExtension',
                 'type'      => 'component',
@@ -143,7 +143,7 @@ class ExtensionUnitCest
     public function getIsProFromFreeComponent(UnitTester $I)
     {
         $extension = Stub::construct(
-            'Alledia\Extension',
+            'Alledia\Framework\Extension',
             array(
                 'namespace' => 'MyFreeExtension',
                 'type'      => 'component',

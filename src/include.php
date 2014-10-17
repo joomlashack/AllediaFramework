@@ -19,5 +19,5 @@ if (!defined('ALLEDIA_FRAMEWORK_LOADED')) {
     require_once ALLEDIA_FRAMEWORK_PATH . '/Psr4AutoLoader.php';
     $loader = new Psr4AutoLoader();
     $loader->register();
-    $loader->addNamespace('Alledia', ALLEDIA_FRAMEWORK_PATH . '/Alledia');
+    $loader->addNamespace('Alledia\Framework', ALLEDIA_FRAMEWORK_PATH . '/Framework');
 }

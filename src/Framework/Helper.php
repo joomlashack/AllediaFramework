@@ -6,9 +6,9 @@
  * @license   http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
  */
 
-namespace Alledia;
+namespace Alledia\Framework;
 
-use Alledia\Extension;
+use Alledia\Framework\Extension;
 
 defined('_JEXEC') or die();
 
