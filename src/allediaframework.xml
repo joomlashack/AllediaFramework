@@ -14,13 +14,13 @@
     <alledia>
         <element>allediaframework</element>
 
-        <namespace>Alledia</namespace>
+        <namespace>AllediaFramework</namespace>
     </alledia>
 
     <files>
         <filename>include.php</filename>
         <filename>Psr4AutoLoader.php</filename>
-        <folder>Alledia</folder>
+        <folder>Framework</folder>
     </files>
 
 </extension>
