@@ -44,10 +44,8 @@ abstract class AbstractPlugin extends \JPlugin
 
         $this->extension = Factory::getExtension($this->namespace, 'plugin', $this->_type);
 
-        // Load the pro code, if installed
-        if ($this->isPro()) {
-            $this->extension->loadProLibrary();
-        }
+        // Load the libraries, if existent
+        $this->extension->loadLibrary();
 
         $languagePath = JPATH_SITE . '/plugins/' . $this->_type . '/' . $this->_name;
         $languageFile = 'plg_' . $this->_name . '_' . $this->_type . '.sys';

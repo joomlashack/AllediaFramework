@@ -83,6 +83,13 @@ class Extension extends Object
     protected $proLibraryPath;
 
     /**
+     * The path for the free library
+     *
+     * @var string
+     */
+    protected $libraryPath;
+
+    /**
      * Class constructor, set the extension type.
      *
      * @param string $namespace The element of the extension
@@ -97,6 +104,7 @@ class Extension extends Object
         $this->basePath  = $basePath;
         $this->namespace = $namespace;
 
+        $this->getLibraryPath();
         $this->getProLibraryPath();
 
         $this->license = file_exists($this->proLibraryPath) ? 'pro' : 'free';
@@ -193,6 +201,22 @@ class Extension extends Object
     }
 
     /**
+     * Get the include path for the include on the free library, based on the extension type
+     *
+     * @return string The path for pro
+     */
+    public function getLibraryPath()
+    {
+        if (empty($this->libraryPath)) {
+            $basePath = $this->getExtensionPath();
+
+            $this->libraryPath = $basePath . '/library';
+        }
+
+        return $this->libraryPath;
+    }
+
+    /**
      * Get the include path for the include on the pro library, based on the extension type
      *
      * @return string The path for pro
@@ -200,32 +224,36 @@ class Extension extends Object
     public function getProLibraryPath()
     {
         if (empty($this->proLibraryPath)) {
-            $basePath = $this->getExtensionPath();
+            $basePath = $this->getLibraryPath();
 
-            $this->proLibraryPath = $basePath . '/library/pro';
+            $this->proLibraryPath = $basePath . '/Pro';
         }
 
         return $this->proLibraryPath;
     }
 
     /**
-     * Loads the Pro library, if existent
+     * Loads the library, if existent (including the Pro Library)
      *
      * @return bool
      */
-    public function loadProLibrary()
+    public function loadLibrary()
     {
-        if ($this->isPro()) {
-            $proLibraryPath = $this->getProLibraryPath();
+        $libraryPath = $this->getLibraryPath();
 
-            if (!file_exists($proLibraryPath)) {
-                throw new Exception("Pro library not found: {$this->extension->type}, {$this->extension->element}");
+        // If we have a library path, lets load it
+        if (file_exists($libraryPath)) {
+
+            if ($this->isPro()) {
+                // Check if the pro library exists
+                if (!file_exists($this->getProLibraryPath())) {
+                    throw new Exception("Pro library not found: {$this->extension->type}, {$this->extension->element}");
+                }
             }
-
             // Setup autoloaded libraries
             $loader = new \Psr4AutoLoader();
             $loader->register();
-            $loader->addNamespace('Alledia\\' . $this->namespace . 'Pro', $proLibraryPath);
+            $loader->addNamespace('Alledia\\' . $this->namespace, $libraryPath);
 
             return true;
         }
