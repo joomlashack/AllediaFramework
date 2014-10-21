@@ -99,7 +99,7 @@ class Extension extends Object
     public function __construct($namespace, $type, $folder = '', $basePath = JPATH_SITE)
     {
         $this->type      = $type;
-        $this->element   = strtolower($namespace);
+        $this->element   = $this->removeExtensionTypePrefixFromElement(strtolower($namespace));
         $this->folder    = $folder;
         $this->basePath  = $basePath;
         $this->namespace = $namespace;
@@ -387,5 +387,22 @@ class Extension extends Object
             $db->setQuery($query);
             $db->execute();
         }
+    }
+
+    /**
+     * Remove the extension type prefix from the string
+     *
+     * @param  string $element
+     * @return string
+     */
+    protected static function removeExtensionTypePrefixFromElement($element)
+    {
+        $prefixes = array('com_', 'plg_', 'tpl_', 'lib_', 'cli_', 'mod_');
+
+        foreach ($prefixes as $prefix) {
+            $element = preg_replace('/^' . $prefix . '/i', '', $element);
+        }
+
+        return $element;
     }
 }
