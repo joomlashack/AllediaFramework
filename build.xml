@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="Alledia Framework Builder" default="">
-    <property file="../build.global.properties" />
+<project name="OSCARootCertificates Builder" default="">
+    <if>
+        <available file="./build.properties" type="file" />
+        <then>
+            <property file="./build.properties" />
+        </then>
+        <else>
+            <property file="../build.global.properties" />
+        </else>
+    </if>
 
     <import file="${builder.path}/src/build.xml"/>
 </project>
