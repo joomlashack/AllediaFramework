@@ -7,54 +7,25 @@
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
 
-defined('JPATH_PLATFORM') or die;
+defined('_JEXEC') or die('Restricted access');
 
-/**
- * Form Field class for the Joomla Platform.
- * Provides spacer markup to be used in form layouts.
- *
- * @package     Joomla.Platform
- * @subpackage  Form
- * @since       11.1
- */
-class JFormFieldSpacer extends JFormField
+jimport('joomla.form.formfield');
+
+
+class JFormFieldGoPro extends JFormField
 {
-	/**
-	 * The form field type.
-	 *
-	 * @var    string
-	 * @since  11.1
-	 */
-	protected $type = 'GoPro';
-
-	/**
-	 * Method to get the field input markup for a spacer.
-	 * The spacer does not have accept input.
-	 *
-	 * @return  string  The field input markup.
-	 *
-	 * @since   11.1
-	 */
-	protected function getInput()
-	{
-		return ' ';
-	}
-
-	/**
-	 * Method to get the field label markup for a spacer.
-	 * Use the label text or name from the XML element as the spacer or
-	 * Use a hr="true" to automatically generate plain hr markup
-	 *
-	 * @return  string  The field label markup.
-	 *
-	 * @since   11.1
-	 */
-	protected function getLabel()
-	{
-		$html = '<div class="arlert alert-info">
-            <a href="https://www.alledia.com/plans/" class="btn btn-primary" target="_blank">Go Pro to access more features</a> <img src="' . Juri::base() . 'libraries/allediaframework/Framework/assets/alledia_logo.png" style="width:120px;height:auto;" alt=""/>
+    public function getInput() {
+        JHtml::stylesheet( JURI::root() . 'libraries/allediaframework/Framework/assets/css/style.css' );
+        $html = '<div class="ost-alert-gopro">
+            <a href="https://www.alledia.com/plans/" class="ost-alert-btn" target="_blank">
+            <i class="icon-publish"></i> Go Pro to access more features</a>
+            <img src="../libraries/allediaframework/Framework/assets/images/alledia_logo.png" style="width:120px;height:auto;" alt=""/>
         </div>';
 
 		return $html;
 	}
+
+    public function getLabel(){
+        return ' ';
+    }
 }
