@@ -13,8 +13,8 @@
 
     <alledia>
         <element>allediaframework</element>
-
         <namespace>AllediaFramework</namespace>
+        <license>free</license>
     </alledia>
 
     <files>
