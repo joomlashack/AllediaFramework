@@ -8,7 +8,7 @@
  * functionality of allowing multiple base directories for a single namespace
  * prefix.
  */
-class Psr4AutoLoader
+class AllediaPsr4AutoLoader
 {
     /**
      * An associative array where the key is a namespace prefix and the value

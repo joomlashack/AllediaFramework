@@ -45,7 +45,7 @@ class Extension extends Object
      *
      * @var JRegistry
      */
-    protected $params;
+    public $params;
 
     /**
      * The extension enable state
@@ -90,6 +90,13 @@ class Extension extends Object
     protected $libraryPath;
 
     /**
+     * The manifest information
+     *
+     * @var \SimpleXMLElement
+     */
+    public $manifest;
+
+    /**
      * Class constructor, set the extension type.
      *
      * @param string $namespace The element of the extension
@@ -99,15 +106,18 @@ class Extension extends Object
     public function __construct($namespace, $type, $folder = '', $basePath = JPATH_SITE)
     {
         $this->type      = $type;
-        $this->element   = $this->removeExtensionTypePrefixFromElement(strtolower($namespace));
+        $this->element   = strtolower($namespace);
         $this->folder    = $folder;
         $this->basePath  = $basePath;
         $this->namespace = $namespace;
 
+        $this->getManifest();
+
+        $this->license = strtolower($this->manifest->alledia->license);
+
         $this->getLibraryPath();
         $this->getProLibraryPath();
 
-        $this->license = file_exists($this->proLibraryPath) ? 'pro' : 'free';
 
         $this->getDataFromDatabase();
     }
@@ -117,7 +127,7 @@ class Extension extends Object
      */
     protected function getDataFromDatabase()
     {
-        $element = $this->getElementToDb($this->type, $this->element);
+        $element = $this->getElementToDb();
 
         // Load the extension info from database
         $db = \JFactory::getDbo();
@@ -251,7 +261,7 @@ class Extension extends Object
                 }
             }
             // Setup autoloaded libraries
-            $loader = new \Psr4AutoLoader();
+            $loader = new \AllediaPsr4AutoLoader();
             $loader->register();
             $loader->addNamespace('Alledia\\' . $this->namespace, $libraryPath);
 
@@ -277,24 +287,24 @@ class Extension extends Object
             'module'    => 'mod'
         );
 
-        $fullElement = $prefixes[$this->type] . '_';
+        $fullElement = $prefixes[$this->type];
 
         if ($this->type === 'plugin') {
             $fullElement .= '_' . $this->folder;
         }
 
-        return $this->fullElement;
+        $fullElement .= '_' . $this->element;
+
+        return $fullElement;
     }
 
     /**
      * Get the element to match the database records.
      * Only components and modules have the prefix.
      *
-     * @param  string $type
-     * @param  string $element
      * @return string The element
      */
-    public function getElementToDb($type, $element)
+    public function getElementToDb()
     {
         $prefixes = array(
             'component' => 'com_',
@@ -302,11 +312,11 @@ class Extension extends Object
         );
 
         $fullElement = '';
-        if (array_key_exists($type, $prefixes)) {
-            $fullElement = $prefixes[$type];
+        if (array_key_exists($this->type, $prefixes)) {
+            $fullElement = $prefixes[$this->type];
         }
 
-        $fullElement .= $element;
+        $fullElement .= $this->element;
 
         return $fullElement;
     }
@@ -316,28 +326,27 @@ class Extension extends Object
      *
      * @return JRegistry
      */
-    public function getInfo()
+    protected function getManifest()
     {
-        $info = new \JRegistry();
+        if (!isset($this->manifest)) {
+            $extensionPath = $this->getExtensionPath();
+            $xml = null;
 
-        jimport('joomla.installer.installer');
 
-        $installer = \JInstaller::getInstance();
-        $installer->setPath('source', $this->getExtensionPath());
-        $installer->getManifest();
-        $manifestPath = $installer->getPath('manifest');
+            $path = $extensionPath . "/{$this->element}.xml";
+            if (file_exists($path)) {
+                $xml = simplexml_load_file($path);
+            } else {
+                $path = $extensionPath . "/{$this->getElementToDb()}.xml";
+                $xml = simplexml_load_file($path);
+            }
 
-        if (file_exists($manifestPath)) {
-            $xml = \JFactory::getXML($manifestPath);
-
-            foreach ($xml->children() as $e) {
-                if (!$e->children()) {
-                    $info->set($e->getName(), (string)$e);
-                }
+            if (!empty($xml)) {
+                $this->manifest = (object) json_decode(json_encode($xml));
             }
         }
 
-        return $info;
+        return $this->manifest;
     }
 
     /**
@@ -390,19 +399,17 @@ class Extension extends Object
     }
 
     /**
-     * Remove the extension type prefix from the string
+     * Store the params on the database
      *
-     * @param  string $element
-     * @return string
+     * @return void
      */
-    protected static function removeExtensionTypePrefixFromElement($element)
+    public function storeParams()
     {
-        $prefixes = array('com_', 'plg_', 'tpl_', 'lib_', 'cli_', 'mod_');
+        $db     = \JFactory::getDbo();
+        $params = $db->q($this->params->toString());
 
-        foreach ($prefixes as $prefix) {
-            $element = preg_replace('/^' . $prefix . '/i', '', $element);
-        }
-
-        return $element;
+        $query = "UPDATE #__extensions SET params = {$params} WHERE extension_id = \"{$this->id}\"";
+        $db->setQuery($query);
+        $db->execute();
     }
 }
