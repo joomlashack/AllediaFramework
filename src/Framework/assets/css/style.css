@@ -3,8 +3,9 @@
     border: 1px solid rgba(45,112,145,0.2);
     color: #2d7091;
     padding: 20px;
-    margin: 2px 0;
-    max-width: 320px;
+    margin: 2px 0 2px -180px;
+    max-width: 380px;
+    text-align: center;
 }
 .ost-alert-gopro a.ost-alert-btn{
     border-radius: 3px;
@@ -27,7 +28,7 @@
     /* 5 */
     /* 6 */
     padding: 0 12px;
-    background: #ed8034;
+    background: #075c97;
     color: #ffffff;
     box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
     font-weight: 400;
@@ -37,4 +38,17 @@
 }
 .ost-alert-gopro .icon-publish:before{
     color: #ffffff;
+}
+
+/* Joomla 2 only */
+.ost-alert-gopro.ost-joomla-2{
+    margin-left: 0;
+    display: inline-block;
+}
+
+
+@media (max-width: 480px) {
+    .ost-alert-gopro{
+        margin-left: 0;
+    }
 }
