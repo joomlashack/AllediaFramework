@@ -6,8 +6,6 @@
  * @license   http://www.gnu.org/licenses/gpl.html GNU/GPL
  */
 
-use \Alledia;
-
 defined('_JEXEC') or die();
 
 if (!defined('ALLEDIA_FRAMEWORK_LOADED')) {
@@ -16,8 +14,11 @@ if (!defined('ALLEDIA_FRAMEWORK_LOADED')) {
     define('ALLEDIA_FRAMEWORK_PATH', __DIR__);
 
     // Setup autoloaded libraries
-    require_once ALLEDIA_FRAMEWORK_PATH . '/Psr4AutoLoader.php';
-    $loader = new Psr4AutoLoader();
+    if (!class_exists('AllediaPsr4AutoLoader')) {
+        require_once ALLEDIA_FRAMEWORK_PATH . '/AllediaPsr4AutoLoader.php';
+    }
+
+    $loader = new AllediaPsr4AutoLoader();
     $loader->register();
     $loader->addNamespace('Alledia\Framework', ALLEDIA_FRAMEWORK_PATH . '/Framework');
 }

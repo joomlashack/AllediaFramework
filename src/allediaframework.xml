@@ -19,7 +19,7 @@
 
     <files>
         <filename>include.php</filename>
-        <filename>Psr4AutoLoader.php</filename>
+        <filename>AllediaPsr4AutoLoader.php</filename>
         <folder>Framework</folder>
     </files>
 
