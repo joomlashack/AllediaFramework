@@ -3,7 +3,7 @@
     border: 1px solid rgba(45,112,145,0.2);
     color: #2d7091;
     padding: 20px;
-    margin: 2px 0;
+    margin: 2px 0 2px -180px;
     max-width: 380px;
     text-align: center;
 }
@@ -38,4 +38,10 @@
 }
 .ost-alert-gopro .icon-publish:before{
     color: #ffffff;
+}
+
+@media (max-width: 480px) {
+    .ost-alert-gopro{
+        margin-left: 0;
+    }
 }
