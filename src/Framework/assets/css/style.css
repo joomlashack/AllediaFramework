@@ -40,6 +40,13 @@
     color: #ffffff;
 }
 
+/* Joomla 2 only */
+.ost-alert-gopro.ost-joomla-2{
+    margin-left: 0;
+    display: inline-block;
+}
+
+
 @media (max-width: 480px) {
     .ost-alert-gopro{
         margin-left: 0;
