@@ -322,28 +322,35 @@ class Extension extends Object
     }
 
     /**
+     * Get manifest path for this extension
+     *
+     * @return string
+     */
+    public function getManifestPath()
+    {
+        $extensionPath = $this->getExtensionPath();
+
+        $path = $extensionPath . "/{$this->element}.xml";
+        if (!file_exists($path)) {
+            $path = $extensionPath . "/{$this->getElementToDb()}.xml";
+        }
+
+        return $path;
+    }
+
+    /**
      * Get extension information
      *
      * @return JRegistry
      */
-    protected function getManifest()
+    public function getManifest()
     {
-        if (!isset($this->manifest)) {
-            $extensionPath = $this->getExtensionPath();
-            $xml = null;
+        if (!isset($this->manifest) || $force) {
+            $path = $this->getManifestPath();
 
+            $xml = simplexml_load_file($path);
 
-            $path = $extensionPath . "/{$this->element}.xml";
-            if (file_exists($path)) {
-                $xml = simplexml_load_file($path);
-            } else {
-                $path = $extensionPath . "/{$this->getElementToDb()}.xml";
-                $xml = simplexml_load_file($path);
-            }
-
-            if (!empty($xml)) {
-                $this->manifest = (object) json_decode(json_encode($xml));
-            }
+            $this->manifest = (object) json_decode(json_encode($xml));
         }
 
         return $this->manifest;
