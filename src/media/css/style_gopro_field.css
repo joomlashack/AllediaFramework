@@ -40,6 +40,25 @@
     color: #ffffff;
 }
 
+.ost-alert-gopro.no_offset{
+    margin-left: 0;
+    max-width: 100%;
+    text-align: left;
+    padding-left: 0;
+    padding-right: 0;
+    background: transparent;
+    border: none;
+}
+.ost-alert-gopro.no_offset span{
+    float: right;
+    padding-top: 15px;
+}
+
+.alledia-wrapper .alledia-footer {
+    height: 90px;
+    margin-top: 0;
+}
+
 /* Joomla 2 only */
 .ost-alert-gopro.ost-joomla-2{
     margin-left: 0;
