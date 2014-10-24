@@ -41,7 +41,17 @@ abstract class AbstractPlugin extends \JPlugin
     public function __construct(&$subject, $config = array())
     {
         parent::__construct($subject, $config);
+    }
 
+    /**
+     * Method used to load the extension data. It is not on the constructor
+     * because this way we can avoid to load the data if the plugin
+     * will not be used.
+     *
+     * @return void
+     */
+    protected function init()
+    {
         $this->extension = Factory::getExtension($this->namespace, 'plugin', $this->_type);
 
         // Load the libraries, if existent
@@ -59,7 +69,7 @@ abstract class AbstractPlugin extends \JPlugin
      *
      * @return boolean True for pro version
      */
-    public function isPro()
+    protected function isPro()
     {
         return $this->extension->isPro();
     }
