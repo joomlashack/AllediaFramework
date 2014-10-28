@@ -123,7 +123,7 @@ class Extension extends Object
     }
 
     /**
-     * Get information about this extension from the databae
+     * Get information about this extension from the database
      */
     protected function getDataFromDatabase()
     {
