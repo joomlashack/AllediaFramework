@@ -10,7 +10,7 @@ namespace Alledia\Framework;
 
 defined('_JEXEC') or die();
 
-class Extension extends Object
+class Extension
 {
     /**
      * The extension namespace
@@ -199,13 +199,25 @@ class Extension extends Object
 
         $basePath = $this->basePath . '/' . $folders[$this->type];
 
-        if ($this->type === 'plugin') {
-            $basePath .= $this->folder . '/' . $this->element;
-        } elseif ($this->type === 'module') {
-            $basePath .= 'mod_' . $this->element;
-        } else {
-            $basePath .= $this->element;
+        switch ($this->type) {
+            case 'plugin':
+                $basePath .= $this->folder . '/';
+                break;
+
+            case 'module':
+                if (!preg_match('/^mod_/', $this->element)) {
+                    $basePath .= 'mod_';
+                }
+                break;
+
+            case 'component':
+                if (!preg_match('/^com_/', $this->element)) {
+                    $basePath .= 'com_';
+                }
+                break;
         }
+
+        $basePath .= $this->element;
 
         return $basePath;
     }
@@ -331,6 +343,7 @@ class Extension extends Object
         $extensionPath = $this->getExtensionPath();
 
         $path = $extensionPath . "/{$this->element}.xml";
+
         if (!file_exists($path)) {
             $path = $extensionPath . "/{$this->getElementToDb()}.xml";
         }
