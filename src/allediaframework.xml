@@ -8,7 +8,7 @@
     <license>GPL v3</license>
     <authorEmail>hello@alledia.com</authorEmail>
     <authorUrl>https://www.alledia.com</authorUrl>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
     <description>Shared library for Alledia extensions</description>
 
     <alledia>
