@@ -52,16 +52,39 @@ abstract class AbstractPlugin extends \JPlugin
      */
     protected function init()
     {
-        $this->extension = Factory::getExtension($this->namespace, 'plugin', $this->_type);
+        $this->laodExtension();
 
         // Load the libraries, if existent
         $this->extension->loadLibrary();
+
+        $this->loadLanguage();
+    }
+
+    /**
+     * Method to load the language files
+     *
+     * @return void
+     */
+    public function loadLanguage($extension = '', $basePath = JPATH_ADMINISTRATOR)
+    {
+        parent::loadLanguage($extension, $basePath);
 
         $languagePath = JPATH_SITE . '/plugins/' . $this->_type . '/' . $this->_name;
         $languageFile = 'plg_' . $this->_name . '_' . $this->_type . '.sys';
 
         $language = \JFactory::getLanguage();
         $language->load($languageFile, $languagePath);
+    }
+
+    /**
+     * Method to load the extension data
+     * @return void
+     */
+    protected function laodExtension()
+    {
+        if (!isset($this->extension)) {
+            $this->extension = Factory::getExtension($this->namespace, 'plugin', $this->_type);
+        }
     }
 
     /**
