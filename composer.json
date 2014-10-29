@@ -8,7 +8,7 @@
         "element"        : "lib_allediaframework",
         "element-short"  : "allediaframework",
         "name"           : "AllediaFramework",
-        "client"         : "site",
+        "client"         : "admin",
         "package-license": "free"
     },
     "authors"          : [
