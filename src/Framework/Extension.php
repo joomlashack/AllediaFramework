@@ -325,7 +325,9 @@ class Extension
 
         $fullElement = '';
         if (array_key_exists($this->type, $prefixes)) {
-            $fullElement = $prefixes[$this->type];
+            if (!preg_match('/^' . $prefixes[$this->type] . '/', $this->element)) {
+                $fullElement = $prefixes[$this->type];
+            }
         }
 
         $fullElement .= $this->element;
