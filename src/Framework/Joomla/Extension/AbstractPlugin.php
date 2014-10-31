@@ -52,7 +52,7 @@ abstract class AbstractPlugin extends \JPlugin
      */
     protected function init()
     {
-        $this->laodExtension();
+        $this->loadExtension();
 
         // Load the libraries, if existent
         $this->extension->loadLibrary();
@@ -80,7 +80,7 @@ abstract class AbstractPlugin extends \JPlugin
      * Method to load the extension data
      * @return void
      */
-    protected function laodExtension()
+    protected function loadExtension()
     {
         if (!isset($this->extension)) {
             $this->extension = Factory::getExtension($this->namespace, 'plugin', $this->_type);
