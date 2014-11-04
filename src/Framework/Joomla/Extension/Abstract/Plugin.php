@@ -6,15 +6,17 @@
  * @license   http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
  */
 
-namespace Alledia\Framework\Joomla\Extension;
-
-use Alledia\Framework\Factory;
+namespace Alledia\Framework\Joomla\Extension\Abstract;
 
 defined('_JEXEC') or die();
 
+use Alledia\Framework\Factory;
+use JPlugin;
+use JFactory;
+
 jimport('joomla.plugin.plugin');
 
-abstract class AbstractPlugin extends \JPlugin
+abstract class Plugin extends JPlugin
 {
     /**
      * Alledia Extension instance
@@ -72,7 +74,7 @@ abstract class AbstractPlugin extends \JPlugin
         $languagePath = JPATH_SITE . '/plugins/' . $this->_type . '/' . $this->_name;
         $languageFile = 'plg_' . $this->_name . '_' . $this->_type . '.sys';
 
-        $language = \JFactory::getLanguage();
+        $language = JFactory::getLanguage();
         $language->load($languageFile, $languagePath);
     }
 

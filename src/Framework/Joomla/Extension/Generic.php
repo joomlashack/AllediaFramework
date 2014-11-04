@@ -1,16 +1,22 @@
 <?php
 /**
- * @package   AllediaFramework
+ * @package   AllediaInstaller
  * @contact   www.alledia.com, hello@alledia.com
  * @copyright 2014 Alledia.com, All rights reserved
  * @license   http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
  */
 
-namespace Alledia\Framework;
+namespace Alledia\Framework\Joomla\Extension;
 
 defined('_JEXEC') or die();
 
-class Extension
+use JFactory;
+use JRegistry;
+
+/**
+ * Generic extension class
+ */
+class Generic
 {
     /**
      * The extension namespace
@@ -62,32 +68,11 @@ class Extension
     protected $element;
 
     /**
-     * License type: free or pro
-     *
-     * @var string
-     */
-    protected $license;
-
-    /**
      * Base path
      *
      * @var string
      */
     protected $basePath;
-
-    /**
-     * The path for the pro library
-     *
-     * @var string
-     */
-    protected $proLibraryPath;
-
-    /**
-     * The path for the free library
-     *
-     * @var string
-     */
-    protected $libraryPath;
 
     /**
      * The manifest information
@@ -113,12 +98,6 @@ class Extension
 
         $this->getManifest();
 
-        $this->license = strtolower($this->manifest->alledia->license);
-
-        $this->getLibraryPath();
-        $this->getProLibraryPath();
-
-
         $this->getDataFromDatabase();
     }
 
@@ -130,20 +109,20 @@ class Extension
         $element = $this->getElementToDb();
 
         // Load the extension info from database
-        $db = \JFactory::getDbo();
+        $db = JFactory::getDbo();
         $query = $db->getQuery(true)
             ->select(array(
-                $db->quoteName('extension_id'),
-                $db->quoteName('name'),
-                $db->quoteName('enabled'),
-                $db->quoteName('params')
+                $db->qn('extension_id'),
+                $db->qn('name'),
+                $db->qn('enabled'),
+                $db->qn('params')
             ))
             ->from('#__extensions')
-            ->where($db->quoteName('type') . ' = ' . $db->quote($this->type))
-            ->where($db->quoteName('element') . ' = ' . $db->quote($element));
+            ->where($db->qn('type') . ' = ' . $db->q($this->type))
+            ->where($db->qn('element') . ' = ' . $db->q($element));
 
         if ($this->type === 'plugin') {
-            $query->where($db->quoteName('folder') . ' = ' . $db->quote($this->folder));
+            $query->where($db->qn('folder') . ' = ' . $db->q($this->folder));
         }
 
         $db->setQuery($query);
@@ -156,17 +135,7 @@ class Extension
         $this->id = $row->extension_id;
         $this->name = $row->name;
         $this->enabled = (bool) $row->enabled;
-        $this->params = new \JRegistry($row->params);
-    }
-
-    /**
-     * Check if the license is pro
-     *
-     * @return boolean True for pro license
-     */
-    public function isPro()
-    {
-        return $this->license === 'pro';
+        $this->params = new JRegistry($row->params);
     }
 
     /**
@@ -220,67 +189,6 @@ class Extension
         $basePath .= $this->element;
 
         return $basePath;
-    }
-
-    /**
-     * Get the include path for the include on the free library, based on the extension type
-     *
-     * @return string The path for pro
-     */
-    public function getLibraryPath()
-    {
-        if (empty($this->libraryPath)) {
-            $basePath = $this->getExtensionPath();
-
-            $this->libraryPath = $basePath . '/library';
-        }
-
-        return $this->libraryPath;
-    }
-
-    /**
-     * Get the include path for the include on the pro library, based on the extension type
-     *
-     * @return string The path for pro
-     */
-    public function getProLibraryPath()
-    {
-        if (empty($this->proLibraryPath)) {
-            $basePath = $this->getLibraryPath();
-
-            $this->proLibraryPath = $basePath . '/Pro';
-        }
-
-        return $this->proLibraryPath;
-    }
-
-    /**
-     * Loads the library, if existent (including the Pro Library)
-     *
-     * @return bool
-     */
-    public function loadLibrary()
-    {
-        $libraryPath = $this->getLibraryPath();
-
-        // If we have a library path, lets load it
-        if (file_exists($libraryPath)) {
-
-            if ($this->isPro()) {
-                // Check if the pro library exists
-                if (!file_exists($this->getProLibraryPath())) {
-                    throw new Exception("Pro library not found: {$this->extension->type}, {$this->extension->element}");
-                }
-            }
-            // Setup autoloaded libraries
-            $loader = new \AllediaPsr4AutoLoader();
-            $loader->register();
-            $loader->addNamespace('Alledia\\' . $this->namespace, $libraryPath);
-
-            return true;
-        }
-
-        return false;
     }
 
     /**
@@ -378,7 +286,7 @@ class Extension
      */
     public function getUpdateURL()
     {
-        $db = \JFactory::getDbo();
+        $db = JFactory::getDbo();
         $query = $db->getQuery(true)
             ->select('sites.location')
             ->from('#__update_sites AS sites')
@@ -397,14 +305,14 @@ class Extension
      */
     public function setUpdateURL($url)
     {
-        $db = \JFactory::getDbo();
+        $db = JFactory::getDbo();
 
         // Get the update site id
-        $join = $db->quoteName('#__update_sites_extensions') . ' AS extensions '
+        $join = $db->qn('#__update_sites_extensions') . ' AS extensions '
             . 'ON (sites.update_site_id = extensions.update_site_id)';
         $query = $db->getQuery(true)
             ->select('sites.update_site_id')
-            ->from($db->quoteName('#__update_sites') . ' AS sites')
+            ->from($db->qn('#__update_sites') . ' AS sites')
             ->join('LEFT', $join)
             ->where('extensions.extension_id = ' . $this->id);
         $db->setQuery($query);
@@ -412,9 +320,9 @@ class Extension
 
         if (!empty($siteId)) {
             $query = $db->getQuery(true)
-                ->update($db->quoteName('#__update_sites'))
-                ->set($db->quoteName('location') . ' = ' . $db->quote($url))
-                ->where($db->quoteName('update_site_id') . ' = ' . $siteId);
+                ->update($db->qn('#__update_sites'))
+                ->set($db->qn('location') . ' = ' . $db->q($url))
+                ->where($db->qn('update_site_id') . ' = ' . $siteId);
             $db->setQuery($query);
             $db->execute();
         }
@@ -427,10 +335,11 @@ class Extension
      */
     public function storeParams()
     {
-        $db     = \JFactory::getDbo();
+        $db     = JFactory::getDbo();
         $params = $db->q($this->params->toString());
+        $id     = $db->q($this->id);
 
-        $query = "UPDATE #__extensions SET params = {$params} WHERE extension_id = \"{$this->id}\"";
+        $query = "UPDATE `#__extensions` SET params = {$params} WHERE extension_id = {$id}";
         $db->setQuery($query);
         $db->execute();
     }

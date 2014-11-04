@@ -33,7 +33,7 @@ abstract class Factory extends \JFactory
         $key = $namespace . $type . $folder;
 
         if (empty(self::$extensionInstances[$key])) {
-            $instance = new Extension($namespace, $type, $folder);
+            $instance = new Jooma\Extension\Licensed($namespace, $type, $folder);
 
             self::$extensionInstances[$key] = $instance;
         }

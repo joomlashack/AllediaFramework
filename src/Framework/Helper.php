@@ -8,8 +8,6 @@
 
 namespace Alledia\Framework;
 
-use Alledia\Framework\Extension;
-
 defined('_JEXEC') or die();
 
 abstract class Helper
@@ -38,7 +36,7 @@ abstract class Helper
 
         $extensions = array();
         foreach ($rows as $row) {
-            $extension = new Extension($row->element, $row->type, $row->folder);
+            $extension = new Joomla\Extension\Licensed($row->element, $row->type, $row->folder);
 
             if (!empty($license)) {
                 if ($license === 'pro' && ! $extension->isPro()) {
