@@ -6,7 +6,7 @@
  * @license   http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
  */
 
-namespace Alledia\Framework\Joomla\Extension\Abstract;
+namespace Alledia\Framework\Joomla\Extension;
 
 defined('_JEXEC') or die();
 
@@ -16,7 +16,7 @@ use JFactory;
 
 jimport('joomla.plugin.plugin');
 
-abstract class Plugin extends JPlugin
+abstract class AbstractPlugin extends JPlugin
 {
     /**
      * Alledia Extension instance
