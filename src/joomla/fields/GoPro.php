@@ -9,7 +9,12 @@
 
 defined('_JEXEC') or die('Restricted access');
 
-
+// @TODO: Remove this class and use from the extension folder
+/**
+ * Form field to show an advertisement for the pro version
+ *
+ * @deprecated Should be inside the extension installer
+ */
 class JFormFieldGoPro extends JFormField
 {
     public $fromInstaller = false;
