@@ -21,13 +21,7 @@
         <filename>include.php</filename>
         <filename>AllediaPsr4AutoLoader.php</filename>
         <folder>Framework</folder>
-        <folder>joomla</folder>
     </files>
-
-    <media destination="lib_allediaframework" folder="media">
-        <folder>images</folder>
-        <folder>css</folder>
-    </media>
 
     <updateservers>
         <server type="extension" priority="1" name="Alledia Framework"><![CDATA[https://deploy.ostraining.com/client/update/free/stable/lib_allediaframework]]></server>
