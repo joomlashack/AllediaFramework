@@ -10,7 +10,6 @@ namespace Alledia\Framework\Joomla\Extension;
 
 defined('_JEXEC') or die();
 
-use Alledia\Framework\Exception;
 
 /**
  * Licensed class, for extensions with Free and Pro versions
@@ -122,7 +121,7 @@ class Licensed extends Generic
             if ($this->isPro()) {
                 // Check if the pro library exists
                 if (!file_exists($this->getProLibraryPath())) {
-                    throw new Exception("Pro library not found: {$this->extension->type}, {$this->extension->element}");
+                    throw new \Exception("Pro library not found: {$this->extension->type}, {$this->extension->element}");
                 }
             }
             // Setup autoloaded libraries
