@@ -10,6 +10,8 @@ namespace Alledia\Framework\Joomla\Extension;
 
 defined('_JEXEC') or die();
 
+use Alledia\Framework\Exception;
+
 /**
  * Licensed class, for extensions with Free and Pro versions
  */

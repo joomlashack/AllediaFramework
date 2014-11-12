@@ -10,6 +10,7 @@ namespace Alledia\Framework\Joomla\Extension;
 
 defined('_JEXEC') or die();
 
+use Alledia\Framework\Exception;
 use JFactory;
 use JRegistry;
 
@@ -342,5 +343,15 @@ class Generic
         $query = "UPDATE `#__extensions` SET params = {$params} WHERE extension_id = {$id}";
         $db->setQuery($query);
         $db->execute();
+    }
+
+    /**
+     * Get extension name
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
     }
 }
