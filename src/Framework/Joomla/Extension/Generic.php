@@ -10,7 +10,6 @@ namespace Alledia\Framework\Joomla\Extension;
 
 defined('_JEXEC') or die();
 
-use Alledia\Framework\Exception;
 use JFactory;
 use JRegistry;
 
@@ -129,14 +128,17 @@ class Generic
         $db->setQuery($query);
         $row = $db->loadObject();
 
-        if (!is_object($row)) {
-            throw new Exception("Extension not found: {$this->element}, {$this->type}, {$this->folder}");
+        if (is_object($row)) {
+            $this->id = $row->extension_id;
+            $this->name = $row->name;
+            $this->enabled = (bool) $row->enabled;
+            $this->params = new JRegistry($row->params);
+        } else {
+            $this->id = null;
+            $this->name = null;
+            $this->enabled = false;
+            $this->params = new JRegistry;
         }
-
-        $this->id = $row->extension_id;
-        $this->name = $row->name;
-        $this->enabled = (bool) $row->enabled;
-        $this->params = new JRegistry($row->params);
     }
 
     /**
