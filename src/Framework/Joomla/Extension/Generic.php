@@ -10,8 +10,11 @@ namespace Alledia\Framework\Joomla\Extension;
 
 defined('_JEXEC') or die();
 
+jimport('joomla.filesystem.file');
+
 use JFactory;
 use JRegistry;
+use JFile;
 
 /**
  * Generic extension class
@@ -276,9 +279,13 @@ class Generic
         if (!isset($this->manifest) || $force) {
             $path = $this->getManifestPath();
 
-            $xml = simplexml_load_file($path);
+            if (JFile::exists($path)) {
+                $xml = simplexml_load_file($path);
 
-            $this->manifest = (object) json_decode(json_encode($xml));
+                $this->manifest = (object) json_decode(json_encode($xml));
+            } else {
+                $this->manifest = false;
+            }
         }
 
         return $this->manifest;
