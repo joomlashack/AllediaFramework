@@ -365,4 +365,14 @@ class Generic
     {
         return $this->name;
     }
+
+    /**
+     * Get extension id
+     *
+     * @return int
+     */
+    public function getId()
+    {
+        return (int) $this->id;
+    }
 }
