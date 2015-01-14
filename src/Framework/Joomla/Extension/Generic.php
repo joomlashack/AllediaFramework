@@ -267,9 +267,12 @@ class Generic
     /**
      * Get extension information
      *
+     * @param bool $force If true, force to load the manifest, ignoring the cached one
+     *
      * @return JRegistry
      */
     public function getManifest()
+    public function getManifest($force = false)
     {
         if (!isset($this->manifest) || $force) {
             $path = $this->getManifestPath();
