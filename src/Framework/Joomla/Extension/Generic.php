@@ -271,7 +271,6 @@ class Generic
      *
      * @return JRegistry
      */
-    public function getManifest()
     public function getManifest($force = false)
     {
         if (!isset($this->manifest) || $force) {
