@@ -11,8 +11,11 @@ namespace Alledia\Framework\Joomla\Extension;
 defined('_JEXEC') or die();
 
 use Alledia\Framework\Factory;
+use Alledia\Framework\Joomla\Model\Base as BaseModel;
+use Alledia\Framework\Joomla\Table\Base as BaseTable;
 use JRequest;
 use JModelLegacy;
+use JTable;
 
 abstract class AbstractComponent extends Licensed
 {
@@ -33,6 +36,7 @@ abstract class AbstractComponent extends Licensed
         parent::__construct($namespace, 'component');
 
         JModelLegacy::addIncludePath(JPATH_COMPONENT . '/models');
+        JTable::addIncludePath(JPATH_COMPONENT . '/tables');
 
         $this->loadLibrary();
     }
@@ -87,5 +91,15 @@ abstract class AbstractComponent extends Licensed
 
         $this->controller->execute($task);
         $this->controller->redirect();
+    }
+
+    public function getModel($type)
+    {
+        return BaseModel::getInstance($type, $this->namespace . 'Model');
+    }
+
+    public function getTable($type)
+    {
+        return BaseTable::getInstance($type, $this->namespace . 'Table');
     }
 }
