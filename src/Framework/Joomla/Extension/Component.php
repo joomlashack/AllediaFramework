@@ -15,6 +15,9 @@ use JControllerLegacy;
 use JFactory;
 use JRequest;
 
+/**
+ * @deprecated Components should extends the AbstractComponent
+ */
 class Component extends Licensed
 {
     /**

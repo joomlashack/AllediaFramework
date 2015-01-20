@@ -124,6 +124,7 @@ class Licensed extends Generic
                     throw new \Exception("Pro library not found: {$this->extension->type}, {$this->extension->element}");
                 }
             }
+
             // Setup autoloaded libraries
             $loader = new \AllediaPsr4AutoLoader();
             $loader->register();
