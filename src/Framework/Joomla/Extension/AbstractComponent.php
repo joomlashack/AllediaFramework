@@ -12,6 +12,7 @@ defined('_JEXEC') or die();
 
 use Alledia\Framework\Factory;
 use JRequest;
+use JModelLegacy;
 
 abstract class AbstractComponent extends Licensed
 {
@@ -30,6 +31,8 @@ abstract class AbstractComponent extends Licensed
     public function __construct($namespace)
     {
         parent::__construct($namespace, 'component');
+
+        JModelLegacy::addIncludePath(JPATH_COMPONENT . '/models');
 
         $this->loadLibrary();
     }
