@@ -100,6 +100,21 @@ abstract class AbstractComponent extends Licensed
 
     public function getTable($type)
     {
+        $tableFound = false;
+        $db = Factory::getDbo();
+
+        if ($this->isPro()) {
+            $class = "Alledia\\{$this->namespace}\Pro\Joomla\Table\\{$type}";
+            if (class_exists($class)) {
+                return new $class($db);
+            }
+        } else {
+            $class = "Alledia\{$this->namespace}\Free\Joomla\Table\{$type}";
+            if (class_exists($class)) {
+                return new $class($db);
+            }
+        }
+
         return BaseTable::getInstance($type, $this->namespace . 'Table');
     }
 }
