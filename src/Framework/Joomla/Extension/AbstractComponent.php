@@ -100,7 +100,6 @@ abstract class AbstractComponent extends Licensed
             if (class_exists($class)) {
                 return new $class();
             }
-        $tableFound = false;
         } else {
             $class = "Alledia\{$this->namespace}\Free\Joomla\Model\{$type}";
             if (class_exists($class)) {
