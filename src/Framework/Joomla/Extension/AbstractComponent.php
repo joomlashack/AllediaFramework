@@ -95,12 +95,24 @@ abstract class AbstractComponent extends Licensed
 
     public function getModel($type)
     {
+        if ($this->isPro()) {
+            $class = "Alledia\\{$this->namespace}\Pro\Joomla\Model\\{$type}";
+            if (class_exists($class)) {
+                return new $class();
+            }
+        $tableFound = false;
+        } else {
+            $class = "Alledia\{$this->namespace}\Free\Joomla\Model\{$type}";
+            if (class_exists($class)) {
+                return new $class();
+            }
+        }
+
         return BaseModel::getInstance($type, $this->namespace . 'Model');
     }
 
     public function getTable($type)
     {
-        $tableFound = false;
         $db = Factory::getDbo();
 
         if ($this->isPro()) {
