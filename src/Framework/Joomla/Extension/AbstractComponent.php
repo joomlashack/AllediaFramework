@@ -19,6 +19,7 @@ use JTable;
 
 abstract class AbstractComponent extends Licensed
 {
+    // @TODO: convert to protected and remove from the subclasses?
     private static $instance;
 
     /**
