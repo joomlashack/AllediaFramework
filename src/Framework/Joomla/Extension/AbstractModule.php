@@ -1,0 +1,92 @@
+<?php
+/**
+ * @package   AllediaFramework
+ * @contact   www.alledia.com, hello@alledia.com
+ * @copyright 2014 Alledia.com, All rights reserved
+ * @license   http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
+ */
+
+namespace Alledia\Framework\Joomla\Extension;
+
+defined('_JEXEC') or die();
+
+use Alledia\Framework\Factory;
+use JRegistry;
+use JModuleHelper;
+use JError;
+
+abstract class AbstractModule extends Licensed
+{
+    // @TODO: convert to protected and remove from the subclasses?
+    private static $instance;
+
+    public $id;
+
+    public $title;
+
+    public $module;
+
+    public $position;
+
+    public $content;
+
+    public $showtitle;
+
+    public $params;
+
+    public $menuid;
+
+    public $name;
+
+    public $style;
+
+
+    /**
+     * Class constructor that instantiate the free and pro library, if installed
+     */
+    public function __construct($namespace)
+    {
+        parent::__construct($namespace, 'module');
+
+        $this->loadLibrary();
+    }
+
+    /**
+     * Returns the instance of child classes
+     *
+     * @param string $namespace
+     *
+     * @return Object
+     */
+    public static function getInstance($namespace = null, $module = null)
+    {
+        if (empty(static::$instance)) {
+            $instance = new static($namespace);
+
+            if (is_object($module)) {
+                $instance->id        = $module->id;
+                $instance->title     = $module->title;
+                $instance->module    = $module->module;
+                $instance->position  = $module->position;
+                $instance->content   = $module->content;
+                $instance->showtitle = $module->showtitle;
+                $instance->menuid    = $module->menuid;
+                $instance->name      = $module->name;
+                $instance->style     = $module->style;
+                $instance->params    = new JRegistry($module->params);
+            } else {
+                // @TODO: Raise warning/Error
+            }
+
+            static::$instance = $instance;
+        }
+
+
+        return static::$instance;
+    }
+
+    public function init()
+    {
+        require JModuleHelper::getLayoutPath('mod_' . $this->element, $this->params->get('layout', 'default'));
+    }
+}
