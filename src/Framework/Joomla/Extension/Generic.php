@@ -15,6 +15,7 @@ jimport('joomla.filesystem.file');
 use JFactory;
 use JRegistry;
 use JFile;
+use JFormFieldAllediaFooter;
 
 /**
  * Generic extension class
@@ -394,5 +395,32 @@ class Generic
     public function getId()
     {
         return (int) $this->id;
+    }
+
+    public function getFooterMarkup()
+    {
+        // Check if we have a dedicated config.xml file
+        $configPath = $this->getExtensionPath() . '/config.xml';
+        if (JFile::exists($configPath)) {
+            $config = $this->getConfig();
+
+            if (!empty($config)) {
+                $footerElement = $config->xpath('//field[@type="allediafooter"]');
+            }
+        } else {
+            $footerElement = $this->manifest->xpath('//field[@type="allediafooter"]');
+        }
+
+        if (!empty($footerElement)) {
+            if (!class_exists('JFormFieldAllediaFooter')) {
+                require_once $this->getExtensionPath() . '/form/fields/allediafooter.php';
+            }
+
+            $field = new JFormFieldAllediaFooter();
+            $field->fromInstaller = true;
+            return $field->getInputUsingCustomElement($footerElement[0]);
+        }
+
+        return '';
     }
 }

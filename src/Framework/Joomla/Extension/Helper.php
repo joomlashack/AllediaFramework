@@ -73,4 +73,23 @@ class Helper
             $extension->loadLibrary();
         }
     }
+
+    public static function getFooterMarkup($element)
+    {
+        if (is_string($element)) {
+            $info = static::getExtensionInfoFromElement($element);
+
+            if (!empty($info['type']) && !empty($info['namespace'])) {
+                $extension = Factory::getExtension($info['namespace'], $info['type'], $info['group']);
+            }
+        } elseif (is_object($element)) {
+            $extension = $element;
+        }
+
+        if (!empty($extension)) {
+            return $extension->getFooterMarkup();
+        }
+
+        return '';
+    }
 }
