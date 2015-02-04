@@ -292,6 +292,26 @@ class Generic
     }
 
     /**
+     * Get extension config file
+     *
+     * @param bool $force Force to reload the config file
+     *
+     * @return JRegistry
+     */
+    public function getConfig($force = false)
+    {
+        if (!isset($this->config) || $force) {
+            $path = $this->getExtensionPath() . '/config.xml';
+
+            if (file_exists($path)) {
+                $this->config = simplexml_load_file($path);
+            }
+        }
+
+        return $this->config;
+    }
+
+    /**
      * Returns the update URL from database
      *
      * @return string
