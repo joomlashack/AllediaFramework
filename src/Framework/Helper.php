@@ -53,4 +53,9 @@ abstract class Helper
 
         return $extensions;
     }
+
+    public static function getJoomlaVersionCssClass()
+    {
+        return 'joomla' . (version_compare(JVERSION, '3.0', 'lt') ? '25' : '3x');
+    }
 }
