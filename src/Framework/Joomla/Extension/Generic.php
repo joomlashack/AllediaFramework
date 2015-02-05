@@ -423,4 +423,30 @@ class Generic
 
         return '';
     }
+
+    /**
+     * Check if this extension is powered by Alledia
+     *
+     * @return bool
+     */
+    public function isPoweredByAlledia()
+    {
+        $db = JFactory::getDbo();
+
+        $query = $db->getQuery(true)
+            ->select('custom_data')
+            ->from('#__extensions')
+            ->where('extension_id = ' . $db->quote($this->getId()));
+
+        $db->setQuery($query);
+        $customData = $db->loadResult();
+
+        if (!empty($customData)) {
+            $customData = json_decode($customData);
+
+            return $customData->author === 'Alledia';
+        }
+
+        return false;
+    }
 }

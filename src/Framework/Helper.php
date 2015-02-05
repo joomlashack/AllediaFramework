@@ -15,6 +15,8 @@ abstract class Helper
     /**
      * Return an array of Alledia extensions
      *
+     * @todo Move this method for the class Alledia\Framework\Joomla\Extension\Helper, but keep as deprecated
+     *
      * @param  string $license
      * @return array
      */
