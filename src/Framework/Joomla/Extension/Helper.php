@@ -17,7 +17,7 @@ use stdClass;
 /**
  * Generic extension helper class
  */
-class Helper
+abstract class Helper
 {
     public static function getExtensionInfoFromElement($element)
     {
@@ -91,5 +91,12 @@ class Helper
         }
 
         return '';
+    }
+
+    public static function getExtensionForElement($element)
+    {
+        $info = static::getExtensionInfoFromElement($element);
+
+        return Factory::getExtension($info['namespace'], $info['type'], $info['group']);
     }
 }
