@@ -43,4 +43,9 @@ class ClassHelper extends \Codeception\Module
     {
         return md5(serialize($expected)) !== md5(serialize($current));
     }
+
+    public function assertIsObject($object)
+    {
+        return is_object($object);
+    }
 }
