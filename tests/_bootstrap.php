@@ -1,6 +1,6 @@
 <?php
 // This is global bootstrap for autoloading
-define('ALLEDIA_SOURCE_PATH', __DIR__ . '/../src');
+define('ALLEDIAFRAMEWORK_SOURCE_PATH', __DIR__ . '/../src');
 
 // Bootstrap server variables
 $_SERVER['HTTP_HOST'] = 'http://localhost';
@@ -69,4 +69,4 @@ require_once JPATH_CONFIGURATION . '/configuration.php';
 JFactory::getApplication('site');
 
 // Bootstrap Alledia Framework
-require_once ALLEDIA_SOURCE_PATH . '/include.php';
+require_once ALLEDIAFRAMEWORK_SOURCE_PATH . '/include.php';
