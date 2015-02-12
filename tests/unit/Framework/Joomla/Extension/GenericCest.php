@@ -3,7 +3,7 @@ use \UnitTester;
 use \JRegistry;
 use \Codeception\Util\Stub;
 
-class FrameworkJoomlaExtensionGenericCest
+class GenericCest
 {
     public function _before(UnitTester $I)
     {
@@ -19,7 +19,7 @@ class FrameworkJoomlaExtensionGenericCest
 
     public function getElementToMatchDatabasePatternForComponent(UnitTester $I)
     {
-        $instance = $I->constructDumbComponent();
+        $instance = $I->constructDumbGenericComponent();
         $element  = $instance->getElementToDb();
 
         $I->assertEquals('com_dumbextension', $element);
@@ -27,7 +27,7 @@ class FrameworkJoomlaExtensionGenericCest
 
     public function getElementToMatchDatabasePatternForModule(UnitTester $I)
     {
-        $instance = $I->constructDumbModule();
+        $instance = $I->constructDumbGenericModule();
         $element  = $instance->getElementToDb();
 
         $I->assertEquals('mod_dumbextension', $element);
@@ -35,7 +35,7 @@ class FrameworkJoomlaExtensionGenericCest
 
     public function getElementToMatchDatabasePatternForPlugin(UnitTester $I)
     {
-        $instance = $I->constructDumbPlugin();
+        $instance = $I->constructDumbGenericPlugin();
         $element  = $instance->getElementToDb();
 
         $I->assertEquals('dumbextension', $element);
@@ -43,7 +43,7 @@ class FrameworkJoomlaExtensionGenericCest
 
     public function getElementToMatchDatabasePatternForLibrary(UnitTester $I)
     {
-        $instance = $I->constructDumbLibrary();
+        $instance = $I->constructDumbGenericLibrary();
         $element  = $instance->getElementToDb();
 
         $I->assertEquals('dumbextension', $element);
@@ -51,7 +51,7 @@ class FrameworkJoomlaExtensionGenericCest
 
     public function getElementToMatchDatabasePatternForTemplate(UnitTester $I)
     {
-        $instance = $I->constructDumbTemplate();
+        $instance = $I->constructDumbGenericTemplate();
         $element  = $instance->getElementToDb();
 
         $I->assertEquals('dumbextension', $element);
@@ -59,7 +59,7 @@ class FrameworkJoomlaExtensionGenericCest
 
     public function getElementToMatchDatabasePatternForCLI(UnitTester $I)
     {
-        $instance = $I->constructDumbCLI();
+        $instance = $I->constructDumbGenericCLI();
         $element  = $instance->getElementToDb();
 
         $I->assertEquals('dumbextension', $element);
@@ -69,7 +69,7 @@ class FrameworkJoomlaExtensionGenericCest
     {
         $I->addExtensionToDatabase('COM_DUMBEXTENSION', 'component', 'com_dumbextension');
 
-        $instance = $I->constructDumbComponent();
+        $instance = $I->constructDumbGenericComponent();
 
         $type      = $I->getAttributeFromInstance($instance, 'type');
         $element   = $I->getAttributeFromInstance($instance, 'element');
@@ -133,7 +133,7 @@ class FrameworkJoomlaExtensionGenericCest
     {
         $I->addExtensionToDatabase('COM_DUMBEXTENSION', 'component', 'com_dumbextension');
 
-        $instance = $I->constructDumbComponent(
+        $instance = $I->constructDumbGenericComponent(
             array(),
             array(
                 'enabled' => true
@@ -147,7 +147,7 @@ class FrameworkJoomlaExtensionGenericCest
     {
         $I->addExtensionToDatabase('COM_DUMBEXTENSION', 'component', 'com_dumbextension');
 
-        $instance = $I->constructDumbComponent(
+        $instance = $I->constructDumbGenericComponent(
             array(),
             array(
                 'enabled' => false
@@ -159,7 +159,7 @@ class FrameworkJoomlaExtensionGenericCest
 
     public function getExtensionPathForComponent(UnitTester $I)
     {
-        $instance = $I->constructDumbComponent();
+        $instance = $I->constructDumbGenericComponent();
         $path     = $instance->getExtensionPath();
 
         $I->assertEquals(JPATH_SITE . '/administrator/components/com_dumbextension', $path);
@@ -167,7 +167,7 @@ class FrameworkJoomlaExtensionGenericCest
 
     public function getExtensionPathForModule(UnitTester $I)
     {
-        $instance = $I->constructDumbModule();
+        $instance = $I->constructDumbGenericModule();
         $path     = $instance->getExtensionPath();
 
         $I->assertEquals(JPATH_SITE . '/modules/mod_dumbextension', $path);
@@ -175,7 +175,7 @@ class FrameworkJoomlaExtensionGenericCest
 
     public function getExtensionPathForPlugin(UnitTester $I)
     {
-        $instance = $I->constructDumbPlugin();
+        $instance = $I->constructDumbGenericPlugin();
         $path     = $instance->getExtensionPath();
 
         $I->assertEquals(JPATH_SITE . '/plugins/system/dumbextension', $path);
@@ -183,7 +183,7 @@ class FrameworkJoomlaExtensionGenericCest
 
     public function getExtensionPathForLibrary(UnitTester $I)
     {
-        $instance = $I->constructDumbLibrary();
+        $instance = $I->constructDumbGenericLibrary();
         $path     = $instance->getExtensionPath();
 
         $I->assertEquals(JPATH_SITE . '/libraries/dumbextension', $path);
@@ -191,7 +191,7 @@ class FrameworkJoomlaExtensionGenericCest
 
     public function getExtensionPathForTemplate(UnitTester $I)
     {
-        $instance = $I->constructDumbTemplate();
+        $instance = $I->constructDumbGenericTemplate();
         $path     = $instance->getExtensionPath();
 
         $I->assertEquals(JPATH_SITE . '/templates/dumbextension', $path);
@@ -199,7 +199,7 @@ class FrameworkJoomlaExtensionGenericCest
 
     public function getExtensionPathForCLI(UnitTester $I)
     {
-        $instance = $I->constructDumbCLI();
+        $instance = $I->constructDumbGenericCLI();
         $path     = $instance->getExtensionPath();
 
         $I->assertEquals(JPATH_SITE . '/cli/dumbextension', $path);
@@ -207,7 +207,7 @@ class FrameworkJoomlaExtensionGenericCest
 
     public function getFullElementForComponent(UnitTester $I)
     {
-        $instance    = $I->constructDumbComponent();
+        $instance    = $I->constructDumbGenericComponent();
         $fullElement = $instance->getFullElement();
 
         $I->assertEquals('com_dumbextension', $fullElement);
@@ -215,7 +215,7 @@ class FrameworkJoomlaExtensionGenericCest
 
     public function getFullElementForModule(UnitTester $I)
     {
-        $instance    = $I->constructDumbModule();
+        $instance    = $I->constructDumbGenericModule();
         $fullElement = $instance->getFullElement();
 
         $I->assertEquals('mod_dumbextension', $fullElement);
@@ -223,7 +223,7 @@ class FrameworkJoomlaExtensionGenericCest
 
     public function getFullElementForPlugin(UnitTester $I)
     {
-        $instance    = $I->constructDumbPlugin();
+        $instance    = $I->constructDumbGenericPlugin();
         $fullElement = $instance->getFullElement();
 
         $I->assertEquals('plg_system_dumbextension', $fullElement);
@@ -231,7 +231,7 @@ class FrameworkJoomlaExtensionGenericCest
 
     public function getFullElementForLibrary(UnitTester $I)
     {
-        $instance    = $I->constructDumbLibrary();
+        $instance    = $I->constructDumbGenericLibrary();
         $fullElement = $instance->getFullElement();
 
         $I->assertEquals('lib_dumbextension', $fullElement);
@@ -239,7 +239,7 @@ class FrameworkJoomlaExtensionGenericCest
 
     public function getFullElementForTemplate(UnitTester $I)
     {
-        $instance    = $I->constructDumbTemplate();
+        $instance    = $I->constructDumbGenericTemplate();
         $fullElement = $instance->getFullElement();
 
         $I->assertEquals('tpl_dumbextension', $fullElement);
@@ -247,7 +247,7 @@ class FrameworkJoomlaExtensionGenericCest
 
     public function getFullElementForCLI(UnitTester $I)
     {
-        $instance    = $I->constructDumbCLI();
+        $instance    = $I->constructDumbGenericCLI();
         $fullElement = $instance->getFullElement();
 
         $I->assertEquals('cli_dumbextension', $fullElement);
@@ -255,7 +255,7 @@ class FrameworkJoomlaExtensionGenericCest
 
     public function getElementToDbForComponent(UnitTester $I)
     {
-        $instance = $I->constructDumbComponent();
+        $instance = $I->constructDumbGenericComponent();
         $element  = $instance->getElementToDb();
 
         $I->assertEquals('com_dumbextension', $element);
@@ -263,7 +263,7 @@ class FrameworkJoomlaExtensionGenericCest
 
     public function getElementToDbForModule(UnitTester $I)
     {
-        $instance = $I->constructDumbModule();
+        $instance = $I->constructDumbGenericModule();
         $element  = $instance->getElementToDb();
 
         $I->assertEquals('mod_dumbextension', $element);
@@ -271,7 +271,7 @@ class FrameworkJoomlaExtensionGenericCest
 
     public function getElementToDbForPlugin(UnitTester $I)
     {
-        $instance = $I->constructDumbPlugin();
+        $instance = $I->constructDumbGenericPlugin();
         $element  = $instance->getElementToDb();
 
         $I->assertEquals('dumbextension', $element);
@@ -279,7 +279,7 @@ class FrameworkJoomlaExtensionGenericCest
 
     public function getElementToDbForTemplate(UnitTester $I)
     {
-        $instance = $I->constructDumbTemplate();
+        $instance = $I->constructDumbGenericTemplate();
         $element  = $instance->getElementToDb();
 
         $I->assertEquals('dumbextension', $element);
@@ -287,7 +287,7 @@ class FrameworkJoomlaExtensionGenericCest
 
     public function getElementToDbForLibrary(UnitTester $I)
     {
-        $instance = $I->constructDumbLibrary();
+        $instance = $I->constructDumbGenericLibrary();
         $element  = $instance->getElementToDb();
 
         $I->assertEquals('dumbextension', $element);
@@ -295,7 +295,7 @@ class FrameworkJoomlaExtensionGenericCest
 
     public function getElementToDbForCLI(UnitTester $I)
     {
-        $instance = $I->constructDumbCLI();
+        $instance = $I->constructDumbGenericCLI();
         $element  = $instance->getElementToDb();
 
         $I->assertEquals('dumbextension', $element);
@@ -304,7 +304,7 @@ class FrameworkJoomlaExtensionGenericCest
     public function getManifestPathForComponent(UnitTester $I)
     {
         $extensionPath = $I->getExtensionMockPath('com_dumbextension');
-        $instance = $I->constructDumbComponent(
+        $instance = $I->constructDumbGenericComponent(
             array(),
             array(
                 'getExtensionPath' => $extensionPath
@@ -319,7 +319,7 @@ class FrameworkJoomlaExtensionGenericCest
     public function getManifestPathForModule(UnitTester $I)
     {
         $extensionPath = $I->getExtensionMockPath('mod_dumbextension');
-        $instance = $I->constructDumbModule(
+        $instance = $I->constructDumbGenericModule(
             array(),
             array(
                 'getExtensionPath' => $extensionPath
@@ -334,7 +334,7 @@ class FrameworkJoomlaExtensionGenericCest
     public function getManifestPathForPlugin(UnitTester $I)
     {
         $extensionPath = $I->getExtensionMockPath('plg_system_dumbextension');
-        $instance = $I->constructDumbModule(
+        $instance = $I->constructDumbGenericModule(
             array(),
             array(
                 'getExtensionPath' => $extensionPath
@@ -349,7 +349,7 @@ class FrameworkJoomlaExtensionGenericCest
     public function getManifestPathForTemplate(UnitTester $I)
     {
         $extensionPath = $I->getExtensionMockPath('tpl_dumbextension');
-        $instance = $I->constructDumbTemplate(
+        $instance = $I->constructDumbGenericTemplate(
             array(),
             array(
                 'getExtensionPath' => $extensionPath
@@ -364,7 +364,7 @@ class FrameworkJoomlaExtensionGenericCest
     public function getManifestPathForLibrary(UnitTester $I)
     {
         $extensionPath = $I->getExtensionMockPath('lib_dumbextension');
-        $instance = $I->constructDumbLibrary(
+        $instance = $I->constructDumbGenericLibrary(
             array(),
             array(
                 'getExtensionPath' => $extensionPath
@@ -379,7 +379,7 @@ class FrameworkJoomlaExtensionGenericCest
     public function getManifestPathForCLI(UnitTester $I)
     {
         $extensionPath = $I->getExtensionMockPath('cli_dumbextension');
-        $instance = $I->constructDumbCLI(
+        $instance = $I->constructDumbGenericCLI(
             array(),
             array(
                 'getExtensionPath' => $extensionPath
@@ -395,7 +395,7 @@ class FrameworkJoomlaExtensionGenericCest
     {
         $I->addExtensionToDatabase('COM_DUMBEXTENSION', 'component', 'com_dumbextension');
 
-        $instance = $I->constructDumbComponent();
+        $instance = $I->constructDumbGenericComponent();
 
         $I->assertEquals('COM_DUMBEXTENSION', $instance->getName());
     }
@@ -404,14 +404,14 @@ class FrameworkJoomlaExtensionGenericCest
     {
         $I->addExtensionToDatabase('COM_DUMBEXTENSION', 'component', 'com_dumbextension');
 
-        $instance = $I->constructDumbComponent();
+        $instance = $I->constructDumbGenericComponent();
 
         $I->assertGreaterThan(0, $instance->getId());
     }
 
     public function getManifestAsSimpleXML(UnitTester $I)
     {
-        $instance = $I->makeDumbComponent();
+        $instance = $I->makeDumbGenericComponent();
         $manifest = $instance->getManifestAsSimpleXML(false);
 
         // Get the expected manifest
@@ -426,7 +426,7 @@ class FrameworkJoomlaExtensionGenericCest
     {
         $I->addExtensionToDatabase('COM_DUMBEXTENSION', 'component', 'com_dumbextension');
 
-        $instance = $I->makeDumbComponent();
+        $instance = $I->makeDumbGenericComponent();
         $manifest = $instance->getManifest(false);
 
         // Get the expected manifest
@@ -441,7 +441,7 @@ class FrameworkJoomlaExtensionGenericCest
     {
         $I->addExtensionToDatabase('COM_DUMBEXTENSION', 'component', 'com_dumbextension');
 
-        $instance = $I->makeDumbComponent();
+        $instance = $I->makeDumbGenericComponent();
         $instance->getManifest(false);
 
         // Update a manifest value to check if the force param is working
@@ -457,7 +457,7 @@ class FrameworkJoomlaExtensionGenericCest
     {
         $I->addExtensionToDatabase('COM_DUMBEXTENSION', 'component', 'com_dumbextension');
 
-        $instance = $I->makeDumbComponent();
+        $instance = $I->makeDumbGenericComponent();
         $instance->getManifest(false);
 
         // Update a manifest value to check if the force param is working
@@ -473,7 +473,7 @@ class FrameworkJoomlaExtensionGenericCest
     {
         $I->addExtensionToDatabase('COM_DUMBEXTENSION', 'component', 'com_dumbextension');
 
-        $instance = $I->makeDumbComponent(
+        $instance = $I->makeDumbGenericComponent(
             array(
                 'getExtensionPath' => $I->getExtensionMockPath('com_dumbextension')
             )
@@ -488,7 +488,7 @@ class FrameworkJoomlaExtensionGenericCest
         $I->addExtensionToDatabase('COM_DUMBEXTENSION', 'component', 'com_dumbextension');
 
         // Instantiate a component setting an invalid extension path to not find the config file
-        $instance = $I->makeDumbComponent(
+        $instance = $I->makeDumbGenericComponent(
             array(
                 'getExtensionPath' => __DIR__
             )
@@ -502,7 +502,7 @@ class FrameworkJoomlaExtensionGenericCest
     {
         $I->addExtensionToDatabase('COM_DUMBEXTENSION', 'component', 'com_dumbextension');
 
-        $instance = $I->makeDumbComponent(
+        $instance = $I->makeDumbGenericComponent(
             array(
                 'getExtensionPath' => $I->getExtensionMockPath('com_dumbextension')
             )
@@ -523,7 +523,7 @@ class FrameworkJoomlaExtensionGenericCest
     {
         $I->addExtensionToDatabase('COM_DUMBEXTENSION', 'component', 'com_dumbextension');
 
-        $instance = $I->makeDumbComponent(
+        $instance = $I->makeDumbGenericComponent(
             array(
                 'getExtensionPath' => $I->getExtensionMockPath('com_dumbextension')
             )
@@ -548,7 +548,7 @@ class FrameworkJoomlaExtensionGenericCest
         $updateURL   = 'http://deploy.ostraining.com/client/update/free/stable/com_dumbextension';
         $I->addExtensionUpdateSiteToDatabase($siteId, $name, $extensionId, $updateURL);
 
-        $instance = $I->makeDumbComponent(
+        $instance = $I->makeDumbGenericComponent(
             array(
                 'id'    => $extensionId,
                 'getId' => $extensionId
@@ -566,7 +566,7 @@ class FrameworkJoomlaExtensionGenericCest
         $originalUpdateURL = 'http://deploy.ostraining.com/client/update/free/stable/com_dumbextension';
         $I->addExtensionUpdateSiteToDatabase($siteId, $name, $extensionId, $originalUpdateURL);
 
-        $instance = $I->makeDumbComponent(
+        $instance = $I->makeDumbGenericComponent(
             array(
                 'id'    => $extensionId,
                 'getId' => $extensionId
@@ -590,7 +590,7 @@ class FrameworkJoomlaExtensionGenericCest
         $params->set('param1', 02);
         $params->set('param2', 17);
 
-        $instance = $I->makeDumbComponent(
+        $instance = $I->makeDumbGenericComponent(
             array(
                 'id'     => $extensionId,
                 'params' => $params
@@ -607,7 +607,7 @@ class FrameworkJoomlaExtensionGenericCest
 
     public function getFooterMarkupForComponentWithFooterFromConfig(UnitTester $I)
     {
-        $instance = $I->makeDumbComponent(
+        $instance = $I->makeDumbGenericComponent(
             array(
                 'getExtensionPath' => $I->getExtensionMockPath('com_dumbextension')
             )
@@ -623,7 +623,7 @@ class FrameworkJoomlaExtensionGenericCest
         $manifestPath = $I->getExtensionMockPath('mod_dumbextension') . '/mod_dumbextension.xml';
         $manifest     = simplexml_load_file($manifestPath);
 
-        $instance = $I->makeDumbModule(
+        $instance = $I->makeDumbGenericModule(
             array(
                 'getManifestAsSimpleXML' => $manifest
             )
@@ -639,7 +639,7 @@ class FrameworkJoomlaExtensionGenericCest
         $manifestPath = $I->getExtensionMockPath('lib_dumbextension') . '/dumbextension.xml';
         $manifest     = simplexml_load_file($manifestPath);
 
-        $instance = $I->makeDumbLibrary(
+        $instance = $I->makeDumbGenericLibrary(
             array(
                 'getManifestAsSimpleXML' => $manifest
             )

@@ -6,7 +6,7 @@ use \Codeception\Util\Stub;
 
 class ExtensionsGenericHelper extends \Codeception\Module
 {
-    public function constructDumbComponent($params = array(), $override = array())
+    public function constructDumbGenericComponent($params = array(), $override = array())
     {
         $defaultParams = array(
             'namespace' => 'DumbExtension',
@@ -26,7 +26,7 @@ class ExtensionsGenericHelper extends \Codeception\Module
         return $instance;
     }
 
-    public function makeDumbComponent($override = array())
+    public function makeDumbGenericComponent($override = array())
     {
         $defaultOverride = array(
             'getManifestPath' => $this->getExtensionMockPath('com_dumbextension') . '/dumbextension.xml'
@@ -40,7 +40,7 @@ class ExtensionsGenericHelper extends \Codeception\Module
         return $instance;
     }
 
-    public function makeDumbModule($override = array())
+    public function makeDumbGenericModule($override = array())
     {
         $defaultOverride = array(
             'getExtensionPath' => $this->getExtensionMockPath('mod_dumbextension'),
@@ -55,7 +55,7 @@ class ExtensionsGenericHelper extends \Codeception\Module
         return $instance;
     }
 
-    public function makeDumbLibrary($override = array())
+    public function makeDumbGenericLibrary($override = array())
     {
         $defaultOverride = array(
             'getExtensionPath' => $this->getExtensionMockPath('lib_dumbextension'),
@@ -70,7 +70,7 @@ class ExtensionsGenericHelper extends \Codeception\Module
         return $instance;
     }
 
-    public function constructDumbModule($params = array(), $override = array())
+    public function constructDumbGenericModule($params = array(), $override = array())
     {
         $defaultParams = array(
             'namespace' => 'DumbExtension',
@@ -88,7 +88,7 @@ class ExtensionsGenericHelper extends \Codeception\Module
         return $instance;
     }
 
-    public function constructDumbPlugin($params = array(), $override = array())
+    public function constructDumbGenericPlugin($params = array(), $override = array())
     {
         $defaultParams = array(
             'namespace' => 'DumbExtension',
@@ -107,7 +107,7 @@ class ExtensionsGenericHelper extends \Codeception\Module
         return $instance;
     }
 
-    public function constructDumbLibrary($params = array(), $override = array())
+    public function constructDumbGenericLibrary($params = array(), $override = array())
     {
         $defaultParams = array(
             'namespace' => 'DumbExtension',
@@ -125,7 +125,7 @@ class ExtensionsGenericHelper extends \Codeception\Module
         return $instance;
     }
 
-    public function constructDumbTemplate($params = array(), $override = array())
+    public function constructDumbGenericTemplate($params = array(), $override = array())
     {
         $defaultParams = array(
             'namespace' => 'DumbExtension',
@@ -143,7 +143,7 @@ class ExtensionsGenericHelper extends \Codeception\Module
         return $instance;
     }
 
-    public function constructDumbCLI($params = array(), $override = array())
+    public function constructDumbGenericCLI($params = array(), $override = array())
     {
         $defaultParams = array(
             'namespace' => 'DumbExtension',
