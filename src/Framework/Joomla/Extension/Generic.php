@@ -92,6 +92,14 @@ class Generic
      * @var \SimpleXMLElement
      */
     public $manifestXml;
+
+    /**
+     * The config information
+     *
+     * @var \SimpleXMLElement
+     */
+    public $config;
+
     /**
      * Class constructor, set the extension type.
      *
@@ -323,11 +331,13 @@ class Generic
      *
      * @param bool $force Force to reload the config file
      *
-     * @return JRegistry
+     * @return SimpleXMLElement
      */
     public function getConfig($force = false)
     {
         if (!isset($this->config) || $force) {
+            $this->config = null;
+
             $path = $this->getExtensionPath() . '/config.xml';
 
             if (file_exists($path)) {
