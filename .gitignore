@@ -4,3 +4,6 @@ tests/_output/*
 tests/config.yml
 
 build.properties
+.DS_Store
+composer.lock
+vendor
