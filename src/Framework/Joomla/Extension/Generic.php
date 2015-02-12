@@ -274,7 +274,13 @@ class Generic
     {
         $extensionPath = $this->getExtensionPath();
 
-        $path = $extensionPath . "/{$this->element}.xml";
+        $fileName = $this->element . '.xml';
+
+        if ($this->type === 'template') {
+            $fileName = 'templateDetails.xml';
+        }
+
+        $path = $extensionPath . "/{$fileName}";
 
         if (!file_exists($path)) {
             $path = $extensionPath . "/{$this->getElementToDb()}.xml";
