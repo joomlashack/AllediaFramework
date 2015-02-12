@@ -4,7 +4,7 @@ namespace Codeception\Module;
 use \Codeception\Util\Stub;
 
 
-class ExtensionsHelper extends \Codeception\Module
+class ExtensionsGenericHelper extends \Codeception\Module
 {
     public function constructDumbComponent($params = array(), $override = array())
     {
