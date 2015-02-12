@@ -444,7 +444,9 @@ class Generic
                 $footerElement = $config->xpath('//field[@type="customfooter"]');
             }
         } else {
-            $footerElement = $this->manifest->xpath('//field[@type="customfooter"]');
+            $manifest = $this->getManifestAsSimpleXML();
+
+            $footerElement = $manifest->xpath('//field[@type="customfooter"]');
         }
 
         if (!empty($footerElement)) {
