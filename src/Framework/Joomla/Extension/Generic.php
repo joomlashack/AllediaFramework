@@ -16,6 +16,7 @@ use JFactory;
 use JRegistry;
 use JFile;
 use JFormFieldCustomFooter;
+use SimpleXMLElement;
 
 /**
  * Generic extension class
@@ -81,10 +82,16 @@ class Generic
     /**
      * The manifest information
      *
-     * @var \SimpleXMLElement
+     * @var \JRegistry
      */
     public $manifest;
 
+    /**
+     * The manifest information as SimpleXMLElement
+     *
+     * @var \SimpleXMLElement
+     */
+    public $manifestXml;
     /**
      * Class constructor, set the extension type.
      *
@@ -269,6 +276,28 @@ class Generic
     }
 
     /**
+     * Get extension manifest as SimpleXMLElement
+     *
+     * @param bool $force If true, force to load the manifest, ignoring the cached one
+     *
+     * @return JRegistry
+     */
+    public function getManifestAsSimpleXML($force = false)
+    {
+        if (!isset($this->manifestXml) || $force) {
+            $path = $this->getManifestPath();
+            \Codeception\Util\Debug::debug(32);
+            if (JFile::exists($path)) {
+                $this->manifestXml = simplexml_load_file($path);
+            } else {
+                $this->manifestXml = false;
+            }
+        }
+
+        return $this->manifestXml;
+    }
+
+    /**
      * Get extension information
      *
      * @param bool $force If true, force to load the manifest, ignoring the cached one
@@ -278,11 +307,8 @@ class Generic
     public function getManifest($force = false)
     {
         if (!isset($this->manifest) || $force) {
-            $path = $this->getManifestPath();
-
-            if (JFile::exists($path)) {
-                $xml = simplexml_load_file($path);
-
+            $xml = $this->getManifestAsSimpleXML($force);
+            if (!empty($xml)) {
                 $this->manifest = (object) json_decode(json_encode($xml));
             } else {
                 $this->manifest = false;
