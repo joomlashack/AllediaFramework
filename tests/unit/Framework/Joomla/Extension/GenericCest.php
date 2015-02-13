@@ -475,7 +475,7 @@ class GenericCest
 
         $instance = $I->makeDumbGenericComponent(
             array(
-                'getExtensionPath' => $I->getExtensionMockPath('com_dumbextension')
+                'getExtensionPath' => $I->getExtensionMockPath('com_dumbextension') . '/admin'
             )
         );
         $config = $instance->getConfig(false);

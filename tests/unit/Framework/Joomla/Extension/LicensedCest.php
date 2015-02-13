@@ -137,6 +137,6 @@ class LicensedCest
         $I->assertIsObject($freeLibrary);
         $I->assertIsObject($proLibrary);
         $I->assertClassName('Alledia\DumbExtension\Free\FreeLib', $freeLibrary);
-        $I->assertClassName('Alledia\DumbExtension\Free\ProLib', $proLibrary);
+        $I->assertClassName('Alledia\DumbExtension\Pro\ProLib', $proLibrary);
     }
 }

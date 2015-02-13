@@ -54,16 +54,31 @@ class AssertHelper extends \Codeception\Module
         return $this->assertResult($result);
     }
 
-    public function assertIsEmptyArray($variable)
+    public function assertIsString($variable)
     {
-        $result = assertIsArray($variable) && (count($variable) === 0);
+        $result = is_string($variable);
 
         return $this->assertResult($result);
     }
 
-    public function assertIsString($variable)
+    public function assertIsEmptyArray($variable)
     {
-        $result = is_string($variable);
+        $result = is_array($variable) && (count($variable) === 0);
+
+        return $this->assertResult($result);
+    }
+
+    public function assertIsNotEmptyArray($variable)
+    {
+        $result = is_array($variable) && (count($variable) > 0);
+
+        return $this->assertResult($result);
+    }
+
+    public function assertArrayCount($count, $variable)
+    {
+        $count = (int) $count;
+        $result = is_array($variable) && (count($variable) === $count);
 
         return $this->assertResult($result);
     }
