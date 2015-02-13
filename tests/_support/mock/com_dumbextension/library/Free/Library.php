@@ -8,10 +8,8 @@
 
 namespace Alledia\DumbExtension\Free;
 
-defined('_JEXEC') or die();
 
-
-class FreeLib
+class Library
 {
 
 }

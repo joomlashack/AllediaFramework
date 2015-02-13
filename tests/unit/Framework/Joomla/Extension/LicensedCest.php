@@ -110,11 +110,11 @@ class LicensedCest
 
         $loaded = $instance->loadLibrary();
 
-        $library = new \Alledia\DumbExtension\Free\FreeLib;
+        $library = new \Alledia\DumbExtension\Free\Library;
 
         $I->assertTrue($loaded);
         $I->assertIsObject($library);
-        $I->assertClassName('Alledia\DumbExtension\Free\FreeLib', $library);
+        $I->assertClassName('Alledia\DumbExtension\Free\Library', $library);
     }
 
     public function loadLibraryForProComponent(UnitTester $I)
