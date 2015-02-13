@@ -95,6 +95,10 @@ abstract class Helper
     {
         $info = static::getExtensionInfoFromElement($element);
 
-        return Factory::getExtension($info['namespace'], $info['type'], $info['group']);
+        if (!empty($info['type']) && !empty($info['namespace'])) {
+            return Factory::getExtension($info['namespace'], $info['type'], $info['group']);
+        }
+
+        return null;
     }
 }
