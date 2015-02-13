@@ -2,6 +2,9 @@
 namespace Codeception\Module;
 
 use \Codeception\Util\Stub;
+use \JFolder;
+
+jimport('joomla.filesystem.folder');
 
 
 class ExtensionsLicensedHelper extends \Codeception\Module
@@ -43,5 +46,19 @@ class ExtensionsLicensedHelper extends \Codeception\Module
     protected function getExtensionMockPath($element)
     {
         return $this->getModule('ExtensionsGenericHelper')->getExtensionMockPath($element);
+    }
+
+    public function copyMockComponentToJoomla($element)
+    {
+        $mockPath = $this->getExtensionMockPath($element);
+        $mockDestinationPath = JPATH_ADMINISTRATOR . '/components/' . $element;
+
+        JFolder::copy($mockPath, $mockDestinationPath, '', true);
+    }
+
+    public function removeMockComponentFromJoomla($element)
+    {
+        $mockDestinationPath = JPATH_ADMINISTRATOR . '/components/' . $element;
+        JFolder::delete($mockDestinationPath);
     }
 }
