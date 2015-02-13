@@ -34,7 +34,8 @@ abstract class Helper
             'plg' => 'plugin',
             'mod' => 'module',
             'lib' => 'library',
-            'tpl' => 'template'
+            'tpl' => 'template',
+            'cli' => 'cli'
         );
 
         $element = explode('_', $element);
