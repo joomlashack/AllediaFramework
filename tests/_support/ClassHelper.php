@@ -28,24 +28,4 @@ class ClassHelper extends \Codeception\Module
 
         return $method->invokeArgs($instance, $args);
     }
-
-    public function assertClassName($expected, $current)
-    {
-        return get_class($current) === $expected;
-    }
-
-    public function assertEqualsSerializing($expected, $current)
-    {
-        return md5(serialize($expected)) === md5(serialize($current));
-    }
-
-    public function assertNotEqualsSerializing($expected, $current)
-    {
-        return md5(serialize($expected)) !== md5(serialize($current));
-    }
-
-    public function assertIsObject($object)
-    {
-        return is_object($object);
-    }
 }
