@@ -47,7 +47,7 @@ class Component extends Licensed
         if (! isset($this->controller)) {
             jimport('legacy.controller.legacy');
 
-            $this->controller = JControllerLegacy::getInstance('OSMeta');
+            $this->controller = JControllerLegacy::getInstance($this->namespace);
         }
     }
 
