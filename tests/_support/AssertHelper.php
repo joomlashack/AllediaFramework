@@ -8,28 +8,51 @@ use PHPUnit_Framework_Assert;
 
 class AssertHelper extends \Codeception\Module
 {
+    private function assertResult($result)
+    {
+        $result = (bool) $result;
+
+        if (!$result) {
+            $this->fail(null);
+        }
+
+        return $result;
+    }
+
     public function assertClassName($expected, $current)
     {
-        return get_class($current) === $expected;
+        $result = get_class($current) === $expected;
+
+        return $this->assertResult($result);
     }
 
     public function assertEqualsSerializing($expected, $current)
     {
-        return md5(serialize($expected)) === md5(serialize($current));
+        $result = md5(serialize($expected)) === md5(serialize($current));
+
+        return $this->assertResult($result);
     }
 
     public function assertNotEqualsSerializing($expected, $current)
     {
-        return md5(serialize($expected)) !== md5(serialize($current));
+        $result = md5(serialize($expected)) !== md5(serialize($current));
+
+        return $this->assertResult($result);
     }
 
     public function assertIsObject($object)
     {
-        return is_object($object);
+        $result = is_object($object);
+
+        return $this->assertResult($result);
     }
 
     public function assertIsArray($variable)
     {
-        return is_array($variable);
+        $result = is_array($variable);
+
+        return $this->assertResult($result);
+    }
+
     }
 }
