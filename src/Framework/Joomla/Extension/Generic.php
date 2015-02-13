@@ -20,6 +20,7 @@ use SimpleXMLElement;
 
 /**
  * Generic extension class
+ * @todo : Make this class compatible with non-Alledia extensions
  */
 class Generic
 {
@@ -439,6 +440,7 @@ class Generic
         return (int) $this->id;
     }
 
+    // @TODO: Move to the licensed class?
     public function getFooterMarkup()
     {
         // Check if we have a dedicated config.xml file
