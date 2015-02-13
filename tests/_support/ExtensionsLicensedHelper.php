@@ -51,14 +51,20 @@ class ExtensionsLicensedHelper extends \Codeception\Module
     public function copyMockComponentToJoomla($element)
     {
         $mockPath = $this->getExtensionMockPath($element);
-        $mockDestinationPath = JPATH_ADMINISTRATOR . '/components/' . $element;
 
-        JFolder::copy($mockPath, $mockDestinationPath, '', true);
+        $mockDestinationPath = JPATH_ADMINISTRATOR . '/components/' . $element;
+        JFolder::copy($mockPath . '/admin', $mockDestinationPath, '', true);
+
+        $mockDestinationPath = JPATH_SITE . '/components/' . $element;
+        JFolder::copy($mockPath . '/site', $mockDestinationPath, '', true);
     }
 
     public function removeMockComponentFromJoomla($element)
     {
         $mockDestinationPath = JPATH_ADMINISTRATOR . '/components/' . $element;
+        JFolder::delete($mockDestinationPath);
+
+        $mockDestinationPath = JPATH_SITE . '/components/' . $element;
         JFolder::delete($mockDestinationPath);
     }
 }
