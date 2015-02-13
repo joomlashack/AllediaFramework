@@ -149,4 +149,14 @@ class Tag extends Object
     {
         return $this->content;
     }
+
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    public function getParams()
+    {
+        return $this->params;
+    }
 }
