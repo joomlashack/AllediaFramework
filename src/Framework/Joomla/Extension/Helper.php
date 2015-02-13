@@ -66,22 +66,19 @@ abstract class Helper
 
     public static function loadLibrary($element)
     {
-        $info = static::getExtensionInfoFromElement($element);
+        $extension = static::getExtensionForElement($element);
 
-        if (!empty($info['type']) && !empty($info['namespace'])) {
-            $extension = Factory::getExtension($info['namespace'], $info['type'], $info['group']);
-            $extension->loadLibrary();
+        if (is_object($extension)) {
+            return $extension->loadLibrary();
         }
+
+        return null;
     }
 
     public static function getFooterMarkup($element)
     {
         if (is_string($element)) {
-            $info = static::getExtensionInfoFromElement($element);
-
-            if (!empty($info['type']) && !empty($info['namespace'])) {
-                $extension = Factory::getExtension($info['namespace'], $info['type'], $info['group']);
-            }
+            $extension = static::getExtensionForElement($element);
         } elseif (is_object($element)) {
             $extension = $element;
         }
