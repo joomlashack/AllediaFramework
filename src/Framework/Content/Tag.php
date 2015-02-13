@@ -108,9 +108,9 @@ class Tag extends Object
     */
     protected function parseParams()
     {
-        // Remove the wistia tag, extracting only the tag attributes
+        // Remove the tag name, extracting only the tag attributes
         $inlineParams = preg_replace('/^\{' . $this->name . '/', '', $this->unparsedString);
-        $inlineParams = trim(preg_replace('/\}[a-z0-9\s]*\{\/wistia\}/', '', $inlineParams));
+        $inlineParams = trim(preg_replace('/\}[a-z0-9\s]*\{\/' . $this->name . '\}/', '', $inlineParams));
 
         // Parse the inline params
         $regex = '/([a-z0-9\_]*)(?:="([^"]*)")?\s?/i';
