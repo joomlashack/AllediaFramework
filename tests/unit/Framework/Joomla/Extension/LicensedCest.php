@@ -75,7 +75,7 @@ class LicensedCest
 
     public function getProLibraryPath(UnitTester $I)
     {
-        $extensionPath = $I->getExtensionMockPath('com_dumbextension') . '/library';
+        $extensionPath = $I->getExtensionMockPath('com_dumbextension') . '/admin/library';
         $instance = $I->makeDumbLicensedComponent(
             array(
                 'getLibraryPath' => $extensionPath
@@ -100,7 +100,7 @@ class LicensedCest
 
     public function loadLibraryForFreeComponent(UnitTester $I)
     {
-        $libraryPath = $I->getExtensionMockPath('com_dumbextension') . '/library';
+        $libraryPath = $I->getExtensionMockPath('com_dumbextension') . '/admin/library';
         $instance = $I->makeDumbLicensedComponent(
             array(
                 'getLibraryPath' => $libraryPath,

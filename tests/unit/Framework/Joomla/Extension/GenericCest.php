@@ -415,7 +415,7 @@ class GenericCest
         $manifest = $instance->getManifestAsSimpleXML(false);
 
         // Get the expected manifest
-        $manifestPath = $I->getExtensionMockPath('com_dumbextension') . '/dumbextension.xml';
+        $manifestPath = $I->getExtensionMockPath('com_dumbextension') . '/admin/dumbextension.xml';
         $expected     = simplexml_load_file($manifestPath);
 
         $I->assertClassName('SimpleXMLElement', $manifest);
@@ -430,7 +430,7 @@ class GenericCest
         $manifest = $instance->getManifest(false);
 
         // Get the expected manifest
-        $manifestPath = $I->getExtensionMockPath('com_dumbextension') . '/dumbextension.xml';
+        $manifestPath = $I->getExtensionMockPath('com_dumbextension') . '/admin/dumbextension.xml';
         $xml          = simplexml_load_file($manifestPath);
         $expected     = (object) json_decode(json_encode($xml));
 
@@ -504,7 +504,7 @@ class GenericCest
 
         $instance = $I->makeDumbGenericComponent(
             array(
-                'getExtensionPath' => $I->getExtensionMockPath('com_dumbextension')
+                'getExtensionPath' => $I->getExtensionMockPath('com_dumbextension') . '/admin'
             )
         );
         $original = $instance->getConfig(false);
@@ -525,7 +525,7 @@ class GenericCest
 
         $instance = $I->makeDumbGenericComponent(
             array(
-                'getExtensionPath' => $I->getExtensionMockPath('com_dumbextension')
+                'getExtensionPath' => $I->getExtensionMockPath('com_dumbextension') . '/admin'
             )
         );
         $original = $instance->getConfig(false);
@@ -609,7 +609,7 @@ class GenericCest
     {
         $instance = $I->makeDumbGenericComponent(
             array(
-                'getExtensionPath' => $I->getExtensionMockPath('com_dumbextension')
+                'getExtensionPath' => $I->getExtensionMockPath('com_dumbextension') . '/admin'
             )
         );
 

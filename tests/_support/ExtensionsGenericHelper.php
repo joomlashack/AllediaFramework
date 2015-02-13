@@ -29,7 +29,7 @@ class ExtensionsGenericHelper extends \Codeception\Module
     public function makeDumbGenericComponent($override = array())
     {
         $defaultOverride = array(
-            'getManifestPath' => $this->getExtensionMockPath('com_dumbextension') . '/dumbextension.xml'
+            'getManifestPath' => $this->getExtensionMockPath('com_dumbextension') . '/admin/dumbextension.xml'
         );
 
         $instance = Stub::make(
