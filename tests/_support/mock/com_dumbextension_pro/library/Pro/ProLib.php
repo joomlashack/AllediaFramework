@@ -8,7 +8,6 @@
 
 namespace Alledia\DumbExtension\Pro;
 
-defined('_JEXEC') or die();
 
 use Alledia\DumbExtension\Free\FreeLib;
 
