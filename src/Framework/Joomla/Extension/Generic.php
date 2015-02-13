@@ -300,7 +300,7 @@ class Generic
     {
         if (!isset($this->manifestXml) || $force) {
             $path = $this->getManifestPath();
-            \Codeception\Util\Debug::debug(32);
+
             if (JFile::exists($path)) {
                 $this->manifestXml = simplexml_load_file($path);
             } else {
