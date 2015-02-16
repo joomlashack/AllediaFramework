@@ -6,5 +6,7 @@ define('ALLEDIAFRAMEWORK_SOURCE_PATH', __DIR__ . '/../src');
 $config = json_decode(file_get_contents(__DIR__ . '/config.json'));
 require_once $config->allediaTestFrameworkPath . '/tests/bootstrap_joomla3.php';
 
+Codeception\Module\ExtensionsGenericHelper::$baseMockPath = __DIR__ . '/_support/mock/';
+
 // Load Alledia Framework
 require_once ALLEDIAFRAMEWORK_SOURCE_PATH . '/include.php';
