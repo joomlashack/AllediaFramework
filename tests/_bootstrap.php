@@ -3,7 +3,10 @@
 define('ALLEDIAFRAMEWORK_SOURCE_PATH', __DIR__ . '/../src');
 
 // Bootstrap server variables
-$_SERVER['HTTP_HOST'] = 'http://localhost';
+$_SERVER['HTTP_HOST']      = 'http://localhost';
+$_SERVER['REQUEST_METHOD'] = 'GET';
+$_SERVER['REQUEST_URI']    = '';
+
 
 // Load local configuration file
 $configPath = __DIR__ . '/config.yml';
