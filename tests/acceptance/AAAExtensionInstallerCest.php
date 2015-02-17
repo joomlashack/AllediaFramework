@@ -1,7 +1,7 @@
 <?php
 use \AcceptanceTester;
 
-require_once ALLEDIA_BUILDER_PATH . '/src/tests_extension/tests/acceptance/ExtensionInstallerCest.php';
+require_once ALLEDIA_BUILDER_PATH . '/src/codeception/acceptance/ExtensionInstallerCest.php';
 
 class AAAExtensionInstallerCest extends ExtensionInstallerCest
 {
