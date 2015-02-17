@@ -1,2 +1,4 @@
 builder.path=/path/to/AllediaBuilder/local/copy
-
+testframework.path=/path/to/AllediaTestFramework/local/copy
+joomla25.support=1
+joomla34.support=1

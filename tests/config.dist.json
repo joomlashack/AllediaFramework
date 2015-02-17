@@ -1,3 +1,4 @@
 {
-    "allediaTestFrameworkPath": "/path/to/AllediaTestFramework"
+    "allediaTestFrameworkPath": "/path/to/AllediaTestFramework",
+    "allediaBuilderPath": "/path/to/builder"
 }
