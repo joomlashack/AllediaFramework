@@ -1,3 +1,3 @@
 builder.path=/path/to/AllediaBuilder/local/copy
-joomla25.support=1
-joomla34.support=1
+test.container.joomla25=1
+test.container.joomla34=1

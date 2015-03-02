@@ -62,7 +62,7 @@ class ComponentCest
     {
         $task = 'dumb_task';
         if (version_compare(JVERSION, '3.0', 'lt')) {
-            JRequest::set('task', $task);
+            JRequest::set(array('task' => $task));
         } else {
             $app = JFactory::getApplication();
             $app->input->set('task', $task);

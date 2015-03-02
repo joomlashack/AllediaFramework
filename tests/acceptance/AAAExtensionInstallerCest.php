@@ -1,17 +1,9 @@
 <?php
 use \AcceptanceTester;
 
-require_once ALLEDIA_BUILDER_PATH . '/src/codeception/acceptance/ExtensionInstallerCest.php';
+require_once ALLEDIA_BUILDER_PATH . '/src/codeception/acceptance/ExtensionInstallerAbstractCest.php';
 
-class AAAExtensionInstallerCest extends ExtensionInstallerCest
+class AAAExtensionInstallerCest extends ExtensionInstallerAbstractCest
 {
-    public function _before(AcceptanceTester $I)
-    {
-        parent::_before($I);
-    }
 
-    public function _after(AcceptanceTester $I)
-    {
-        parent::_after($I);
-    }
 }
