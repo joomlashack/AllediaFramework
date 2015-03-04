@@ -3,12 +3,12 @@
     <name>Alledia Framework</name>
     <libraryname>allediaframework</libraryname>
     <author>Alledia</author>
-    <creationDate>February 09, 2015</creationDate>
+    <creationDate>March 04, 2015</creationDate>
     <copyright>Copyright (C) 2015 Alledia.com</copyright>
     <license>GPL v3</license>
     <authorEmail>hello@alledia.com</authorEmail>
     <authorUrl>https://www.alledia.com</authorUrl>
-    <version>1.1.0</version>
+    <version>1.2.0</version>
     <description>Shared library for Alledia extensions</description>
 
     <alledia>
