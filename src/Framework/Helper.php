@@ -58,4 +58,28 @@ abstract class Helper
     {
         return 'joomla' . (version_compare(JVERSION, '3.0', 'lt') ? '25' : '3x');
     }
+
+    public static function callMethod($className, $methodName, $params = array())
+    {
+        $result = true;
+
+        if (method_exists($className, $methodName)) {
+            $method = new \ReflectionMethod($className, $methodName);
+
+            if ($method->isStatic()) {
+                $result = call_user_func_array("{$className}::{$methodName}", $params);
+            } else {
+                // Check if we have a singleton class
+                if (method_exists($className, 'getInstance')) {
+                    $instance = $className::getInstance();
+                } else {
+                    $instance = new $className;
+                }
+
+                $result = call_user_func_array(array($instance, $methodName), $params);
+            }
+        }
+
+        return $result;
+    }
 }
