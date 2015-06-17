@@ -34,7 +34,7 @@ class Text extends Object
      * @param  string $tagName
      * @return array  An array with all tags {tagName} found on the text
      */
-    protected function extractTags($tagName)
+    protected function extractPluginTags($tagName)
     {
         preg_match_all(Tag::getRegex($tagName), $this->content, $matches);
 
@@ -48,9 +48,9 @@ class Text extends Object
      * @param  string $tagName
      * @return array  An array with all tags {tagName} found on the text
      */
-    public function getTags($tagName)
+    public function getPluginTags($tagName)
     {
-        $unparsedTags = $this->extractTags($tagName);
+        $unparsedTags = $this->extractPluginTags($tagName);
 
         $tags = array();
         foreach ($unparsedTags as $unparsedTag) {
@@ -58,5 +58,19 @@ class Text extends Object
         }
 
         return $tags;
+    }
+
+    /**
+     * Extract multiple {mytag} tags from the content, returning
+     * as Tag instances
+     *
+     * @param  string $tagName
+     * @return array  An array with all tags {tagName} found on the text
+     * @deprecated 1.3.1 Use getPluginsTags instead
+     */
+    public function getTags($tagName)
+    {
+        // Deprecated. Use getPluginsTags instead
+        return $this->getPluginsTags($tagName);
     }
 }
