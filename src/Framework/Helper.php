@@ -10,6 +10,9 @@ namespace Alledia\Framework;
 
 defined('_JEXEC') or die();
 
+use Alledia\Framework\Joomla\Extension\Helper as ExtensionHelper;
+
+
 abstract class Helper
 {
     /**
@@ -38,7 +41,8 @@ abstract class Helper
 
         $extensions = array();
         foreach ($rows as $row) {
-            $extension = new Joomla\Extension\Licensed($row->element, $row->type, $row->folder);
+            $extensionInfo = ExtensionHelper::getExtensionInfoFromElement($row->element);
+            $extension     = new Joomla\Extension\Licensed($extensionInfo['namespace'], $row->type, $row->folder);
 
             if (!empty($license)) {
                 if ($license === 'pro' && ! $extension->isPro()) {
