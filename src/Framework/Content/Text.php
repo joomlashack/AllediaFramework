@@ -70,7 +70,7 @@ class Text extends Object
      */
     public function getTags($tagName)
     {
-        // Deprecated. Use getPluginsTags instead
-        return $this->getPluginsTags($tagName);
+        // Deprecated. Use getPluginTags instead
+        return $this->getPluginTags($tagName);
     }
 }
