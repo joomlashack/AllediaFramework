@@ -469,4 +469,14 @@ class Generic
 
         return '';
     }
+
+    /**
+     * Returns the extension's version collected from the manifest file
+     *
+     * @return string The extension's version
+     */
+    public function getVersion()
+    {
+        return $this->manifest->version;
+    }
 }
