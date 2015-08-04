@@ -10,7 +10,9 @@ namespace Alledia\Framework\Joomla\View;
 
 defined('_JEXEC') or die();
 
-jimport('legacy.view.legacy');
+if (!class_exists('JViewLegacy')) {
+    jimport('legacy.view.legacy');
+}
 
 class Base extends \JViewLegacy
 {
