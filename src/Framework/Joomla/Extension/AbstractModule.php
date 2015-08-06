@@ -15,6 +15,11 @@ use JRegistry;
 use JModuleHelper;
 use JError;
 
+/**
+ * @deprecated  1.4.1 Use AbstractFlexibleModule instead. This module doesn't
+ * work with multiple modules in the same page because of the Singleton pattern.
+ *
+ */
 abstract class AbstractModule extends Licensed
 {
     // @TODO: convert to protected and remove from the subclasses?
