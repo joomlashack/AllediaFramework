@@ -121,14 +121,6 @@ class Licensed extends Generic
 
         // If we have a library path, lets load it
         if (file_exists($libraryPath)) {
-
-            if ($this->isPro()) {
-                // Check if the pro library exists
-                if (!file_exists($this->getProLibraryPath())) {
-                    throw new \Exception("Pro library not found: {$this->extension->type}, {$this->extension->element}");
-                }
-            }
-
             // Setup autoloaded libraries
             AutoLoader::register('Alledia\\' . $this->namespace, $libraryPath);
 
