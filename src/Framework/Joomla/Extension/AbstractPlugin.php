@@ -33,19 +33,6 @@ abstract class AbstractPlugin extends JPlugin
     protected $namespace;
 
     /**
-     * Class constructor that instantiate the pro library, if installed
-     *
-     * @param   object  &$subject  The object to observe
-     * @param   array   $config    An optional associative array of configuration settings.
-     *                             Recognized key values include 'name', 'group', 'params', 'language'
-     *                             (this list is not meant to be comprehensive).
-     */
-    public function __construct(&$subject, $config = array())
-    {
-        parent::__construct($subject, $config);
-    }
-
-    /**
      * Method used to load the extension data. It is not on the constructor
      * because this way we can avoid to load the data if the plugin
      * will not be used.
