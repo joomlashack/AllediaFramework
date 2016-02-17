@@ -448,13 +448,13 @@ class Generic
         if (JFile::exists($configPath)) {
             $config = $this->getConfig();
 
-            if (!empty($config)) {
+            if (is_object($config)) {
                 $footerElement = $config->xpath('//field[@type="customfooter"]');
             }
         } else {
             $manifest = $this->getManifestAsSimpleXML();
 
-            if (!empty($manifest)) {
+            if (is_object($manifest)) {
                 $footerElement = $manifest->xpath('//field[@type="customfooter"]');
             }
         }
