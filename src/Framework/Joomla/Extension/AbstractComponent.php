@@ -73,7 +73,7 @@ abstract class AbstractComponent extends Licensed
             $client = $app->isAdmin() ? 'Admin' : 'Site';
 
             $controllerClass  = 'Alledia\\' . $this->namespace . '\\' . ucfirst($this->license)
-                . '\Joomla\Controller\\' . $client;
+                . '\\Joomla\\Controller\\' . $client;
             require JPATH_COMPONENT . '/controller.php';
 
             $this->controller = $controllerClass::getInstance($this->namespace);
