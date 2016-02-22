@@ -3,12 +3,12 @@
     <name>Alledia Framework</name>
     <libraryname>allediaframework</libraryname>
     <author>Alledia</author>
-    <creationDate>February 17, 2016</creationDate>
+    <creationDate>February 19, 2016</creationDate>
     <copyright>Copyright (C) 2016 Open Source Training, LLC. All rights reserved.</copyright>
     <license>GPL v3</license>
     <authorEmail>support@alledia.com</authorEmail>
     <authorUrl>https://www.alledia.com</authorUrl>
-    <version>1.4.3</version>
+    <version>1.4.4</version>
     <description>Shared library for Alledia extensions</description>
 
     <alledia>
@@ -26,5 +26,4 @@
     <updateservers>
         <server type="extension" priority="1" name="Alledia Framework"><![CDATA[https://deploy.ostraining.com/client/update/free/stable/lib_allediaframework]]></server>
     </updateservers>
-
 </extension>
