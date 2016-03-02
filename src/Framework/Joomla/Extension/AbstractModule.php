@@ -83,7 +83,10 @@ abstract class AbstractModule extends Licensed
                 // @TODO: Raise warning/Error
             }
 
+            $instance->loadLanguage();
+
             static::$instance = $instance;
+
         }
 
 
@@ -93,5 +96,16 @@ abstract class AbstractModule extends Licensed
     public function init()
     {
         require JModuleHelper::getLayoutPath('mod_' . $this->element, $this->params->get('layout', 'default'));
+    }
+
+    /**
+     * Method to load the language files
+     *
+     * @return void
+     */
+    public function loadLanguage()
+    {
+        $language = Factory::getLanguage();
+        $language->load($this->module, JPATH_SITE);
     }
 }
