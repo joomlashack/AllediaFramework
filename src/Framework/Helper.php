@@ -8,9 +8,11 @@
 
 namespace Alledia\Framework;
 
-defined('_JEXEC') or die();
-
 use Alledia\Framework\Joomla\Extension\Helper as ExtensionHelper;
+use Alledia\Framework\Factory;
+use JLog;
+
+defined('_JEXEC') or die();
 
 
 abstract class Helper
