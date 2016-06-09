@@ -221,24 +221,7 @@ class Generic
      */
     public function getFullElement()
     {
-        $prefixes = array(
-            'component' => 'com',
-            'plugin'    => 'plg',
-            'template'  => 'tpl',
-            'library'   => 'lib',
-            'cli'       => 'cli',
-            'module'    => 'mod'
-        );
-
-        $fullElement = $prefixes[$this->type];
-
-        if ($this->type === 'plugin') {
-            $fullElement .= '_' . $this->folder;
-        }
-
-        $fullElement .= '_' . $this->element;
-
-        return $fullElement;
+        return Helper::getFullElementFromInfo($this->type, $this->element, $this->folder);
     }
 
     /**

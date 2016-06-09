@@ -43,7 +43,14 @@ abstract class Helper
 
         $extensions = array();
         foreach ($rows as $row) {
-            $extensionInfo = ExtensionHelper::getExtensionInfoFromElement($row->element);
+            $fullElement = $row->element;
+
+             // Fix the element for plugins
+            if ($row->type === 'plugin') {
+                $fullElement = ExtensionHelper::getFullElementFromInfo($row->type, $row->element, $row->folder) ;
+            }
+
+            $extensionInfo = ExtensionHelper::getExtensionInfoFromElement($fullElement);
             $extension     = new Joomla\Extension\Licensed($extensionInfo['namespace'], $row->type, $row->folder);
 
             if (!empty($license)) {

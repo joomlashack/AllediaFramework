@@ -8,17 +8,40 @@
 
 namespace Alledia\Framework\Joomla\Extension;
 
-defined('_JEXEC') or die();
-
 use Alledia\Framework\Factory;
-use stdClass;
 
+defined('_JEXEC') or die();
 
 /**
  * Generic extension helper class
  */
 abstract class Helper
 {
+    /**
+     * Build a string representing the element
+     */
+    public static function getFullElementFromInfo($type, $element, $folder = null)
+    {
+        $prefixes    = array(
+            'component' => 'com',
+            'plugin'    => 'plg',
+            'template'  => 'tpl',
+            'library'   => 'lib',
+            'cli'       => 'cli',
+            'module'    => 'mod'
+        );
+
+        $fullElement = $prefixes[$type];
+
+        if ($type === 'plugin') {
+            $fullElement .= '_' . $folder;
+        }
+
+        $fullElement .= '_' . $element;
+
+        return $fullElement;
+    }
+
     public static function getExtensionInfoFromElement($element)
     {
         $result = array(
