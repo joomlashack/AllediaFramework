@@ -11,12 +11,6 @@
     <version>1.5.1</version>
     <description>Shared library for Alledia extensions</description>
 
-    <alledia>
-        <element>allediaframework</element>
-        <namespace>AllediaFramework</namespace>
-        <license>free</license>
-    </alledia>
-
     <files>
         <filename>include.php</filename>
         <filename>AllediaPsr4AutoLoader.php</filename>
@@ -26,4 +20,10 @@
     <updateservers>
         <server type="extension" priority="1" name="Alledia Framework"><![CDATA[https://deploy.ostraining.com/client/update/free/stable/lib_allediaframework]]></server>
     </updateservers>
+
+    <alledia>
+        <element>allediaframework</element>
+        <namespace>AllediaFramework</namespace>
+        <license>free</license>
+    </alledia>
 </extension>
