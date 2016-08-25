@@ -36,6 +36,7 @@ abstract class Helper
             ->select($db->quoteName('folder'))
             ->from('#__extensions')
             ->where($db->quoteName('custom_data') . " LIKE '%\"author\":\"Alledia\"%'", 'OR')
+            ->where($db->quoteName('custom_data') . " LIKE '%\"author\":\"OSTraining\"%'", 'OR')
             ->where($db->quoteName('manifest_cache') . " LIKE '%\"author\":\"Alledia\"%'", 'OR')
             ->where($db->quoteName('manifest_cache') . " LIKE '%\"author\":\"OSTraining\"%'", 'OR')
             ->group($db->quoteName('extension_id'));
