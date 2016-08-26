@@ -30,21 +30,30 @@ abstract class Helper
         // Get the extensions ids
         $db = \JFactory::getDbo();
         $query = $db->getQuery(true)
-            ->select($db->quoteName('extension_id'))
-            ->select($db->quoteName('type'))
-            ->select($db->quoteName('element'))
-            ->select($db->quoteName('folder'))
+            ->select(
+                array(
+                    $db->quoteName('extension_id'),
+                    $db->quoteName('type'),
+                    $db->quoteName('element'),
+                    $db->quoteName('folder')
+                )
+            )
             ->from('#__extensions')
-            ->where($db->quoteName('custom_data') . " LIKE '%\"author\":\"Alledia\"%'", 'OR')
-            ->where($db->quoteName('custom_data') . " LIKE '%\"author\":\"OSTraining\"%'", 'OR')
-            ->where($db->quoteName('manifest_cache') . " LIKE '%\"author\":\"Alledia\"%'", 'OR')
-            ->where($db->quoteName('manifest_cache') . " LIKE '%\"author\":\"OSTraining\"%'", 'OR')
+            ->where(
+                array(
+                    $db->quoteName('custom_data') . " LIKE '%\"author\":\"Alledia\"%'",
+                    $db->quoteName('custom_data') . " LIKE '%\"author\":\"OSTraining\"%'",
+                    $db->quoteName('manifest_cache') . " LIKE '%\"author\":\"Alledia\"%'",
+                    $db->quoteName('manifest_cache') . " LIKE '%\"author\":\"OSTraining\"%'"
+                ),
+                'OR'
+            )
             ->group($db->quoteName('extension_id'));
-
         $db->setQuery($query);
         $rows = $db->loadObjectList();
 
         $extensions = array();
+
         foreach ($rows as $row) {
             $fullElement = $row->element;
 
