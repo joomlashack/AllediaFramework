@@ -43,8 +43,10 @@ abstract class Helper
                 array(
                     $db->quoteName('custom_data') . " LIKE '%\"author\":\"Alledia\"%'",
                     $db->quoteName('custom_data') . " LIKE '%\"author\":\"OSTraining\"%'",
+                    $db->quoteName('custom_data') . " LIKE '%\"author\":\"Joomlashack\"%'",
                     $db->quoteName('manifest_cache') . " LIKE '%\"author\":\"Alledia\"%'",
-                    $db->quoteName('manifest_cache') . " LIKE '%\"author\":\"OSTraining\"%'"
+                    $db->quoteName('manifest_cache') . " LIKE '%\"author\":\"OSTraining\"%'",
+                    $db->quoteName('manifest_cache') . " LIKE '%\"author\":\"Joomlashack\"%'"
                 ),
                 'OR'
             )
