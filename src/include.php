@@ -19,8 +19,10 @@ if (!defined('ALLEDIA_FRAMEWORK_LOADED')) {
     if (!class_exists('\\Alledia\\Framework\\AutoLoader')) {
         require_once ALLEDIA_FRAMEWORK_PATH . '/Framework/AutoLoader.php';
     }
-    AutoLoader::register('Alledia\\Framework', ALLEDIA_FRAMEWORK_PATH . '/Framework');
+    AutoLoader::register('\\Alledia\\Framework', ALLEDIA_FRAMEWORK_PATH . '/Framework');
 }
 
 // Backward compatibility with the old autoloader. Avoids to break a legacy system plugin running while installing.
-require_once "AllediaPsr4AutoLoader.php";
+if (!class_exists('AllediaPsr4AutoLoader')) {
+    require_once "AllediaPsr4AutoLoader.php";
+}
