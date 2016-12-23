@@ -52,7 +52,15 @@ class Admin extends Base
         $output = '';
 
         $layoutPath = $this->extension->getExtensionPath() . '/views/footer/tmpl/default.php';
-        if (JFile::exists($layoutPath)) {
+        if (!JFile::exists($layoutPath)) {
+            $layoutPath = $this->extension->getExtensionPath() . '/alledia_views/footer/tmpl/default.php';
+
+            if (!JFile::exists($layoutPath)) {
+                $layoutPath = null;
+            }
+        }
+
+        if (!is_null($layoutPath)) {
             // Start capturing output into a buffer
             ob_start();
 
