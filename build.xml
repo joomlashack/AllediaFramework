@@ -10,7 +10,5 @@
         </else>
     </if>
 
-    <fail unless="builder.path" message="Missed builder.path property" />
-
     <import file="${builder.path}/src/build.xml"/>
 </project>
