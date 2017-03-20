@@ -1,10 +1,54 @@
+# General exclusion of system files
+###################################
 .*
-packages/*
-!packages/.gitkeep
-tests/_output/*
-tests/config.yml
-
+*~
+*.bak
 build.properties
-composer.lock
-vendor
-tests/config.json
+
+!.gitignore
+!.gitkeep
+!.htaccess
+
+# Icon must ends with two \r.
+Icon
+
+
+# Windows Files #
+#################
+# Windows image file caches
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# Eclipse #
+###########
+bin/**
+tmp/**
+tmp/**/*
+local.properties
+
+# JetBrains Apps #
+## IntelliJ
+out/
+
+# NetBeans IDE #
+################
+nbproject/private/
+build/
+nbbuild/
+dist/
+nbdist/
+nbactions.xml
+nb-configuration.xml
+
+# Phing #
+#########
+packages/*
+
+# misc other files #
+####################
+_notes/
+error_log
+config.codekit
+tests/_output/*
