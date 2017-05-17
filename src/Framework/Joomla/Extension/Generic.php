@@ -13,7 +13,7 @@ defined('_JEXEC') or die();
 jimport('joomla.filesystem.file');
 
 use JFactory;
-use Joomla\Registry\Registry;
+use JRegistry;
 use JFile;
 use JFormFieldCustomFooter;
 use SimpleXMLElement;
@@ -55,7 +55,7 @@ class Generic
     /**
      * The extension params
      *
-     * @var Registry
+     * @var JRegistry
      */
     public $params;
 
@@ -83,7 +83,7 @@ class Generic
     /**
      * The manifest information
      *
-     * @var Registry
+     * @var JRegistry
      */
     public $manifest;
 
@@ -152,12 +152,12 @@ class Generic
             $this->id = $row->extension_id;
             $this->name = $row->name;
             $this->enabled = (bool) $row->enabled;
-            $this->params = new Registry($row->params);
+            $this->params = new JRegistry($row->params);
         } else {
             $this->id = null;
             $this->name = null;
             $this->enabled = false;
-            $this->params = new Registry();
+            $this->params = new JRegistry();
         }
     }
 
@@ -278,7 +278,7 @@ class Generic
      *
      * @param bool $force If true, force to load the manifest, ignoring the cached one
      *
-     * @return Registry
+     * @return JRegistry
      */
     public function getManifestAsSimpleXML($force = false)
     {
@@ -300,7 +300,7 @@ class Generic
      *
      * @param bool $force If true, force to load the manifest, ignoring the cached one
      *
-     * @return Registry
+     * @return JRegistry
      */
     public function getManifest($force = false)
     {

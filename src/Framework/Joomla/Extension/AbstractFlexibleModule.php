@@ -10,9 +10,8 @@ namespace Alledia\Framework\Joomla\Extension;
 
 defined('_JEXEC') or die();
 
+use JRegistry;
 use JModuleHelper;
-use JError;
-use Joomla\Registry\Registry;
 
 abstract class AbstractFlexibleModule extends Licensed
 {
@@ -74,7 +73,7 @@ abstract class AbstractFlexibleModule extends Licensed
             $this->menuid    = $module->menuid;
             $this->name      = $module->name;
             $this->style     = $module->style;
-            $this->params    = new Registry($module->params);
+            $this->params    = new JRegistry($module->params);
         }
     }
 

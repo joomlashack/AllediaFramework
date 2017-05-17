@@ -11,9 +11,8 @@ namespace Alledia\Framework\Joomla\Extension;
 defined('_JEXEC') or die();
 
 use Alledia\Framework\Factory;
+use JRegistry;
 use JModuleHelper;
-use JError;
-use Joomla\Registry\Registry;
 
 /**
  * @deprecated  1.4.1 Use AbstractFlexibleModule instead. This module doesn't
@@ -78,7 +77,7 @@ abstract class AbstractModule extends Licensed
                 $instance->menuid    = $module->menuid;
                 $instance->name      = $module->name;
                 $instance->style     = $module->style;
-                $instance->params    = new Registry($module->params);
+                $instance->params    = new JRegistry($module->params);
             } else {
                 // @TODO: Raise warning/Error
             }

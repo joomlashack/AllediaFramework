@@ -9,7 +9,7 @@
 namespace Alledia\Framework\Content;
 
 use Alledia\Framework\Object;
-use Joomla\Registry\Registry;
+use JRegistry;
 
 defined('_JEXEC') or die();
 
@@ -41,7 +41,7 @@ class Tag extends Object
 
     /**
      * The tag params
-     * @var Registry
+     * @var JRegistry
      */
     public $params;
 
@@ -114,7 +114,7 @@ class Tag extends Object
 
         // Parse the inline params
         $regex = '/([a-z0-9\_]*)(?:="([^"]*)")?\s?/i';
-        $parsed = new Registry();
+        $parsed = new JRegistry();
         if (preg_match_all($regex, $inlineParams, $vars)) {
             $fullParams  = $vars[0];
             $paramNames  = $vars[1];
