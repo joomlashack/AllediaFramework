@@ -13,7 +13,6 @@ defined('_JEXEC') or die();
 use Alledia\Framework\Factory;
 use JControllerLegacy;
 use JFactory;
-use JRequest;
 
 /**
  * @deprecated Components should extends the AbstractComponent
@@ -44,7 +43,7 @@ class Component extends Licensed
      */
     public function loadController()
     {
-        if (! isset($this->controller)) {
+        if (!isset($this->controller)) {
             jimport('legacy.controller.legacy');
 
             $this->controller = JControllerLegacy::getInstance($this->namespace);
@@ -53,13 +52,8 @@ class Component extends Licensed
 
     public function executeTask()
     {
-        // Joomla 2.5 Backward Compatibility
-        if (version_compare(JVERSION, '3.0', '<')) {
-            $task = JRequest::getCmd('task');
-        } else {
-            $app = JFactory::getApplication();
-            $task = $app->input->getCmd('task');
-        }
+        $app  = JFactory::getApplication();
+        $task = $app->input->getCmd('task');
 
         $this->controller->execute($task);
         $this->controller->redirect();

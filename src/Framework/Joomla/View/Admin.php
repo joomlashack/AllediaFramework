@@ -22,14 +22,12 @@ class Admin extends Base
 
     public function __construct($config = array())
     {
-        if (version_compare(JVERSION, '3.0', 'lt')) {
-            $this->option = JRequest::getCmd('option');
-        } else {
-            $app    = Factory::getApplication();
-            $this->option = $app->input->get('option');
-        }
+        parent::__construct($config);
 
-        $info = ExtensionHelper::getExtensionInfoFromElement($this->option);
+        $app          = Factory::getApplication();
+        $this->option = $app->input->get('option');
+
+        $info            = ExtensionHelper::getExtensionInfoFromElement($this->option);
         $this->extension = Factory::getExtension($info['namespace'], $info['type']);
     }
 

@@ -13,7 +13,6 @@ defined('_JEXEC') or die();
 use Alledia\Framework\Factory;
 use Alledia\Framework\Joomla\Model\Base as BaseModel;
 use Alledia\Framework\Joomla\Table\Base as BaseTable;
-use JRequest;
 use JModelLegacy;
 use JTable;
 
@@ -68,11 +67,11 @@ abstract class AbstractComponent extends Licensed
 
     public function loadController()
     {
-        if (! is_object($this->controller)) {
+        if (!is_object($this->controller)) {
             $app    = Factory::getApplication();
             $client = $app->isAdmin() ? 'Admin' : 'Site';
 
-            $controllerClass  = 'Alledia\\' . $this->namespace . '\\' . ucfirst($this->license)
+            $controllerClass = 'Alledia\\' . $this->namespace . '\\' . ucfirst($this->license)
                 . '\\Joomla\\Controller\\' . $client;
             require JPATH_COMPONENT . '/controller.php';
 
@@ -82,13 +81,8 @@ abstract class AbstractComponent extends Licensed
 
     public function executeRedirectTask()
     {
-        // Joomla 2.5 Backward Compatibility
-        if (version_compare(JVERSION, '3.0', '<')) {
-            $task = JRequest::getCmd('task');
-        } else {
-            $app = Factory::getApplication();
-            $task = $app->input->getCmd('task');
-        }
+        $app  = Factory::getApplication();
+        $task = $app->input->getCmd('task');
 
         $this->controller->execute($task);
         $this->controller->redirect();
