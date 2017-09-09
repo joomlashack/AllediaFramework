@@ -16,6 +16,11 @@ use JModuleHelper;
 abstract class AbstractFlexibleModule extends Licensed
 {
     /**
+     * @var int
+     */
+    public $id = null;
+
+    /**
      * @var string
      */
     public $title = null;
@@ -23,33 +28,42 @@ abstract class AbstractFlexibleModule extends Licensed
     /**
      * @var
      */
-    public $module;
+    public $module = null;
 
     /**
      * @var
      */
-    public $position;
+    public $position = null;
 
     /**
      * @var string
      */
-    public $content;
+    public $content = null;
 
     /**
      * @var bool
      */
-    public $showtitle;
+    public $showtitle = null;
 
     /**
      * @var int
      */
-    public $menuid;
+    public $menuid = null;
 
     /**
      * @var string
      */
-    public $style;
+    public $name = null;
 
+    /**
+     * @var string
+     */
+    public $style = null;
+
+    /**
+     * @var Registry
+     */
+    public $params = null;
 
     /**
      * Class constructor that instantiate the free and pro library, if installed
