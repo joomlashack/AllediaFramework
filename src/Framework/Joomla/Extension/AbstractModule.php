@@ -59,6 +59,7 @@ abstract class AbstractModule extends Licensed
      * Returns the instance of child classes
      *
      * @param string $namespace
+     * @param object $module
      *
      * @return Object
      */
