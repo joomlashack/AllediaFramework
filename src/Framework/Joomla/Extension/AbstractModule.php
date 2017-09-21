@@ -11,7 +11,7 @@ namespace Alledia\Framework\Joomla\Extension;
 defined('_JEXEC') or die();
 
 use Alledia\Framework\Factory;
-use JRegistry;
+use Joomla\Registry\Registry;
 use JModuleHelper;
 
 /**
@@ -59,6 +59,7 @@ abstract class AbstractModule extends Licensed
      * Returns the instance of child classes
      *
      * @param string $namespace
+     * @param object $module
      *
      * @return Object
      */
@@ -77,7 +78,7 @@ abstract class AbstractModule extends Licensed
                 $instance->menuid    = $module->menuid;
                 $instance->name      = $module->name;
                 $instance->style     = $module->style;
-                $instance->params    = new JRegistry($module->params);
+                $instance->params    = new Registry($module->params);
             } else {
                 // @TODO: Raise warning/Error
             }
