@@ -25,6 +25,7 @@
     <alledia>
         <element>allediaframework</element>
         <namespace>AllediaFramework</namespace>
+        <name>Joomlashack Framework</name>
         <license>free</license>
     </alledia>
 </extension>
