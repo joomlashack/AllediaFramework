@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension type="library" version="3.5" method="upgrade">
-    <name>Joomlashack Framework (Don't uninstall this if you're using an Alledia/Joomlashack extension)</name>
+    <name>Joomlashack Framework</name>
     <libraryname>allediaframework</libraryname>
     <author>Joomlashack</author>
     <creationDate>September 21 2017</creationDate>
