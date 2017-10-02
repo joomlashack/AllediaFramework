@@ -94,7 +94,7 @@ class Object
     }
 
     /**
-     * Map values in a source object/array to Alledia Framework keys using a map
+     * Map values in a source object/array to Joomlashack Framework keys using a map
      * of key equivalences. Any fields in $keys not present in $map will be
      * mapped name to name. Map fields mapped to null will be ignored.
      *

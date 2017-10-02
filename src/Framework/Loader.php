@@ -69,7 +69,7 @@ class Loader
             // Warn admin users
             $app = Factory::getApplication();
             if ($app->isAdmin()) {
-                $app->enqueueMessage('Alledia Framework Loader detected that a required file was not found! Please, check the logs.', 'error');
+                $app->enqueueMessage('Joomlashack Framework Loader detected that a required file was not found! Please, check the logs.', 'error');
             }
 
             // Stand up a flag to warn a required file is missed
