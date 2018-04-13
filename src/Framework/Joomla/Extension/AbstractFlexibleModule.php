@@ -68,8 +68,8 @@ abstract class AbstractFlexibleModule extends Licensed
     /**
      * Class constructor that instantiate the free and pro library, if installed
      *
-     * @param string $namespace  Namespace
-     * @param object $module     The base module, instance of stdClass
+     * @param string $namespace Namespace
+     * @param object $module    The base module, instance of stdClass
      */
     public function __construct($namespace, $module = null)
     {

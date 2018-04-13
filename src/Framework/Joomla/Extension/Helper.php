@@ -114,6 +114,11 @@ abstract class Helper
         return '';
     }
 
+    /**
+     * @param string $element
+     *
+     * @return Licensed
+     */
     public static function getExtensionForElement($element)
     {
         $info = static::getExtensionInfoFromElement($element);

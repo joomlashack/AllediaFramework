@@ -8,6 +8,8 @@
 
 namespace Alledia\Framework;
 
+use Alledia\Framework\Joomla\Extension\Licensed;
+
 defined('_JEXEC') or die();
 
 abstract class Factory extends \JFactory
@@ -26,7 +28,7 @@ abstract class Factory extends \JFactory
      * @param  string $type      The extension type
      * @param  string $folder    The extension folder (plugins only)
      *
-     * @return object            The extension instance
+     * @return Licensed          The extension instance
      */
     public static function getExtension($namespace, $type, $folder = null)
     {
