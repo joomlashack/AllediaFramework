@@ -78,16 +78,26 @@ abstract class AbstractFlexibleModule extends Licensed
         $this->loadLibrary();
 
         if (is_object($module)) {
-            $this->id        = $module->id;
-            $this->title     = $module->title;
-            $this->module    = $module->module;
-            $this->position  = $module->position;
-            $this->content   = $module->content;
-            $this->showtitle = $module->showtitle;
-            $this->menuid    = $module->menuid;
-            $this->name      = $module->name;
-            $this->style     = $module->style;
-            $this->params    = new Registry($module->params);
+            $properties = array(
+                'id',
+                'title',
+                'module',
+                'position',
+                'content',
+                'showtitle',
+                'menuid',
+                'name',
+                'style',
+                'params'
+            );
+            foreach ($properties as $property) {
+                if (isset($module->$property)) {
+                    $this->$property = $module->$property;
+                }
+            }
+            if (!$this->params instanceof Registry) {
+                $this->params = new Registry($this->params);
+            }
         }
     }
 
