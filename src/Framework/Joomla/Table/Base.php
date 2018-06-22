@@ -10,8 +10,6 @@ namespace Alledia\Framework\Joomla\Table;
 
 defined('_JEXEC') or die();
 
-jimport('joomla.table.table');
-
 class Base extends \JTable
 {
 

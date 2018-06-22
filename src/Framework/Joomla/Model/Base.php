@@ -10,8 +10,6 @@ namespace Alledia\Framework\Joomla\Model;
 
 defined('_JEXEC') or die();
 
-jimport('legacy.model.legacy');
-
 class Base extends \JModelLegacy
 {
 

@@ -10,8 +10,6 @@ namespace Alledia\Framework\Joomla\Controller;
 
 defined('_JEXEC') or die();
 
-jimport('legacy.controller.legacy');
-
 class Base extends \JControllerLegacy
 {
 

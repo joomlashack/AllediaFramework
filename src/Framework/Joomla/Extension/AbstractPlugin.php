@@ -58,15 +58,13 @@ abstract class AbstractPlugin extends JPlugin
     {
         parent::loadLanguage($extension, $basePath);
 
-        $languagePath = JPATH_SITE . '/plugins/' . $this->_type . '/' . $this->_name;
-        $languageFile = 'plg_' . $this->_type . '_' . $this->_name . '.sys';
-
-        $language = JFactory::getLanguage();
-        $language->load($languageFile, $languagePath);
+        $systemStrings = 'plg_' . $this->_type . '_' . $this->_name . '.sys';
+        parent::loadLanguage($systemStrings, $basePath);
     }
 
     /**
      * Method to load the extension data
+     *
      * @return void
      */
     protected function loadExtension()
