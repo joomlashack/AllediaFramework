@@ -19,7 +19,7 @@ defined('_JEXEC') or die();
 jimport('joomla.log.log');
 
 
-class Loader
+abstract class Loader
 {
     protected static $logRegistered = false;
 
@@ -70,8 +70,11 @@ class Loader
 
             // Warn admin users
             $app = Factory::getApplication();
-            if ($app->isAdmin()) {
-                $app->enqueueMessage('Joomlashack Framework Loader detected that a required file was not found! Please, check the logs.', 'error');
+            if ($app->isClient('administrator')) {
+                $app->enqueueMessage(
+                    'Joomlashack Framework Loader detected that a required file was not found! Please, check the logs.',
+                    'error'
+                );
             }
 
             // Stand up a flag to warn a required file is missed
