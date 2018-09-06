@@ -8,12 +8,12 @@
 
 namespace Alledia\Framework\Content;
 
-use Alledia\Framework\Object;
+use Alledia\Framework\Base;
 use Joomla\Registry\Registry;
 
 defined('_JEXEC') or die();
 
-class Tag extends Object
+class Tag extends Base
 {
     /**
      * The unparsed tag string

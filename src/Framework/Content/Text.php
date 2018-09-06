@@ -8,12 +8,11 @@
 
 namespace Alledia\Framework\Content;
 
-use Alledia\Framework\Object;
-use Alledia\Framework\Content\Tag;
+use Alledia\Framework\Base;
 
 defined('_JEXEC') or die();
 
-class Text extends Object
+class Text extends Base
 {
     public $content = '';
 
