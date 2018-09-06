@@ -477,6 +477,10 @@ class Generic
      */
     public function getVersion()
     {
-        return $this->manifest->version;
+        if (!empty($this->manifest->version)) {
+            return $this->manifest->version;
+        }
+
+        return null;
     }
 }
