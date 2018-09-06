@@ -51,8 +51,8 @@ abstract class Helper
                 'OR'
             )
             ->group($db->quoteName('extension_id'));
-        $db->setQuery($query);
-        $rows = $db->loadObjectList();
+
+        $rows = $db->setQuery($query)->loadObjectList();
 
         $extensions = array();
 

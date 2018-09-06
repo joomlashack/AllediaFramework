@@ -355,14 +355,14 @@ class Generic
      */
     public function getUpdateURL()
     {
-        $db = JFactory::getDbo();
+        $db    = JFactory::getDbo();
         $query = $db->getQuery(true)
             ->select('sites.location')
             ->from('#__update_sites AS sites')
-            ->join('LEFT', '#__update_sites_extensions AS extensions ON (sites.update_site_id = extensions.update_site_id)')
+            ->leftJoin('#__update_sites_extensions AS extensions ON (sites.update_site_id = extensions.update_site_id)')
             ->where('extensions.extension_id = ' . $this->id);
-        $db->setQuery($query);
-        $row = $db->loadResult();
+
+        $row = $db->setQuery($query)->loadResult();
 
         return $row;
     }
@@ -377,23 +377,23 @@ class Generic
         $db = JFactory::getDbo();
 
         // Get the update site id
-        $join = $db->qn('#__update_sites_extensions') . ' AS extensions '
+        $join  = $db->qn('#__update_sites_extensions') . ' AS extensions '
             . 'ON (sites.update_site_id = extensions.update_site_id)';
         $query = $db->getQuery(true)
             ->select('sites.update_site_id')
             ->from($db->qn('#__update_sites') . ' AS sites')
-            ->join('LEFT', $join)
+            ->leftJoin($join)
             ->where('extensions.extension_id = ' . $this->id);
-        $db->setQuery($query);
-        $siteId = (int) $db->loadResult();
+
+        $siteId = (int)$db->setQuery($query)->loadResult();
 
         if (!empty($siteId)) {
             $query = $db->getQuery(true)
                 ->update($db->qn('#__update_sites'))
                 ->set($db->qn('location') . ' = ' . $db->q($url))
                 ->where($db->qn('update_site_id') . ' = ' . $siteId);
-            $db->setQuery($query);
-            $db->execute();
+
+            $db->setQuery($query)->execute();
         }
     }
 
@@ -404,13 +404,14 @@ class Generic
      */
     public function storeParams()
     {
-        $db     = JFactory::getDbo();
-        $params = $db->q($this->params->toString());
-        $id     = $db->q($this->id);
+        $db = JFactory::getDbo();
 
-        $query = "UPDATE `#__extensions` SET params = {$params} WHERE extension_id = {$id}";
-        $db->setQuery($query);
-        $db->execute();
+        $updateObject = (object)array(
+            'params'       => $this->params->toString(),
+            'extension_id' => $this->id
+        );
+
+        $db->updateObject('#__extensions', $updateObject, array('extension_id'));
     }
 
     /**
