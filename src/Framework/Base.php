@@ -8,8 +8,6 @@
 
 namespace Alledia\Framework;
 
-use Alledia\Framework\Exception;
-
 defined('_JEXEC') or die();
 
 class Base

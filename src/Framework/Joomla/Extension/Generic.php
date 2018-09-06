@@ -20,6 +20,7 @@ use SimpleXMLElement;
 
 /**
  * Generic extension class
+ *
  * @todo : Make this class compatible with non-Alledia extensions
  */
 class Generic
@@ -83,21 +84,21 @@ class Generic
     /**
      * The manifest information
      *
-     * @var Registry
+     * @var object
      */
     public $manifest;
 
     /**
      * The manifest information as SimpleXMLElement
      *
-     * @var \SimpleXMLElement
+     * @var SimpleXMLElement
      */
     public $manifestXml;
 
     /**
      * The config information
      *
-     * @var \SimpleXMLElement
+     * @var SimpleXMLElement
      */
     public $config;
 
@@ -123,13 +124,15 @@ class Generic
 
     /**
      * Get information about this extension from the database
+     *
+     * @return void
      */
     protected function getDataFromDatabase()
     {
         $element = $this->getElementToDb();
 
         // Load the extension info from database
-        $db = JFactory::getDbo();
+        $db    = JFactory::getDbo();
         $query = $db->getQuery(true)
             ->select(array(
                 $db->qn('extension_id'),
@@ -149,15 +152,16 @@ class Generic
         $row = $db->loadObject();
 
         if (is_object($row)) {
-            $this->id = $row->extension_id;
-            $this->name = $row->name;
-            $this->enabled = (bool) $row->enabled;
-            $this->params = new Registry($row->params);
+            $this->id      = $row->extension_id;
+            $this->name    = $row->name;
+            $this->enabled = (bool)$row->enabled;
+            $this->params  = new Registry($row->params);
+
         } else {
-            $this->id = null;
-            $this->name = null;
+            $this->id      = null;
+            $this->name    = null;
             $this->enabled = false;
-            $this->params = new Registry();
+            $this->params  = new Registry();
         }
     }
 
@@ -168,7 +172,7 @@ class Generic
      */
     public function isEnabled()
     {
-        return (bool) $this->enabled;
+        return (bool)$this->enabled;
     }
 
     /**
@@ -284,7 +288,7 @@ class Generic
      *
      * @param bool $force If true, force to load the manifest, ignoring the cached one
      *
-     * @return Registry
+     * @return SimpleXMLElement
      */
     public function getManifestAsSimpleXML($force = false)
     {
@@ -306,14 +310,14 @@ class Generic
      *
      * @param bool $force If true, force to load the manifest, ignoring the cached one
      *
-     * @return Registry
+     * @return object
      */
     public function getManifest($force = false)
     {
         if (!isset($this->manifest) || $force) {
             $xml = $this->getManifestAsSimpleXML($force);
             if (!empty($xml)) {
-                $this->manifest = (object) json_decode(json_encode($xml));
+                $this->manifest = (object)json_decode(json_encode($xml));
             } else {
                 $this->manifest = false;
             }
@@ -426,10 +430,14 @@ class Generic
      */
     public function getId()
     {
-        return (int) $this->id;
+        return (int)$this->id;
     }
 
-    // @TODO: Move to the licensed class?
+    /**
+     * @TODO: Move to the licensed class?
+     *
+     * @return string
+     */
     public function getFooterMarkup()
     {
         // Check if we have a dedicated config.xml file
@@ -453,7 +461,7 @@ class Generic
                 require_once $this->getExtensionPath() . '/form/fields/customfooter.php';
             }
 
-            $field = new JFormFieldCustomFooter();
+            $field                = new JFormFieldCustomFooter();
             $field->fromInstaller = true;
             return $field->getInputUsingCustomElement($footerElement[0]);
         }

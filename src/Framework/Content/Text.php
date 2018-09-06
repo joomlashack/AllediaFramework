@@ -30,7 +30,9 @@ class Text extends Base
      * Extract multiple {mytag} tags from the content
      *
      * @todo Recognize unclose tags like {dumbtag param1="12"}
+     *
      * @param  string $tagName
+     *
      * @return array  An array with all tags {tagName} found on the text
      */
     protected function extractPluginTags($tagName)
@@ -45,6 +47,7 @@ class Text extends Base
      * as Tag instances
      *
      * @param  string $tagName
+     *
      * @return array  An array with all tags {tagName} found on the text
      */
     public function getPluginTags($tagName)
@@ -64,6 +67,7 @@ class Text extends Base
      * as Tag instances
      *
      * @param  string $tagName
+     *
      * @return array  An array with all tags {tagName} found on the text
      * @deprecated 1.3.1 Use getPluginsTags instead
      */

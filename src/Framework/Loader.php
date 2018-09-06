@@ -11,6 +11,7 @@
 
 namespace Alledia\Framework;
 
+use Exception;
 use JLog;
 
 defined('_JEXEC') or die();
@@ -28,9 +29,10 @@ class Loader
      * This method will register a log message and display a warning for admins
      * in case the file is missed.
      *
-     * @param   string  $path  The file path you want to include
+     * @param string $path The file path you want to include
      *
-     * @return  bool           True, if the file exists and was loaded well.
+     * @return bool True, if the file exists and was loaded well.
+     * @throws Exception
      */
     public static function includeFile($path)
     {
