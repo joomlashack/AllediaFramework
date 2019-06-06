@@ -48,7 +48,7 @@ class Text extends Base
      *
      * @param  string $tagName
      *
-     * @return array  An array with all tags {tagName} found on the text
+     * @return Tag[]  An array with all tags {tagName} found on the text
      */
     public function getPluginTags($tagName)
     {

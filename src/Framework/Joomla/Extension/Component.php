@@ -14,9 +14,6 @@ use Alledia\Framework\Factory;
 use JControllerLegacy;
 use JFactory;
 
-/**
- * @deprecated Components should extends the AbstractComponent
- */
 class Component extends Licensed
 {
     /**
