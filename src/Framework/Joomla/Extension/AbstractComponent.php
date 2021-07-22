@@ -69,7 +69,7 @@ abstract class AbstractComponent extends Licensed
     {
         if (!is_object($this->controller)) {
             $app    = Factory::getApplication();
-            $client = $app->isAdmin() ? 'Admin' : 'Site';
+            $client = $app->isClient('administrator') ? 'Admin' : 'Site';
 
             $controllerClass = 'Alledia\\' . $this->namespace . '\\' . ucfirst($this->license)
                 . '\\Joomla\\Controller\\' . $client;
