@@ -21,7 +21,7 @@ abstract class AbstractPlugin extends JPlugin
     /**
      * Alledia Extension instance
      *
-     * @var object
+     * @var Licensed
      */
     protected $extension;
 
