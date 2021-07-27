@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<extension type="library" version="3.5" method="upgrade">
+<extension type="library" method="upgrade">
     <name>Joomlashack Framework</name>
     <libraryname>allediaframework</libraryname>
     <author>Joomlashack</author>
-    <creationDate>November 09 2018</creationDate>
-    <copyright>Copyright (C) 2016-2018 Open Source Training, LLC. All rights reserved.</copyright>
-    <license>GPL v3</license>
-    <authorEmail>help@joomlashack.co</authorEmail>
-    <authorUrl>https://www.joomlashack.com</authorUrl>
-    <version>1.6.4</version>
-    <variant>FREE</variant>
+    <authorEmail>help@joomlashack.com</authorEmail>
+    <authorUrl>https://www.joomlashack.com/</authorUrl>
+    <copyright>Copyright 2016-2021 Joomlashack.com</copyright>
+    <license>GNU GPL; see LICENSE file</license>
     <description>Shared library for Joomlashack extensions</description>
+    <version>2.0.0b1</version>
+    <creationDate>July 27 2021</creationDate>
+    <variant>FREE</variant>
 
     <files>
         <folder>Framework</folder>
