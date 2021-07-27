@@ -13,9 +13,9 @@
     <description>Shared library for Joomlashack extensions</description>
 
     <files>
-        <filename>include.php</filename>
-        <filename>AllediaPsr4AutoLoader.php</filename>
         <folder>Framework</folder>
+
+        <filename>include.php</filename>
     </files>
 
     <updateservers>
