@@ -2,8 +2,8 @@
     "name"             : "alledia/allediaframework",
     "description"      : "AllediaFramework",
     "minimum-stability": "stable",
-    "license"          : "GPL-2+",
-    "type"             : "joomla.library",
+    "license"          : "GPL-2.0-or-later",
+    "type"             : "joomla-library",
     "extra"            : {
         "element"        : "lib_allediaframework",
         "element-short"  : "allediaframework",
@@ -18,7 +18,7 @@
         }
     ],
     "require"          : {
-        "php"          : ">= 5.6",
+        "php"          : ">=7.2.5",
         "ext-simplexml": "*",
         "ext-json"     : "*"
     }
