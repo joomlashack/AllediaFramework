@@ -21,9 +21,5 @@
         "php"          : ">= 5.6",
         "ext-simplexml": "*",
         "ext-json"     : "*"
-    },
-    "require-dev"      : {
-        "phing/phing"            : "*",
-        "codeception/codeception": "*"
     }
 }
