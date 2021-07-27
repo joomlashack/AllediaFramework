@@ -27,5 +27,6 @@
         <namespace>AllediaFramework</namespace>
         <name>Joomlashack Framework</name>
         <license>free</license>
+        <phpminimum>7.2.5</phpminimum>
     </alledia>
 </extension>
