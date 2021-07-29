@@ -15,6 +15,7 @@
     <files>
         <folder>Framework</folder>
 
+        <filename>AllediaPsr4AutoLoader.php</filename>
         <filename>include.php</filename>
     </files>
 
