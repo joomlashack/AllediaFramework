@@ -1,13 +1,13 @@
 {
     "name"             : "alledia/allediaframework",
-    "description"      : "AllediaFramework",
+    "description"      : "Joomlashack Framework",
     "minimum-stability": "stable",
     "license"          : "GPL-2.0-or-later",
     "type"             : "joomla-library",
     "extra"            : {
         "element"        : "lib_allediaframework",
         "element-short"  : "allediaframework",
-        "name"           : "AllediaFramework",
+        "name"           : "Joomlashack Framework",
         "client"         : "site",
         "target-platform": "3.9",
         "package-license": "free"
