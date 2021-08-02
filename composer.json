@@ -9,6 +9,7 @@
         "element-short"  : "allediaframework",
         "name"           : "AllediaFramework",
         "client"         : "site",
+        "target-platform": "3.9",
         "package-license": "free"
     },
     "authors"          : [
