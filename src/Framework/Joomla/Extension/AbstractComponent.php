@@ -72,14 +72,20 @@ abstract class AbstractComponent extends Licensed
         return static::$instance;
     }
 
+    /**
+     * @return void
+     * @throws \Exception
+     */
     public function init()
     {
-        $app = Factory::getApplication();
-
         $this->loadController();
         $this->executeRedirectTask();
     }
 
+    /**
+     * @return void
+     * @throws \Exception
+     */
     public function loadController()
     {
         if (!is_object($this->controller)) {
@@ -94,6 +100,10 @@ abstract class AbstractComponent extends Licensed
         }
     }
 
+    /**
+     * @return void
+     * @throws \Exception
+     */
     public function executeRedirectTask()
     {
         $app  = Factory::getApplication();
@@ -105,16 +115,14 @@ abstract class AbstractComponent extends Licensed
 
     public function getModel($type)
     {
-        if ($this->isPro()) {
-            $class = "Alledia\\{$this->namespace}\\Pro\\Joomla\\Model\\{$type}";
-            if (class_exists($class)) {
-                return new $class();
-            }
-        } else {
-            $class = "Alledia\\{$this->namespace}\\Free\\Joomla\\Model\\{$type}";
-            if (class_exists($class)) {
-                return new $class();
-            }
+        $class = sprintf(
+            'Alledia\\%s\\%s\\Joomla\\Model\\%s',
+            $this->namespace,
+            $this->isPro() ? 'Pro' : 'Free',
+            $type
+        );
+        if (class_exists($class)) {
+            return new $class();
         }
 
         return BaseModel::getInstance($type, $this->namespace . 'Model');
@@ -122,18 +130,16 @@ abstract class AbstractComponent extends Licensed
 
     public function getTable($type)
     {
-        $db = Factory::getDbo();
+        $class = sprintf(
+            'Alledia\\%s\\%s\\Joomla\\Table\\%s',
+            $this->namespace,
+            $this->isPro() ? 'Pro' : 'Free',
+            $type
+        );
+        if (class_exists($class)) {
+            $db = Factory::getDbo();
 
-        if ($this->isPro()) {
-            $class = "Alledia\\{$this->namespace}\\Pro\\Joomla\\Table\\{$type}";
-            if (class_exists($class)) {
-                return new $class($db);
-            }
-        } else {
-            $class = "Alledia\\{$this->namespace}\\Free\\Joomla\\Table\\{$type}";
-            if (class_exists($class)) {
-                return new $class($db);
-            }
+            return new $class($db);
         }
 
         return BaseTable::getInstance($type, $this->namespace . 'Table');

@@ -43,14 +43,14 @@ abstract class Helper
      */
     public static function getFullElementFromInfo($type, $element, $folder = null)
     {
-        $prefixes = array(
+        $prefixes = [
             'component' => 'com',
             'plugin'    => 'plg',
             'template'  => 'tpl',
             'library'   => 'lib',
             'cli'       => 'cli',
             'module'    => 'mod'
-        );
+        ];
 
         $fullElement = $prefixes[$type];
 
@@ -70,22 +70,22 @@ abstract class Helper
      */
     public static function getExtensionInfoFromElement($element)
     {
-        $result = array(
+        $result = [
             'type'      => null,
             'name'      => null,
             'group'     => null,
             'prefix'    => null,
             'namespace' => null
-        );
+        ];
 
-        $types = array(
+        $types = [
             'com' => 'component',
             'plg' => 'plugin',
             'mod' => 'module',
             'lib' => 'library',
             'tpl' => 'template',
             'cli' => 'cli'
-        );
+        ];
 
         $element = explode('_', $element);
 

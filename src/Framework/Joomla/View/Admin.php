@@ -27,22 +27,33 @@ defined('_JEXEC') or die();
 
 use Alledia\Framework\Factory;
 use Alledia\Framework\Joomla\Extension\Helper as ExtensionHelper;
-use JFile;
+use Alledia\Framework\Joomla\Extension\Licensed;
+use Joomla\CMS\Filesystem\File;
 
 class Admin extends Base
 {
-    protected $option;
+    /**
+     * @var string
+     */
+    protected $option = null;
 
-    protected $extension;
+    /**
+     * @var Licensed
+     */
+    protected $extension = null;
 
-    public function __construct($config = array())
+    /**
+     * @param array $config
+     *
+     * @throws \Exception
+     */
+    public function __construct($config = [])
     {
         parent::__construct($config);
 
-        $app          = Factory::getApplication();
-        $this->option = $app->input->get('option');
+        $info = ExtensionHelper::getExtensionInfoFromElement($this->option);
 
-        $info            = ExtensionHelper::getExtensionInfoFromElement($this->option);
+        $this->option    = Factory::getApplication()->input->get('option');
         $this->extension = Factory::getExtension($info['namespace'], $info['type']);
     }
 
@@ -50,9 +61,8 @@ class Admin extends Base
     {
         // Add default admin CSS
         $cssPath = JPATH_SITE . "/media/{$this->option}/css/admin-default.css";
-        if (file_exists($cssPath)) {
-            $doc = Factory::getDocument();
-            $doc->addStyleSheet($cssPath);
+        if (is_file($cssPath)) {
+            Factory::getDocument()->addStyleSheet($cssPath);
         }
 
         parent::display($tpl);
@@ -65,10 +75,10 @@ class Admin extends Base
         $output = '';
 
         $layoutPath = $this->extension->getExtensionPath() . '/views/footer/tmpl/default.php';
-        if (!JFile::exists($layoutPath)) {
+        if (!File::exists($layoutPath)) {
             $layoutPath = $this->extension->getExtensionPath() . '/alledia_views/footer/tmpl/default.php';
 
-            if (!JFile::exists($layoutPath)) {
+            if (!File::exists($layoutPath)) {
                 $layoutPath = null;
             }
         }

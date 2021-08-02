@@ -24,7 +24,6 @@
 namespace Alledia\Framework;
 
 use Alledia\Framework\Joomla\Extension\Helper as ExtensionHelper;
-use ReflectionException;
 use ReflectionMethod;
 
 defined('_JEXEC') or die();
@@ -34,42 +33,37 @@ abstract class Helper
     /**
      * Return an array of Alledia extensions
      *
-     * @todo Move this method for the class Alledia\Framework\Joomla\Extension\Helper, but keep as deprecated
-     *
-     * @param  string $license
+     * @param string $license
      *
      * @return object[]
+     * @todo Move this method for the class Alledia\Framework\Joomla\Extension\Helper, but keep as deprecated
+     *
      */
     public static function getAllediaExtensions($license = '')
     {
         // Get the extensions ids
         $db    = \JFactory::getDbo();
         $query = $db->getQuery(true)
-            ->select(
-                array(
-                    $db->quoteName('extension_id'),
-                    $db->quoteName('type'),
-                    $db->quoteName('element'),
-                    $db->quoteName('folder')
-                )
-            )
+            ->select([
+                $db->quoteName('extension_id'),
+                $db->quoteName('type'),
+                $db->quoteName('element'),
+                $db->quoteName('folder')
+            ])
             ->from('#__extensions')
-            ->where(
-                array(
-                    $db->quoteName('custom_data') . " LIKE '%\"author\":\"Alledia\"%'",
-                    $db->quoteName('custom_data') . " LIKE '%\"author\":\"OSTraining\"%'",
-                    $db->quoteName('custom_data') . " LIKE '%\"author\":\"Joomlashack\"%'",
-                    $db->quoteName('manifest_cache') . " LIKE '%\"author\":\"Alledia\"%'",
-                    $db->quoteName('manifest_cache') . " LIKE '%\"author\":\"OSTraining\"%'",
-                    $db->quoteName('manifest_cache') . " LIKE '%\"author\":\"Joomlashack\"%'"
-                ),
-                'OR'
-            )
+            ->where([
+                $db->quoteName('custom_data') . " LIKE '%\"author\":\"Alledia\"%'",
+                $db->quoteName('custom_data') . " LIKE '%\"author\":\"OSTraining\"%'",
+                $db->quoteName('custom_data') . " LIKE '%\"author\":\"Joomlashack\"%'",
+                $db->quoteName('manifest_cache') . " LIKE '%\"author\":\"Alledia\"%'",
+                $db->quoteName('manifest_cache') . " LIKE '%\"author\":\"OSTraining\"%'",
+                $db->quoteName('manifest_cache') . " LIKE '%\"author\":\"Joomlashack\"%'"
+            ], 'OR')
             ->group($db->quoteName('extension_id'));
 
         $rows = $db->setQuery($query)->loadObjectList();
 
-        $extensions = array();
+        $extensions = [];
 
         foreach ($rows as $row) {
             $fullElement = $row->element;
@@ -111,9 +105,8 @@ abstract class Helper
      * @param array  $params
      *
      * @return mixed
-     * @throws ReflectionException
      */
-    public static function callMethod($className, $methodName, $params = array())
+    public static function callMethod($className, $methodName, $params = [])
     {
         $result = true;
 
@@ -129,10 +122,10 @@ abstract class Helper
                     $instance = $className::getInstance();
 
                 } else {
-                    $instance = new $className;
+                    $instance = new $className();
                 }
 
-                $result = call_user_func_array(array($instance, $methodName), $params);
+                $result = call_user_func_array([$instance, $methodName], $params);
             }
         }
 

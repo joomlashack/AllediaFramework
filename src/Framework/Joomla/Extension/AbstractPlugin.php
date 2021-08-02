@@ -26,12 +26,9 @@ namespace Alledia\Framework\Joomla\Extension;
 defined('_JEXEC') or die();
 
 use Alledia\Framework\Factory;
-use JPlugin;
-use JFactory;
+use Joomla\CMS\Plugin\CMSPlugin;
 
-jimport('joomla.plugin.plugin');
-
-abstract class AbstractPlugin extends JPlugin
+abstract class AbstractPlugin extends CMSPlugin
 {
     /**
      * Alledia Extension instance
@@ -49,7 +46,7 @@ abstract class AbstractPlugin extends JPlugin
 
     /**
      * Method used to load the extension data. It is not on the constructor
-     * because this way we can avoid to load the data if the plugin
+     * because this way we can avoid loading the data if the plugin
      * will not be used.
      *
      * @return void
@@ -92,7 +89,7 @@ abstract class AbstractPlugin extends JPlugin
     /**
      * Check if this extension is licensed as pro
      *
-     * @return boolean True for pro version
+     * @return bool True for pro version
      */
     protected function isPro()
     {

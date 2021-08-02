@@ -57,7 +57,7 @@ class Exception extends \Exception
     public function getCallStack()
     {
         $trace = $this->getTrace();
-        $stack = array();
+        $stack = [];
 
         foreach ($trace as $caller) {
             $row = 'Line ' . (empty($caller['line']) ? '' : $caller['line'] . ' - ');

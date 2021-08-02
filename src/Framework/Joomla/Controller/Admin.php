@@ -23,9 +23,11 @@
 
 namespace Alledia\Framework\Joomla\Controller;
 
+use Joomla\CMS\MVC\Controller\AdminController;
+
 defined('_JEXEC') or die();
 
-class Admin extends \JControllerAdmin
+class Admin extends AdminController
 {
 
 }

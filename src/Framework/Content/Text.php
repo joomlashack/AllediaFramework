@@ -69,7 +69,7 @@ class Text extends Base
     {
         $unparsedTags = $this->extractPluginTags($tagName);
 
-        $tags = array();
+        $tags = [];
         foreach ($unparsedTags as $unparsedTag) {
             $tags[] = new Tag($tagName, $unparsedTag);
         }

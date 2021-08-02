@@ -27,12 +27,24 @@ defined('_JEXEC') or die();
 
 class Profiler
 {
+    /**
+     * @var int
+     */
     protected $startTime = 0;
 
+    /**
+     * @var int
+     */
     protected $initialMemory = 0;
 
+    /**
+     * @var int
+     */
     protected $maxLength = 80;
 
+    /**
+     * @var int
+     */
     protected $lastMemory = 0;
 
     /**
@@ -61,7 +73,7 @@ class Profiler
     {
         echo "\n";
         $total    = memory_get_usage() - $this->initialMemory;
-        $data     = "==== Mem: " . number_format($total, 0, '.', ',') . ' bytes';
+        $data     = '==== Mem: ' . number_format($total, 0, '.', ',') . ' bytes';
         $diff     = $total - $this->lastMemory;
         $peak     = memory_get_peak_usage();
         $operator = '';
@@ -127,6 +139,6 @@ class Profiler
      */
     protected function printSeparator()
     {
-        echo str_repeat("=", $this->maxLength);
+        echo str_repeat('=', $this->maxLength);
     }
 }

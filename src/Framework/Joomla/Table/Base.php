@@ -23,9 +23,11 @@
 
 namespace Alledia\Framework\Joomla\Table;
 
+use Joomla\CMS\Table\Table;
+
 defined('_JEXEC') or die();
 
-class Base extends \JTable
+class Base extends Table
 {
 
 }

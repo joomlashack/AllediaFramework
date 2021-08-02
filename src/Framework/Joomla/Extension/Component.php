@@ -25,9 +25,8 @@ namespace Alledia\Framework\Joomla\Extension;
 
 defined('_JEXEC') or die();
 
-use Alledia\Framework\Factory;
 use JControllerLegacy;
-use JFactory;
+use Joomla\CMS\Factory;
 
 class Component extends Licensed
 {
@@ -52,6 +51,7 @@ class Component extends Licensed
      * Load the main controller
      *
      * @return void
+     * @throws \Exception
      */
     public function loadController()
     {
@@ -62,10 +62,13 @@ class Component extends Licensed
         }
     }
 
+    /**
+     * @return void
+     * @throws \Exception
+     */
     public function executeTask()
     {
-        $app  = JFactory::getApplication();
-        $task = $app->input->getCmd('task');
+        $task = Factory::getApplication()->input->getCmd('task');
 
         $this->controller->execute($task);
         $this->controller->redirect();

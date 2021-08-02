@@ -26,8 +26,8 @@ namespace Alledia\Framework\Joomla\Extension;
 defined('_JEXEC') or die();
 
 use Alledia\Framework\Factory;
-use Joomla\Registry\Registry;
 use JModuleHelper;
+use Joomla\Registry\Registry;
 
 /**
  * @deprecated  1.4.1 Use AbstractFlexibleModule instead. This module doesn't
@@ -36,28 +36,55 @@ use JModuleHelper;
  */
 abstract class AbstractModule extends Licensed
 {
-    // @TODO: convert to protected and remove from the subclasses?
-    private static $instance;
+    /**
+     * @var AbstractModule
+     */
+    protected static $instance;
 
-    public $id;
+    /**
+     * @var int
+     */
+    public $id = null;
 
-    public $title;
+    /**
+     * @var string
+     */
+    public $title = null;
 
-    public $module;
+    /**
+     * @var string
+     */
+    public $module = null;
 
-    public $position;
+    /**
+     * @var string
+     */
+    public $position = null;
 
-    public $content;
+    /**
+     * @var string
+     */
+    public $content = null;
 
-    public $showtitle;
+    /**
+     * @var bool
+     */
+    public $showtitle = null;
 
-    public $params;
+    /**
+     * @var int
+     */
+    public $menuid = null;
 
-    public $menuid;
+    /**
+     * @var string
+     */
+    public $name = null;
 
-    public $name;
-
-    public $style;
+    /**
+     * @var string
+     */
+    public $style = null;
 
 
     /**

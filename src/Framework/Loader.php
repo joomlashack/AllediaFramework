@@ -24,12 +24,9 @@
 namespace Alledia\Framework;
 
 use Exception;
-use JLog;
+use Joomla\CMS\Log\Log;
 
 defined('_JEXEC') or die();
-
-jimport('joomla.log.log');
-
 
 abstract class Loader
 {
@@ -49,10 +46,10 @@ abstract class Loader
     public static function includeFile($path)
     {
         if (!static::$logRegistered) {
-            JLog::addLogger(
-                array('text_file' => 'allediaframework.loader.errors.php'),
-                JLog::ALL,
-                array('allediaframework')
+            Log::addLogger(
+                ['text_file' => 'allediaframework.loader.errors.php'],
+                Log::ALL,
+                ['allediaframework']
             );
 
             static::$logRegistered = true;
@@ -78,7 +75,7 @@ abstract class Loader
             }
 
             // Register the log
-            JLog::add($logMsg, JLog::ERROR, 'allediaframework');
+            Log::add($logMsg, Log::ERROR, 'allediaframework');
 
             // Warn admin users
             $app = Factory::getApplication();

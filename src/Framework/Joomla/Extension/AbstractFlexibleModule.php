@@ -93,7 +93,7 @@ abstract class AbstractFlexibleModule extends Licensed
         $this->loadLibrary();
 
         if (is_object($module)) {
-            $properties = array(
+            $properties = [
                 'id',
                 'title',
                 'module',
@@ -104,10 +104,10 @@ abstract class AbstractFlexibleModule extends Licensed
                 'name',
                 'style',
                 'params'
-            );
+            ];
             foreach ($properties as $property) {
-                if (isset($module->$property)) {
-                    $this->$property = $module->$property;
+                if (isset($module->{$property})) {
+                    $this->{$property} = $module->{$property};
                 }
             }
             if (!$this->params instanceof Registry) {

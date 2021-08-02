@@ -77,7 +77,7 @@ class Tag extends Base
     {
         $this->name           = $name;
         $this->unparsedString = $unparsedString;
-        $this->regex          = $this->getRegex($this->name);
+        $this->regex          = static::getRegex($this->name);
 
         $this->parse();
     }

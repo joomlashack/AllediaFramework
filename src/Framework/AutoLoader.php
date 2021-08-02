@@ -33,7 +33,7 @@ class AutoLoader
      *
      * @var array
      */
-    protected static $prefixes = array();
+    protected static $prefixes = [];
 
     /**
      * Associative array of prefixes for loading specialized camelCase classes
@@ -41,7 +41,7 @@ class AutoLoader
      *
      * @var array
      */
-    protected static $camelPrefixes = array();
+    protected static $camelPrefixes = [];
 
     /**
      * @var AutoLoader
@@ -54,7 +54,7 @@ class AutoLoader
             static::$instance = new static();
         }
 
-        spl_autoload_register(array(static::$instance, $method));
+        spl_autoload_register([static::$instance, $method]);
     }
 
     /**
@@ -76,7 +76,7 @@ class AutoLoader
             return;
         }
 
-        if (count(self::$prefixes) == 0) {
+        if (count(static::$prefixes) == 0) {
             // Register function on first call
             static::registerLoader('loadClass');
         }
@@ -88,15 +88,15 @@ class AutoLoader
         $baseDir = rtrim($baseDir, '\\/') . '/';
 
         // initialise the namespace prefix array
-        if (empty(self::$prefixes[$prefix])) {
-            self::$prefixes[$prefix] = array();
+        if (empty(static::$prefixes[$prefix])) {
+            static::$prefixes[$prefix] = [];
         }
 
         // retain the base directory for the namespace prefix
         if ($prepend) {
-            array_unshift(self::$prefixes[$prefix], $baseDir);
+            array_unshift(static::$prefixes[$prefix], $baseDir);
         } else {
-            array_push(self::$prefixes[$prefix], $baseDir);
+            array_push(static::$prefixes[$prefix], $baseDir);
         }
     }
 
@@ -136,12 +136,12 @@ class AutoLoader
     protected function loadMappedFile($prefix, $className)
     {
         // are there any base directories for this namespace prefix?
-        if (isset(self::$prefixes[$prefix]) === false) {
+        if (isset(static::$prefixes[$prefix]) === false) {
             return false;
         }
 
         // look through base directories for this namespace prefix
-        foreach (self::$prefixes[$prefix] as $baseDir) {
+        foreach (static::$prefixes[$prefix] as $baseDir) {
             $path = $baseDir . str_replace('\\', '/', $className) . '.php';
 
             if (is_file($path)) {
@@ -183,13 +183,13 @@ class AutoLoader
             throw new \Exception("Cannot register '{$prefix}'. The requested base directory does not exist!'");
         }
 
-        if (count(self::$camelPrefixes) == 0) {
+        if (count(static::$camelPrefixes) == 0) {
             // Register function on first call
             static::registerLoader('loadCamelClass');
         }
 
-        if (empty(self::$camelPrefixes[$prefix])) {
-            self::$camelPrefixes[$prefix] = $baseDir;
+        if (empty(static::$camelPrefixes[$prefix])) {
+            static::$camelPrefixes[$prefix] = $baseDir;
         }
     }
 
@@ -203,7 +203,7 @@ class AutoLoader
     protected function loadCamelClass($class)
     {
         if (!class_exists($class)) {
-            foreach (self::$camelPrefixes as $prefix => $baseDir) {
+            foreach (static::$camelPrefixes as $prefix => $baseDir) {
                 if (strpos($class, $prefix) === 0) {
                     $parts = preg_split('/(?<=[a-z])(?=[A-Z])/x', substr($class, strlen($prefix)));
 

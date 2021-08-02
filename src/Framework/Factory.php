@@ -34,7 +34,7 @@ abstract class Factory extends \JFactory
      *
      * @var array
      */
-    protected static $extensionInstances = array();
+    protected static $extensionInstances = [];
 
     /**
      * Get an extension
@@ -49,12 +49,12 @@ abstract class Factory extends \JFactory
     {
         $key = $namespace . $type . $folder;
 
-        if (empty(self::$extensionInstances[$key])) {
+        if (empty(static::$extensionInstances[$key])) {
             $instance = new Joomla\Extension\Licensed($namespace, $type, $folder);
 
-            self::$extensionInstances[$key] = $instance;
+            static::$extensionInstances[$key] = $instance;
         }
 
-        return self::$extensionInstances[$key];
+        return static::$extensionInstances[$key];
     }
 }

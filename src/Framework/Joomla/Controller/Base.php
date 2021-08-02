@@ -23,9 +23,11 @@
 
 namespace Alledia\Framework\Joomla\Controller;
 
+use Joomla\CMS\MVC\Controller\BaseController;
+
 defined('_JEXEC') or die();
 
-class Base extends \JControllerLegacy
+class Base extends BaseController
 {
 
 }

@@ -23,9 +23,11 @@
 
 namespace Alledia\Framework\Joomla\View;
 
+use Joomla\CMS\MVC\View\HtmlView;
+
 defined('_JEXEC') or die();
 
-class Base extends \JViewLegacy
+class Base extends HtmlView
 {
 
 }

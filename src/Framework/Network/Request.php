@@ -38,7 +38,7 @@ class Request
      *
      * @return string
      */
-    public function post($url, $data = array())
+    public function post($url, $data = [])
     {
         if ($this->hasCURL()) {
             return $this->postCURL($url, $data);
@@ -53,7 +53,7 @@ class Request
      * Does the server have the curl extension ?
      *
      * @access protected
-     * @return boolean
+     * @return bool
      */
     protected function hasCURL()
     {
@@ -71,7 +71,7 @@ class Request
      *
      * @return string
      */
-    protected function postCURL($url, $data = array())
+    protected function postCURL($url, $data = [])
     {
         $ch = curl_init();
 
@@ -97,17 +97,17 @@ class Request
      *
      * @return string
      */
-    protected function postFOpen($url, $data = array())
+    protected function postFOpen($url, $data = [])
     {
-        $stream = fopen($url, 'r', false, stream_context_create(array(
-            'http' => array(
+        $stream = fopen($url, 'r', false, stream_context_create([
+            'http' => [
                 'method'  => 'POST',
                 'header'  => 'Content-type: application/x-www-form-urlencoded',
                 'content' => http_build_query(
                     $data
                 )
-            )
-        )));
+            ]
+        ]));
 
         $contents = stream_get_contents($stream);
         fclose($stream);

@@ -25,12 +25,10 @@ namespace Alledia\Framework\Joomla\Extension;
 
 defined('_JEXEC') or die();
 
-jimport('joomla.filesystem.file');
-
-use JFactory;
-use Joomla\Registry\Registry;
 use JFile;
 use JFormFieldCustomFooter;
+use Joomla\CMS\Factory;
+use Joomla\Registry\Registry;
 use SimpleXMLElement;
 
 /**
@@ -45,35 +43,35 @@ class Generic
      *
      * @var string
      */
-    protected $namespace;
+    protected $namespace = null;
 
     /**
      * The extension type
      *
      * @var string
      */
-    protected $type;
+    protected $type = null;
 
     /**
      * The extension id
      *
      * @var int
      */
-    protected $id;
+    protected $id = null;
 
     /**
      * The extension name
      *
      * @var string
      */
-    protected $name;
+    protected $name = null;
 
     /**
      * The extension params
      *
      * @var Registry
      */
-    public $params;
+    public $params = null;
 
     /**
      * The extension enable state
@@ -88,6 +86,11 @@ class Generic
      * @var string
      */
     protected $element;
+
+    /**
+     * @var string
+     */
+    protected $folder = null;
 
     /**
      * Base path
@@ -147,20 +150,20 @@ class Generic
         $element = $this->getElementToDb();
 
         // Load the extension info from database
-        $db    = JFactory::getDbo();
+        $db    = Factory::getDbo();
         $query = $db->getQuery(true)
-            ->select(array(
-                $db->qn('extension_id'),
-                $db->qn('name'),
-                $db->qn('enabled'),
-                $db->qn('params')
-            ))
+            ->select([
+                $db->quoteName('extension_id'),
+                $db->quoteName('name'),
+                $db->quoteName('enabled'),
+                $db->quoteName('params')
+            ])
             ->from('#__extensions')
-            ->where($db->qn('type') . ' = ' . $db->q($this->type))
-            ->where($db->qn('element') . ' = ' . $db->q($element));
+            ->where($db->quoteName('type') . ' = ' . $db->quote($this->type))
+            ->where($db->quoteName('element') . ' = ' . $db->quote($element));
 
         if ($this->type === 'plugin') {
-            $query->where($db->qn('folder') . ' = ' . $db->q($this->folder));
+            $query->where($db->quoteName('folder') . ' = ' . $db->quote($this->folder));
         }
 
         $db->setQuery($query);
@@ -183,7 +186,7 @@ class Generic
     /**
      * Check if the extension is enabled
      *
-     * @return boolean True for enabled
+     * @return bool
      */
     public function isEnabled()
     {
@@ -197,16 +200,14 @@ class Generic
      */
     public function getExtensionPath()
     {
-        $basePath = '';
-
-        $folders = array(
+        $folders = [
             'component' => 'administrator/components/',
             'plugin'    => 'plugins/',
             'template'  => 'templates/',
             'library'   => 'libraries/',
             'cli'       => 'cli/',
             'module'    => 'modules/'
-        );
+        ];
 
         $basePath = $this->basePath . '/' . $folders[$this->type];
 
@@ -251,10 +252,10 @@ class Generic
      */
     public function getElementToDb()
     {
-        $prefixes = array(
+        $prefixes = [
             'component' => 'com_',
             'module'    => 'mod_'
-        );
+        ];
 
         $fullElement = '';
         if (array_key_exists($this->type, $prefixes)) {
@@ -282,18 +283,13 @@ class Generic
             $fileName = 'templateDetails.xml';
         } else {
             $fileName = $this->element . '.xml';
-
-            if ($this->type === 'template') {
-                $fileName = 'templateDetails.xml';
-            }
         }
 
         $path = $extensionPath . "/{$fileName}";
 
-        if (!file_exists($path)) {
+        if (!is_file($path)) {
             $path = $extensionPath . "/{$this->getElementToDb()}.xml";
         }
-
 
         return $path;
     }
@@ -370,16 +366,14 @@ class Generic
      */
     public function getUpdateURL()
     {
-        $db    = JFactory::getDbo();
+        $db    = Factory::getDbo();
         $query = $db->getQuery(true)
             ->select('sites.location')
             ->from('#__update_sites AS sites')
             ->leftJoin('#__update_sites_extensions AS extensions ON (sites.update_site_id = extensions.update_site_id)')
             ->where('extensions.extension_id = ' . $this->id);
 
-        $row = $db->setQuery($query)->loadResult();
-
-        return $row;
+        return $db->setQuery($query)->loadResult();
     }
 
     /**
@@ -389,14 +383,14 @@ class Generic
      */
     public function setUpdateURL($url)
     {
-        $db = JFactory::getDbo();
+        $db = Factory::getDbo();
 
         // Get the update site id
-        $join  = $db->qn('#__update_sites_extensions') . ' AS extensions '
+        $join  = $db->quoteName('#__update_sites_extensions') . ' AS extensions '
             . 'ON (sites.update_site_id = extensions.update_site_id)';
         $query = $db->getQuery(true)
             ->select('sites.update_site_id')
-            ->from($db->qn('#__update_sites') . ' AS sites')
+            ->from($db->quoteName('#__update_sites') . ' AS sites')
             ->leftJoin($join)
             ->where('extensions.extension_id = ' . $this->id);
 
@@ -404,9 +398,9 @@ class Generic
 
         if (!empty($siteId)) {
             $query = $db->getQuery(true)
-                ->update($db->qn('#__update_sites'))
-                ->set($db->qn('location') . ' = ' . $db->q($url))
-                ->where($db->qn('update_site_id') . ' = ' . $siteId);
+                ->update($db->quoteName('#__update_sites'))
+                ->set($db->quoteName('location') . ' = ' . $db->quote($url))
+                ->where($db->quoteName('update_site_id') . ' = ' . $siteId);
 
             $db->setQuery($query)->execute();
         }
@@ -419,14 +413,14 @@ class Generic
      */
     public function storeParams()
     {
-        $db = JFactory::getDbo();
+        $db = Factory::getDbo();
 
-        $updateObject = (object)array(
+        $updateObject = (object)[
             'params'       => $this->params->toString(),
             'extension_id' => $this->id
-        );
+        ];
 
-        $db->updateObject('#__extensions', $updateObject, array('extension_id'));
+        $db->updateObject('#__extensions', $updateObject, ['extension_id']);
     }
 
     /**

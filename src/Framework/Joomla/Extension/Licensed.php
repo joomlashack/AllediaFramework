@@ -65,10 +65,10 @@ class Licensed extends Generic
     {
         parent::__construct($namespace, $type, $folder, $basePath);
 
-        $this->license = @strtolower($this->manifest->alledia->license);
+        $this->license = strtolower((string)$this->manifest->alledia->license);
 
         // Make sure we are using the correct namespace
-        $this->namespace = @$this->manifest->alledia->namespace;
+        $this->namespace = (string)$this->manifest->alledia->namespace;
 
         $this->getLibraryPath();
         $this->getProLibraryPath();
@@ -77,9 +77,9 @@ class Licensed extends Generic
     /**
      * Check if the license is pro
      *
-     * @return boolean True for pro license
+     * @return bool
      */
-    public function isPro()
+    public function isPro(): bool
     {
         return $this->license === 'pro';
     }
@@ -87,15 +87,15 @@ class Licensed extends Generic
     /**
      * Check if the license is free
      *
-     * @return boolean True for free license
+     * @return bool
      */
-    public function isFree()
+    public function isFree(): bool
     {
         return !$this->isPro();
     }
 
     /**
-     * Get the include path for the include on the free library, based on the extension type
+     * Get the include path for the free library, based on the extension type
      *
      * @return string The path for pro
      */
@@ -111,7 +111,7 @@ class Licensed extends Generic
     }
 
     /**
-     * Get the include path for the include on the pro library, based on the extension type
+     * Get the include path the pro library, based on the extension type
      *
      * @return string The path for pro
      */

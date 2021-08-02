@@ -27,7 +27,7 @@ defined('_JEXEC') or die();
 
 class Base
 {
-    const MAP_UNDEFINED = 'undefined';
+    public const MAP_UNDEFINED = 'undefined';
 
     /**
      * Retrieve all public properties and their values
@@ -50,10 +50,10 @@ class Base
             );
         }
 
-        $data = array();
+        $data = [];
         foreach ($properties as $property) {
             $name        = $property->name;
-            $data[$name] = $this->$name;
+            $data[$name] = $this->{$name};
         }
 
         return $data;
@@ -63,12 +63,12 @@ class Base
      * Set the public properties from the passed array/object
      *
      * @param array|Base $data Values to copy to $this
-     * @param array      $map  Use properties from $data translated using a field map
+     * @param ?array     $map  Use properties from $data translated using a field map
      *
      * @return $this
      * @throws Exception
      */
-    public function setProperties($data, array $map = null)
+    public function setProperties($data, ?array $map = null)
     {
         $properties = $this->getProperties();
         if ($map !== null) {
@@ -82,7 +82,7 @@ class Base
 
         foreach ($data as $k => $v) {
             if (array_key_exists($k, $properties)) {
-                $this->$k = $data[$k];
+                $this->{$k} = $v;
             }
         }
 
@@ -100,7 +100,7 @@ class Base
     {
         $properties = array_keys($this->getProperties($publicOnly));
         foreach ($properties as $property) {
-            $this->$property = null;
+            $this->{$property} = null;
         }
 
         return $this;
@@ -125,14 +125,14 @@ class Base
      * will be used for the unknown value.
      *
      *
-     * @param array|Base $source Source data to be mapped
-     * @param array      $keys   Extension keys for which values are being requested
-     * @param array      $map    Associative array where key=Extension Key, value=Source Key
+     * @param array|object $source Source data to be mapped
+     * @param array        $keys   Extension keys for which values are being requested
+     * @param array        $map    Associative array where key=Extension Key, value=Source Key
      *
      * @return array An array of all specified keys with values filled in based on map
      * @throws Exception
      */
-    public function map($source, array $keys, array $map = array())
+    public function map($source, array $keys, array $map = [])
     {
         if (!is_object($source) && !is_array($source)) {
             throw new Exception('Expected array or object for source argument');
@@ -180,10 +180,10 @@ class Base
     public function getKeyValue($data, $var, $default = null)
     {
         if (is_object($data)) {
-            return isset($data->$var) ? $data->$var : $default;
+            return $data->{$var} ?? $default;
         }
 
-        return isset($data[$var]) ? $data[$var] : $default;
+        return $data[$var] ?? $default;
     }
 
     /**

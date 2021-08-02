@@ -23,9 +23,11 @@
 
 namespace Alledia\Framework\Joomla\Model;
 
+use Joomla\CMS\MVC\Model\BaseDatabaseModel;
+
 defined('_JEXEC') or die();
 
-class Base extends \JModelLegacy
+class Base extends BaseDatabaseModel
 {
 
 }
