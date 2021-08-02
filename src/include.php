@@ -15,12 +15,13 @@ if (!defined('ALLEDIA_FRAMEWORK_LOADED')) {
 
     define('ALLEDIA_FRAMEWORK_PATH', __DIR__);
 
-    // Setup autoloaded libraries
     if (!class_exists('\\Alledia\\Framework\\AutoLoader')) {
         require_once ALLEDIA_FRAMEWORK_PATH . '/Framework/AutoLoader.php';
     }
 
     AutoLoader::register('\\Alledia\\Framework', ALLEDIA_FRAMEWORK_PATH . '/Framework');
+
+    class_alias('\\Alledia\\Framework\\Joomla\Extension\Licensed', '\\Alledia\\Framework\\Extension');
 }
 
 // Backward compatibility with the old autoloader. Avoids breaking legacy extensions.
