@@ -25,9 +25,9 @@ namespace Alledia\Framework\Joomla\Extension;
 
 defined('_JEXEC') or die();
 
-use JFile;
 use JFormFieldCustomFooter;
 use Joomla\CMS\Factory;
+use Joomla\CMS\Filesystem\File;
 use Joomla\Registry\Registry;
 use SimpleXMLElement;
 
@@ -306,7 +306,7 @@ class Generic
         if (!isset($this->manifestXml) || $force) {
             $path = $this->getManifestPath();
 
-            if (JFile::exists($path)) {
+            if (File::exists($path)) {
                 $this->manifestXml = simplexml_load_file($path);
             } else {
                 $this->manifestXml = false;
@@ -452,7 +452,7 @@ class Generic
     {
         // Check if we have a dedicated config.xml file
         $configPath = $this->getExtensionPath() . '/config.xml';
-        if (JFile::exists($configPath)) {
+        if (File::exists($configPath)) {
             $config = $this->getConfig();
 
             if (is_object($config)) {

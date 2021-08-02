@@ -25,15 +25,15 @@ namespace Alledia\Framework\Joomla\Extension;
 
 defined('_JEXEC') or die();
 
-use JControllerLegacy;
 use Joomla\CMS\Factory;
+use Joomla\CMS\MVC\Controller\BaseController;
 
 class Component extends Licensed
 {
     /**
      * The main controller
      *
-     * @var JControllerLegacy
+     * @var BaseController
      */
     protected $controller;
 
@@ -58,7 +58,7 @@ class Component extends Licensed
         if (!isset($this->controller)) {
             jimport('legacy.controller.legacy');
 
-            $this->controller = JControllerLegacy::getInstance($this->namespace);
+            $this->controller = BaseController::getInstance($this->namespace);
         }
     }
 

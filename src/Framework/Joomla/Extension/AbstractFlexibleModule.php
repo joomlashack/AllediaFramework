@@ -25,8 +25,8 @@ namespace Alledia\Framework\Joomla\Extension;
 
 defined('_JEXEC') or die();
 
+use Joomla\CMS\Helper\ModuleHelper;
 use Joomla\Registry\Registry;
-use JModuleHelper;
 
 abstract class AbstractFlexibleModule extends Licensed
 {
@@ -121,6 +121,6 @@ abstract class AbstractFlexibleModule extends Licensed
      */
     public function init()
     {
-        require JModuleHelper::getLayoutPath('mod_' . $this->element, $this->params->get('layout', 'default'));
+        require ModuleHelper::getLayoutPath('mod_' . $this->element, $this->params->get('layout', 'default'));
     }
 }

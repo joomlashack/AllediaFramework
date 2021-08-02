@@ -27,7 +27,7 @@ use Alledia\Framework\Joomla\Extension\Licensed;
 
 defined('_JEXEC') or die();
 
-abstract class Factory extends \JFactory
+abstract class Factory extends \Joomla\CMS\Factory
 {
     /**
      * Instances of extensions

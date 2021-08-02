@@ -28,8 +28,8 @@ defined('_JEXEC') or die();
 use Alledia\Framework\Factory;
 use Alledia\Framework\Joomla\Model\Base as BaseModel;
 use Alledia\Framework\Joomla\Table\Base as BaseTable;
-use JModelLegacy;
-use JTable;
+use Joomla\CMS\MVC\Model\BaseDatabaseModel;
+use Joomla\CMS\Table\Table;
 
 abstract class AbstractComponent extends Licensed
 {
@@ -50,8 +50,8 @@ abstract class AbstractComponent extends Licensed
     {
         parent::__construct($namespace, 'component');
 
-        JModelLegacy::addIncludePath(JPATH_COMPONENT . '/models');
-        JTable::addIncludePath(JPATH_COMPONENT . '/tables');
+        BaseDatabaseModel::addIncludePath(JPATH_COMPONENT . '/models');
+        Table::addIncludePath(JPATH_COMPONENT . '/tables');
 
         $this->loadLibrary();
     }
