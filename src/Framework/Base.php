@@ -214,6 +214,9 @@ class Base
         return null;
     }
 
+    /**
+     * @return string
+     */
     public function __toString()
     {
         return $this->asString();

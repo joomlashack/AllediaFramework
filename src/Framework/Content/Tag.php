@@ -35,14 +35,14 @@ class Tag extends Base
      *
      * @var string
      */
-    protected $unparsedString;
+    protected $unparsedString = null;
 
     /**
      * The tag name
      *
      * @var string
      */
-    protected $name;
+    protected $name = null;
 
     /**
      * The tag content
@@ -56,14 +56,14 @@ class Tag extends Base
      *
      * @var string
      */
-    protected $regex;
+    protected $regex = null;
 
     /**
      * The tag params
      *
      * @var Registry
      */
-    public $params;
+    public $params = null;
 
     /**
      * Constructor method, that defines the internal content

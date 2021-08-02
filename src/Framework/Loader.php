@@ -30,6 +30,9 @@ defined('_JEXEC') or die();
 
 abstract class Loader
 {
+    /**
+     * @var bool
+     */
     protected static $logRegistered = false;
 
     /**
