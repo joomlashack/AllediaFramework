@@ -136,11 +136,11 @@ class Tag extends Base
     protected function parseParams()
     {
         // Remove the tag name, extracting only the tag attributes
-        $inlineParams = preg_replace('/^\{' . $this->name . '/', '', $this->unparsedString);
-        $inlineParams = trim(preg_replace('/\}[a-z0-9\s]*\{\/' . $this->name . '\}/', '', $inlineParams));
+        $inlineParams = preg_replace('/^{' . $this->name . '/', '', $this->unparsedString);
+        $inlineParams = trim(preg_replace('/}[a-z0-9\s]*{\/' . $this->name . '}/', '', $inlineParams));
 
         // Parse the inline params
-        $regex  = '/([a-z0-9\_]*)(?:="([^"]*)")?\s?/i';
+        $regex  = '/([a-z0-9_]*)(?:="([^"]*)")?\s?/i';
         $parsed = new Registry();
         if (preg_match_all($regex, $inlineParams, $vars)) {
             $fullParams  = $vars[0];
