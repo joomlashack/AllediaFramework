@@ -9,7 +9,7 @@
         "element-short"  : "allediaframework",
         "name"           : "Joomlashack Framework",
         "client"         : "site",
-        "target-platform": "3.9",
+        "target-platform": ".*",
         "package-license": "free"
     },
     "authors"          : [
