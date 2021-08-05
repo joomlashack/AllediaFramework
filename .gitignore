@@ -32,6 +32,11 @@ local.properties
 ## IntelliJ
 out/
 
+# Node files
+##############
+node_modules
+package*.json
+
 # NetBeans IDE #
 ################
 nbproject/private/
