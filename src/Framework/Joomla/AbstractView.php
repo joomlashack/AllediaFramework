@@ -23,10 +23,6 @@
 
 namespace Alledia\Framework\Joomla;
 
-use Alledia\Framework\Extension;
-use Alledia\Framework\Factory;
-use Alledia\Framework\Joomla\Extension\Helper as ExtensionHelper;
-use Joomla\CMS\Application\CMSApplication;
 use Joomla\CMS\MVC\Model\BaseDatabaseModel;
 use Joomla\CMS\MVC\View\HtmlView;
 use Joomla\CMS\Object\CMSObject;
@@ -56,7 +52,7 @@ abstract class AbstractView extends HtmlView
     {
         parent::__construct($config);
 
-        $this->constructSetup();
+        $this->setup();
     }
 
     /**
@@ -64,20 +60,13 @@ abstract class AbstractView extends HtmlView
      */
     public function setModel($model, $default = false)
     {
-        if (parent::setModel($model, $default)) {
-            if ($default) {
-                $this->model = $model;
-                $this->state = $this->model->getState();
-            }
-
-            return true;
+        $model = parent::setModel($model, $default);
+        if ($model && $default) {
+            $this->model = $model;
+            $this->state = $this->model->getState();
         }
 
-        return false;
-    }
-
-    protected function setup()
-    {
+        return $model;
     }
 
     /**
@@ -93,18 +82,17 @@ abstract class AbstractView extends HtmlView
     }
 
     /**
-     * Get layout name based on Joomla version
+     * Adjust layout name based on Joomla version
      *
      * @return string
      */
-    public function getLayout()
+    public function setLayout($layout)
     {
-        $layout = parent::getLayout();
         if (Version::MAJOR_VERSION != '4') {
             $layout .= '.j' . Version::MAJOR_VERSION;
         }
 
-        return $layout;
+        return parent::setLayout($layout);
     }
 
     /**

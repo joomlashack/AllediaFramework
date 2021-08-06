@@ -27,7 +27,6 @@ use Alledia\Framework\Extension;
 use Alledia\Framework\Factory;
 use Alledia\Framework\Joomla\Extension\Helper as ExtensionHelper;
 use Joomla\CMS\Application\CMSApplication;
-use Joomla\CMS\Filesystem\File;
 
 defined('_JEXEC') or die();
 
@@ -43,9 +42,10 @@ trait TraitAllediaView
      */
     protected $extension = null;
 
-    final protected function constructSetup()
+    protected function setup()
     {
-        $this->app = Factory::getApplication();
+        $this->app      = Factory::getApplication();
+        $this->document = Factory::getDocument();
 
         $this->option = $this->app->input->get('option');
 
@@ -53,12 +53,5 @@ trait TraitAllediaView
 
         $this->extension = Factory::getExtension($info['namespace'], $info['type']);
         $this->extension->loadLibrary();
-
-        $this->setup();
-    }
-
-    protected function setup()
-    {
-
     }
 }
