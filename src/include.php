@@ -7,6 +7,7 @@
  */
 
 use Alledia\Framework\AutoLoader;
+use Joomla\CMS\Version;
 
 defined('_JEXEC') or die();
 
@@ -22,6 +23,11 @@ if (!defined('ALLEDIA_FRAMEWORK_LOADED')) {
     AutoLoader::register('\\Alledia\\Framework', ALLEDIA_FRAMEWORK_PATH . '/Framework');
 
     class_alias('\\Alledia\\Framework\\Joomla\Extension\Licensed', '\\Alledia\\Framework\\Extension');
+
+    if (Version::MAJOR_VERSION < 4) {
+        // Add some shims for Joomla 3
+        class_alias('JHtmlSidebar', '\\Joomla\\CMS\\HTML\\Helpers\\Sidebar');
+    }
 }
 
 // Backward compatibility with the old autoloader. Avoids breaking legacy extensions.
