@@ -25,18 +25,13 @@ namespace Alledia\Framework\Joomla\View\Admin;
 
 defined('_JEXEC') or die();
 
-use Alledia\Framework\Joomla\AbstractView;
-use Alledia\Framework\Joomla\TraitAllediaView;
 use Joomla\CMS\Form\Form;
 use Joomla\CMS\HTML\HTMLHelper;
-use Joomla\CMS\Object\CMSObject;
 use Joomla\CMS\Pagination\Pagination;
 use Joomla\CMS\Version;
 
-abstract class AbstractList extends AbstractView
+abstract class AbstractList extends AbstractBase
 {
-    use TraitAllediaView;
-
     /**
      * @var object[]
      */
@@ -77,13 +72,6 @@ abstract class AbstractList extends AbstractView
         }
 
         parent::display($tpl);
-    }
-
-    protected function displayFooter()
-    {
-        parent::displayFooter();
-
-        $this->displayAdminFooter();
     }
 }
 

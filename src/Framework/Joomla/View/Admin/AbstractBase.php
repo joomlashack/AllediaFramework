@@ -21,44 +21,45 @@
  * along with AllediaFramework.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-namespace Alledia\Framework\Joomla;
+namespace Alledia\Framework\Joomla\View\Admin;
 
 use Alledia\Framework\Extension;
-use Alledia\Framework\Factory;
-use Alledia\Framework\Joomla\Extension\Helper as ExtensionHelper;
-use Joomla\CMS\Application\CMSApplication;
+use Alledia\Framework\Joomla\AbstractView;
 use Joomla\CMS\Filesystem\File;
 
 defined('_JEXEC') or die();
 
-trait TraitAllediaView
+class AbstractBase extends AbstractView
 {
-    /**
-     * @var CMSApplication
-     */
-    protected $app = null;
-
-    /**
-     * @var Extension
-     */
-    protected $extension = null;
-
-    final protected function constructSetup()
+    protected function displayFooter(?Extension $extension = null)
     {
-        $this->app = Factory::getApplication();
+        parent::displayFooter();
 
-        $this->option = $this->app->input->get('option');
-
-        $info = ExtensionHelper::getExtensionInfoFromElement($this->option);
-
-        $this->extension = Factory::getExtension($info['namespace'], $info['type']);
-        $this->extension->loadLibrary();
-
-        $this->setup();
+        $this->displayAdminFooter($extension);
     }
 
-    protected function setup()
+    /**
+     * @param ?Extension $extension
+     */
+    protected function displayAdminFooter(?Extension $extension = null)
     {
+        $extension = $extension ?: ($this->extension ?? null);
 
+        if ($extension) {
+            $layoutPath = $extension->getExtensionPath() . '/views/footer/tmpl/default.php';
+
+            if (!File::exists($layoutPath)) {
+                $layoutPath = $extension->getExtensionPath() . '/alledia_views/footer/tmpl/default.php';
+            }
+
+            if (File::exists($layoutPath)) {
+                ob_start();
+                include $layoutPath;
+                $output = ob_get_contents();
+                ob_end_clean();
+            }
+        }
+
+        echo $output ?? '';
     }
 }

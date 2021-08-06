@@ -36,15 +36,7 @@ defined('_JEXEC') or die();
 
 abstract class AbstractView extends HtmlView
 {
-    /**
-     * @var CMSApplication
-     */
-    protected $app = null;
-
-    /**
-     * @var Extension
-     */
-    protected $extension = null;
+    use TraitAllediaView;
 
     /**
      * @var BaseDatabaseModel
@@ -62,11 +54,9 @@ abstract class AbstractView extends HtmlView
      */
     public function __construct($config = [])
     {
-        $this->app = Factory::getApplication();
-
         parent::__construct($config);
 
-        $this->setup();
+        $this->constructSetup();
     }
 
     /**
@@ -88,12 +78,6 @@ abstract class AbstractView extends HtmlView
 
     protected function setup()
     {
-        $this->option = $this->app->input->get('option');
-
-        $info = ExtensionHelper::getExtensionInfoFromElement($this->option);
-
-        $this->extension = Factory::getExtension($info['namespace'], $info['type']);
-        $this->extension->loadLibrary();
     }
 
     /**
