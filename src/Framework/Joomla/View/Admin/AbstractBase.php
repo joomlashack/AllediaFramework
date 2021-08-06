@@ -46,17 +46,21 @@ class AbstractBase extends AbstractView
         $extension = $extension ?: ($this->extension ?? null);
 
         if ($extension) {
-            $layoutPath = $extension->getExtensionPath() . '/views/footer/tmpl/default.php';
+            $output = $extension->getFooterMarkup();
 
-            if (!File::exists($layoutPath)) {
-                $layoutPath = $extension->getExtensionPath() . '/alledia_views/footer/tmpl/default.php';
-            }
+            if (empty($output)) {
+                $layoutPath = $extension->getExtensionPath() . '/views/footer/tmpl/default.php';
 
-            if (File::exists($layoutPath)) {
-                ob_start();
-                include $layoutPath;
-                $output = ob_get_contents();
-                ob_end_clean();
+                if (!File::exists($layoutPath)) {
+                    $layoutPath = $extension->getExtensionPath() . '/alledia_views/footer/tmpl/default.php';
+                }
+
+                if (File::exists($layoutPath)) {
+                    ob_start();
+                    include $layoutPath;
+                    $output = ob_get_contents();
+                    ob_end_clean();
+                }
             }
         }
 
