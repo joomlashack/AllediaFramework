@@ -57,6 +57,11 @@ abstract class AbstractList extends AbstractBase
      */
     public $activeFilters = null;
 
+    /**
+     * @var bool
+     */
+    protected $isEmptyState = null;
+
     public function display($tpl = null)
     {
         // Add default admin CSS
@@ -65,7 +70,6 @@ abstract class AbstractList extends AbstractBase
         if (
             Version::MAJOR_VERSION == 4
             && empty($this->items)
-            && property_exists($this, 'isEmptyState')
             && ($this->isEmptyState = $this->get('IsEmptyState'))
         ) {
             $this->setLayout('emptystate');
