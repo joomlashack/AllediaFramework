@@ -27,6 +27,9 @@ use Joomla\CMS\MVC\View\HtmlView;
 
 defined('_JEXEC') or die();
 
+/**
+ * @deprecated v2.0.5
+ */
 class Base extends HtmlView
 {
 

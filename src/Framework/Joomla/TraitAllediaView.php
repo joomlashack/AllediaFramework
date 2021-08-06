@@ -1,0 +1,57 @@
+<?php
+/**
+ * @package   AllediaFramework
+ * @contact   www.joomlashack.com, help@joomlashack.com
+ * @copyright 2021 Joomlashack.com. All rights reserved
+ * @license   https://www.gnu.org/licenses/gpl.html GNU/GPL
+ *
+ * This file is part of AllediaFramework.
+ *
+ * AllediaFramework is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * AllediaFramework is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with AllediaFramework.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
+namespace Alledia\Framework\Joomla;
+
+use Alledia\Framework\Extension;
+use Joomla\CMS\Filesystem\File;
+
+defined('_JEXEC') or die();
+
+trait TraitAllediaView
+{
+    /**
+     * @param ?Extension $extension
+     */
+    protected function displayAdminFooter(?Extension $extension = null)
+    {
+        $extension = $extension ?: ($this->extension ?? null);
+
+        if ($extension) {
+            $layoutPath = $extension->getExtensionPath() . '/views/footer/tmpl/default.php';
+            if (!File::exists($layoutPath)) {
+                $layoutPath = $extension->getExtensionPath() . '/alledia_views/footer/tmpl/default.php';
+
+                if (File::exists($layoutPath)) {
+                    ob_start();
+                    include $layoutPath;
+                    $output = ob_get_contents();
+                    ob_end_clean();
+                }
+            }
+        }
+
+        echo $output ?? '';
+    }
+
+}

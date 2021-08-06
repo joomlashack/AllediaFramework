@@ -29,7 +29,11 @@ use Alledia\Framework\Factory;
 use Alledia\Framework\Joomla\Extension\Helper as ExtensionHelper;
 use Alledia\Framework\Joomla\Extension\Licensed;
 use Joomla\CMS\Filesystem\File;
+use Joomla\CMS\HTML\HTMLHelper;
 
+/**
+ * @deprecated v2.0.5
+ */
 class Admin extends Base
 {
     /**
@@ -60,10 +64,7 @@ class Admin extends Base
     public function display($tpl = null)
     {
         // Add default admin CSS
-        $cssPath = JPATH_SITE . "/media/{$this->option}/css/admin-default.css";
-        if (is_file($cssPath)) {
-            Factory::getDocument()->addStyleSheet($cssPath);
-        }
+        HTMLHelper::_('stylesheet', $this->option . '/admin-default.css', ['relative' => true]);
 
         parent::display($tpl);
 
