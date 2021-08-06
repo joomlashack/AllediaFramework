@@ -49,6 +49,7 @@ class AbstractBase extends AbstractView
             $output = $extension->getFooterMarkup();
 
             if (empty($output)) {
+                // Use alternative if no custom footer field
                 $layoutPath = $extension->getExtensionPath() . '/views/footer/tmpl/default.php';
 
                 if (!File::exists($layoutPath)) {
