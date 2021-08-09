@@ -25,6 +25,7 @@ namespace Alledia\Framework;
 
 use Alledia\Framework\Joomla\Extension\Helper as ExtensionHelper;
 use Joomla\CMS\Form\Form;
+use Joomla\CMS\Version;
 use ReflectionMethod;
 
 defined('_JEXEC') or die();
@@ -97,7 +98,7 @@ abstract class Helper
      */
     public static function getJoomlaVersionCssClass()
     {
-        return 'joomla' . (version_compare(JVERSION, '3.0', 'lt') ? '25' : '3x');
+        return sprintf('joomla%sx', Version::MAJOR_VERSION);
     }
 
     /**
