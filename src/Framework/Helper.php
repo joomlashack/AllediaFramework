@@ -24,6 +24,7 @@
 namespace Alledia\Framework;
 
 use Alledia\Framework\Joomla\Extension\Helper as ExtensionHelper;
+use Joomla\CMS\Form\Form;
 use ReflectionMethod;
 
 defined('_JEXEC') or die();
@@ -130,5 +131,18 @@ abstract class Helper
         }
 
         return $result;
+    }
+
+    /**
+     * @param string $name
+     *
+     * @return Form
+     */
+    public static function createForm(string $name)
+    {
+        $form = new Form($name);
+        $form->load('<?xml version="1.0" encoding="UTF-8"?><form/>');
+
+        return $form;
     }
 }
