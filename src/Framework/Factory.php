@@ -24,6 +24,9 @@
 namespace Alledia\Framework;
 
 use Alledia\Framework\Joomla\Extension\Licensed;
+use Joomla\CMS\Version;
+use JEventDispatcher;
+use Joomla\Event\DispatcherInterface;
 
 defined('_JEXEC') or die();
 
@@ -35,6 +38,11 @@ abstract class Factory extends \Joomla\CMS\Factory
      * @var array
      */
     protected static $extensionInstances = [];
+
+    /**
+     * @var JEventDispatcher
+     */
+    protected static $dispatcher = null;
 
     /**
      * Get an extension
@@ -56,5 +64,21 @@ abstract class Factory extends \Joomla\CMS\Factory
         }
 
         return static::$extensionInstances[$key];
+    }
+
+    /**
+     * @return JEventDispatcher|DispatcherInterface
+     */
+    public static function getDispatcher()
+    {
+        if (Version::MAJOR_VERSION < 4) {
+            if (static::$dispatcher === null) {
+                static::$dispatcher = JEventDispatcher::getInstance();
+            }
+
+            return static::$dispatcher;
+        }
+
+        return static::getApplication()->getDispatcher();
     }
 }
