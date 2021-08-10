@@ -47,9 +47,9 @@ abstract class Factory extends \Joomla\CMS\Factory
     /**
      * Get an extension
      *
-     * @param  string $namespace The extension namespace
-     * @param  string $type      The extension type
-     * @param  string $folder    The extension folder (plugins only)
+     * @param string $namespace The extension namespace
+     * @param string $type      The extension type
+     * @param string $folder    The extension folder (plugins only)
      *
      * @return Licensed          The extension instance
      */
