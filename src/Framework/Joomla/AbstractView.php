@@ -74,11 +74,13 @@ abstract class AbstractView extends HtmlView
      */
     public function display($tpl = null)
     {
-        $this->displayHeader();
+        if ($this->initSuccess) {
+            $this->displayHeader();
 
-        parent::display($tpl);
+            parent::display($tpl);
 
-        $this->displayFooter();
+            $this->displayFooter();
+        }
     }
 
     /**

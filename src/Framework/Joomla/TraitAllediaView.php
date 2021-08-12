@@ -42,16 +42,37 @@ trait TraitAllediaView
      */
     protected $extension = null;
 
+    /**
+     * @var bool
+     */
+    protected $initSuccess = null;
+
+    /**
+     * @return void
+     */
     protected function setup()
     {
-        $this->app      = Factory::getApplication();
-        $this->document = Factory::getDocument();
+        try {
+            $this->app      = Factory::getApplication();
+            $this->document = Factory::getDocument();
 
-        $this->option = $this->app->input->get('option');
+            $this->option = $this->app->input->get('option');
 
-        $info = ExtensionHelper::getExtensionInfoFromElement($this->option);
+            $info = ExtensionHelper::getExtensionInfoFromElement($this->option);
 
-        $this->extension = Factory::getExtension($info['namespace'], $info['type']);
-        $this->extension->loadLibrary();
+            $this->extension = Factory::getExtension($info['namespace'], $info['type']);
+            $this->extension->loadLibrary();
+
+            $this->initSuccess = true;
+
+        } catch (\Throwable $error) {
+            if ($this->app) {
+                $this->app->enqueueMessage($error->getMessage(), 'error');
+            } else {
+                echo '<p>' . $error->getMessage() . '</p>';
+            }
+
+            $this->initSuccess = false;
+        }
     }
 }
