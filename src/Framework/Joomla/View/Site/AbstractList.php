@@ -2,7 +2,7 @@
 /**
  * @package   AllediaFramework
  * @contact   www.joomlashack.com, help@joomlashack.com
- * @copyright 2016-2021 Joomlashack.com. All rights reserved
+ * @copyright 2021 Joomlashack.com. All rights reserved
  * @license   https://www.gnu.org/licenses/gpl.html GNU/GPL
  *
  * This file is part of AllediaFramework.
@@ -21,16 +21,33 @@
  * along with AllediaFramework.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-namespace Alledia\Framework\Joomla\Model;
-
-use Joomla\CMS\MVC\Model\BaseDatabaseModel;
+namespace Alledia\Framework\Joomla\View\Site;
 
 defined('_JEXEC') or die();
 
-/**
- * @deprecated v2.1.0: This is pretty much useless
- */
-class Base extends BaseDatabaseModel
-{
+use Joomla\CMS\Form\Form;
+use Joomla\CMS\Pagination\Pagination;
 
+abstract class AbstractList extends AbstractBase
+{
+    /**
+     * @var object[]
+     */
+    protected $items = null;
+
+    /**
+     * @var Pagination
+     */
+    protected $pagination = null;
+
+    /**
+     * @var Form
+     */
+    public $filterForm = null;
+
+    /**
+     * @var string[]
+     */
+    public $activeFilters = null;
 }
+
