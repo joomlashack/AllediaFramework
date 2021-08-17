@@ -23,7 +23,6 @@
 
 namespace Alledia\Framework\Joomla\View\Admin;
 
-use Alledia\Framework\Joomla\TraitAllediaView;
 use Joomla\CMS\Form\Form;
 use Joomla\CMS\MVC\Model\AdminModel;
 
