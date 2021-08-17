@@ -24,7 +24,9 @@
 namespace Alledia\Framework\Joomla\View\Admin;
 
 use Joomla\CMS\Form\Form;
+use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\MVC\Model\AdminModel;
+use Joomla\CMS\Version;
 
 defined('_JEXEC') or die();
 
@@ -39,6 +41,18 @@ class AbstractForm extends AbstractBase
      * @var bool
      */
     protected $useCoreUI = true;
+
+    /**
+     * @inheritDoc
+     */
+    protected function setup()
+    {
+        parent::setup();
+
+        if (Version::MAJOR_VERSION < 4) {
+            HTMLHelper::_('behavior.tabstate');
+        }
+    }
 
     /**
      * @inheritDoc
