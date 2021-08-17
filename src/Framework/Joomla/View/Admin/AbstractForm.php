@@ -36,6 +36,11 @@ class AbstractForm extends AbstractBase
     protected $form = null;
 
     /**
+     * @var bool
+     */
+    protected $useCoreUI = true;
+
+    /**
      * @inheritDoc
      *
      */
