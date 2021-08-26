@@ -34,3 +34,5 @@ if (!defined('ALLEDIA_FRAMEWORK_LOADED')) {
 if (!class_exists('AllediaPsr4AutoLoader')) {
     require_once 'AllediaPsr4AutoLoader.php';
 }
+
+return defined('ALLEDIA_FRAMEWORK_LOADED');
