@@ -135,9 +135,7 @@ class Licensed extends Generic
     {
         $libraryPath = $this->getLibraryPath();
 
-        // If we have a library path, lets load it
-        if (file_exists($libraryPath)) {
-            // Setup autoloaded libraries
+        if (is_dir($libraryPath)) {
             AutoLoader::register('Alledia\\' . $this->namespace, $libraryPath);
 
             return true;
