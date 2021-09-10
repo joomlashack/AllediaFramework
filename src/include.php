@@ -7,6 +7,7 @@
  */
 
 use Alledia\Framework\AutoLoader;
+use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Version;
 
 defined('_JEXEC') or die();
@@ -21,6 +22,7 @@ if (!defined('ALLEDIA_FRAMEWORK_LOADED')) {
     }
 
     AutoLoader::register('\\Alledia\\Framework', ALLEDIA_FRAMEWORK_PATH . '/Framework');
+    HTMLHelper::addIncludePath(ALLEDIA_FRAMEWORK_PATH . '/helpers/html');
 
     class_alias('\\Alledia\\Framework\\Joomla\Extension\Licensed', '\\Alledia\\Framework\\Extension');
 
