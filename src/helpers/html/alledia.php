@@ -123,7 +123,6 @@ window.{$function} = function(id, name) {
     window.processModalSelect('{$itemType}', '{$id}', id, name);
 };
 JSCRIPT;
-
             Factory::getDocument()->addScriptDeclaration($script);
 
             static::$modalFunctions[$function] = true;
@@ -135,21 +134,19 @@ JSCRIPT;
         // Begin field output
         $html = '<span class="input-append input-group">';
 
-        // Display the read-only name field
-        $html .= sprintf(
-            '<input %s/>',
-            ArrayHelper::toString([
-                'type'     => 'text',
-                'id'       => $id . '_name',
-                'value'    => $options['hint'],
-                'class'    => 'input-medium form-control',
-                'disabled' => 'disabled',
-                'size'     => 35
-            ])
-        );
+        // Read-only name field
+        $nameAttribs = [
+            'type'     => 'text',
+            'id'       => $id . '_name',
+            'value'    => $options['hint'],
+            'class'    => 'input-medium form-control',
+            'disabled' => 'disabled',
+            'size'     => 35
+        ];
+        $html .= sprintf('<input %s/>', ArrayHelper::toString($nameAttribs));
 
         // Create read-only ID field
-        $attribs = [
+        $idAttribs = [
             'type'          => 'hidden',
             'id'            => $id . '_id',
             'name'          => $name,
@@ -157,9 +154,9 @@ JSCRIPT;
             'data-required' => (int)(bool)$options['required']
         ];
         if ($options['required']) {
-            $attribs['class'] = 'class="required modal-value';
+            $idAttribs['class'] = 'required modal-value';
         }
-        $html .= sprintf('<input  %s/>', ArrayHelper::toString($attribs));
+        $html .= sprintf('<input  %s/>', ArrayHelper::toString($idAttribs));
 
         // Select button
         $html .= HTMLHelper::_(
