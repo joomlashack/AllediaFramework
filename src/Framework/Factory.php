@@ -24,8 +24,10 @@
 namespace Alledia\Framework;
 
 use Alledia\Framework\Joomla\Extension\Licensed;
-use Joomla\CMS\Version;
 use JEventDispatcher;
+use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\Version;
 use Joomla\Event\DispatcherInterface;
 
 defined('_JEXEC') or die();
