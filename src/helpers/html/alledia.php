@@ -68,12 +68,15 @@ abstract class JhtmlAlledia
             'itemType' => null,
         ];
 
-        $options = array_merge(
+        $options = array_replace_recursive(
             $required,
             [
                 'title'      => Text::_('JSELECT'),
                 'hint'       => Text::_('JGLOBAL_SELECT_AN_OPTION'),
-                'button'     => Text::_('JSELECT'),
+                'button'     => [
+                    'select' => Text::_('JSELECT'),
+                    'clear'  => Text::_('JCLEAR')
+                ],
                 'close'      => Text::_('JLIB_HTML_BEHAVIOR_CLOSE'),
                 'value'      => null,
                 'required'   => false,
@@ -140,10 +143,10 @@ JSCRIPT;
             'id'       => $id . '_name',
             'value'    => $options['hint'],
             'class'    => 'input-medium form-control',
-            'disabled' => 'disabled',
+            'readonly' => 'readonly',
             'size'     => 35
         ];
-        $html .= sprintf('<input %s/>', ArrayHelper::toString($nameAttribs));
+        $html        .= sprintf('<input %s/>', ArrayHelper::toString($nameAttribs));
 
         // Create read-only ID field
         $idAttribs = [
@@ -151,27 +154,29 @@ JSCRIPT;
             'id'            => $id . '_id',
             'name'          => $name,
             'value'         => $options['value'],
-            'data-required' => (int)(bool)$options['required']
+            'data-required' => (int)(bool)$options['required'],
+            'data-text'     => $title
         ];
         if ($options['required']) {
             $idAttribs['class'] = 'required modal-value';
         }
+
         $html .= sprintf('<input  %s/>', ArrayHelper::toString($idAttribs));
 
-        // Select button
-        $html .= HTMLHelper::_(
-            'link',
-            '#' . $modalId,
-            '<span class="icon-list" aria-hidden="true"></span> ' . $options['button'],
-            [
-                'class'          => 'btn btn-primary hasTooltip',
-                'id'             => $id . '_change',
-                'data-toggle'    => 'modal',
-                'data-bs-toggle' => 'modal',
-                'data-bs-target' => '#' . $modalId,
-                'role'           => 'button',
-                'title'          => $title,
-            ]
+        $html .= static::createSelectButton(
+            $options['value'],
+            $id,
+            $modalId,
+            $options['button']['select'],
+            $options['required']
+        );
+
+        $html .= static::createClearButton(
+            $options['value'],
+            $id,
+            $modalId,
+            $options['button']['clear'],
+            $options['required']
         );
 
         // Modal Sitemap window
@@ -193,5 +198,79 @@ JSCRIPT;
         );
 
         return $html;
+    }
+
+    /**
+     * @param string $value
+     * @param string $id
+     * @param string $modalId
+     * @param string $text
+     * @param bool   $required
+     *
+     * @return string
+     */
+    protected static function createSelectButton(
+        string $value,
+        string $id,
+        string $modalId,
+        string $text,
+        bool $required
+    ): string {
+        $selectAttribs = [
+            'class'          => 'btn btn-primary hasTooltip',
+            'id'             => $id . ($required ? '_change' : '_select'),
+            'data-toggle'    => 'modal',
+            'data-bs-toggle' => 'modal',
+            'data-bs-target' => '#' . $modalId,
+            'role'           => 'button',
+        ];
+        if (empty($required) && $value) {
+            $selectAttribs['class'] .= ' hidden';
+        }
+
+        return HTMLHelper::_(
+            'link',
+            '#' . $modalId,
+            '<span class="icon-list" aria-hidden="true"></span> ' . $text,
+            $selectAttribs
+        );
+    }
+
+    /**
+     * @param string $value
+     * @param string $id
+     * @param string $modalId
+     * @param string $text
+     * @param bool   $required
+     *
+     * @return string
+     */
+    protected static function createClearButton(
+        string $value,
+        string $id,
+        string $modalId,
+        string $text,
+        bool $required
+    ): string {
+        if ($required == false) {
+            $clearAttribs = [
+                'class'   => 'btn btn-secondary hasTooltip',
+                'id'      => $id . '_clear',
+                'role'    => 'button',
+                'onclick' => "window.processModalParent('{$id}');return false;",
+            ];
+            if (empty($value)) {
+                $clearAttribs['class'] .= ' hidden';
+            }
+
+            return HTMLHelper::_(
+                'link',
+                '#' . $modalId,
+                '<span class="icon-remove" aria-hidden="true"></span> ' . $text,
+                $clearAttribs
+            );
+        }
+
+        return '';
     }
 }
