@@ -27,7 +27,6 @@ use Joomla\CMS\Form\Form;
 use Joomla\CMS\MVC\Model\BaseDatabaseModel;
 use Joomla\CMS\MVC\View\HtmlView;
 use Joomla\CMS\Object\CMSObject;
-use Joomla\CMS\Version;
 
 defined('_JEXEC') or die();
 
@@ -87,20 +86,6 @@ abstract class AbstractView extends HtmlView
 
             $this->displayFooter();
         }
-    }
-
-    /**
-     * Adjust layout name based on Joomla version
-     *
-     * @return string
-     */
-    public function setLayout($layout)
-    {
-        if (Version::MAJOR_VERSION != '4') {
-            $layout .= '.j' . Version::MAJOR_VERSION;
-        }
-
-        return parent::setLayout($layout);
     }
 
     /**
