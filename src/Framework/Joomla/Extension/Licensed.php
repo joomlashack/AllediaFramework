@@ -38,21 +38,21 @@ class Licensed extends Generic
      *
      * @var string
      */
-    protected $license;
+    protected $license = null;
 
     /**
      * The path for the pro library
      *
      * @var string
      */
-    protected $proLibraryPath;
+    protected $proLibraryPath = null;
 
     /**
      * The path for the free library
      *
      * @var string
      */
-    protected $libraryPath;
+    protected $libraryPath = null;
 
     /**
      * Class constructor, set the extension type.
