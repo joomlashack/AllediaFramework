@@ -42,7 +42,7 @@ abstract class Factory extends \Joomla\CMS\Factory
     protected static $extensionInstances = [];
 
     /**
-     * @var JEventDispatcher
+     * @var JEventDispatcher|DispatcherInterface
      */
     protected static $dispatcher = null;
 
