@@ -65,10 +65,10 @@ class Licensed extends Generic
     {
         parent::__construct($namespace, $type, $folder, $basePath);
 
-        $this->license = strtolower((string)$this->manifest->alledia->license);
+        $this->license = strtolower($this->manifest->alledia->license ?? null);
 
         // Make sure we are using the correct namespace
-        $this->namespace = (string)$this->manifest->alledia->namespace;
+        $this->namespace = $this->manifest->alledia->namespace ?? null;
 
         $this->getLibraryPath();
         $this->getProLibraryPath();
@@ -101,7 +101,7 @@ class Licensed extends Generic
      */
     public function getLibraryPath()
     {
-        if (empty($this->libraryPath)) {
+        if ($this->libraryPath === null) {
             $basePath = $this->getExtensionPath();
 
             $this->libraryPath = $basePath . '/library';
@@ -133,12 +133,14 @@ class Licensed extends Generic
      */
     public function loadLibrary()
     {
-        $libraryPath = $this->getLibraryPath();
+        if ($this->namespace) {
+            $libraryPath = $this->getLibraryPath();
 
-        if (is_dir($libraryPath)) {
-            AutoLoader::register('Alledia\\' . $this->namespace, $libraryPath);
+            if (is_dir($libraryPath)) {
+                AutoLoader::register('Alledia\\' . $this->namespace, $libraryPath);
 
-            return true;
+                return true;
+            }
         }
 
         return false;
