@@ -40,6 +40,8 @@ abstract class AbstractView extends HtmlView
     protected $model = null;
 
     /**
+     * Formally declare this since Joomla core does not
+     *
      * @var Form
      */
     protected $form = null;
