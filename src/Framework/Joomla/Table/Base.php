@@ -23,11 +23,36 @@
 
 namespace Alledia\Framework\Joomla\Table;
 
+use Alledia\Framework\Factory;
 use Joomla\CMS\Table\Table;
+use Joomla\CMS\Version;
 
 defined('_JEXEC') or die();
 
 class Base extends Table
 {
+    /**
+     * Joomla version agnostic loading of other component tables
+     *
+     * @param string $component
+     * @param string $name
+     * @param string $prefix
+     *
+     * @return ?Table
+     */
+    public static function getComponentInstance($component, $name, $prefix): ?Table
+    {
+        if (Version::MAJOR_VERSION < 4) {
+            Table::addIncludePath(JPATH_ADMINISTRATOR . '/components/' . $component . '/tables');
+            $table = Table::getInstance($name, $prefix);
 
+        } else {
+            $table = Factory::getApplication()
+                ->bootComponent($component)
+                ->getMVCFactory()
+                ->createTable($name, 'Administrator');
+        }
+
+        return $table ?: null;
+    }
 }
