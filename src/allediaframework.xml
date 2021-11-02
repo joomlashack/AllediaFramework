@@ -12,24 +12,13 @@
     <creationDate>November 02 2021</creationDate>
     <variant>FREE</variant>
 
-    <scriptfile>script.install.php</scriptfile>
-
     <files>
         <folder>Framework</folder>
         <folder>helpers</folder>
-        <folder>language</folder>
-        <folder>library</folder>
-        <folder>views</folder>
 
         <filename>AllediaPsr4AutoLoader.php</filename>
         <filename>include.php</filename>
     </files>
-
-    <media destination="lib_allediaframework" folder="media">
-        <folder>css</folder>
-        <folder>images</folder>
-    </media>
-
 
     <updateservers>
         <server type="extension" priority="1" name="Joomlashack Framework"><![CDATA[https://deploy.ostraining.com/client/update/free/stable/lib_allediaframework]]></server>
