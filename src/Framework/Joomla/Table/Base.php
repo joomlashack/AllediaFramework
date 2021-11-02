@@ -29,7 +29,7 @@ use Joomla\CMS\Version;
 
 defined('_JEXEC') or die();
 
-class Base extends Table
+abstract class Base extends Table
 {
     /**
      * Joomla version agnostic loading of other component tables
@@ -47,12 +47,17 @@ class Base extends Table
             $table = Table::getInstance($name, $prefix);
 
         } else {
-            $table = Factory::getApplication()
-                ->bootComponent($component)
-                ->getMVCFactory()
-                ->createTable($name, 'Administrator');
+            try {
+                $table = Factory::getApplication()
+                    ->bootComponent($component)
+                    ->getMVCFactory()
+                    ->createTable($name, 'Administrator');
+
+            } catch (\Throwable $error) {
+                // Ignore
+            }
         }
 
-        return $table ?: null;
+        return $table ?? null;
     }
 }
