@@ -23,9 +23,16 @@
 
 namespace Alledia\Framework\Joomla\Form\Field;
 
+use Joomla\CMS\Factory;
+use Joomla\CMS\Form\FormHelper;
 use Joomla\CMS\Version;
 
 defined('_JEXEC') or die();
+
+if (Version::MAJOR_VERSION < 4) {
+    class_alias('JFormFieldList', '\\Joomla\\CMS\\Form\\Field\\ListField');
+    FormHelper::loadFieldClass('List');
+}
 
 class ListField extends \Joomla\CMS\Form\Field\ListField
 {
