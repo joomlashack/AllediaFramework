@@ -35,7 +35,7 @@ class ListField extends \Joomla\CMS\Form\Field\ListField
      */
     public function setup(\SimpleXMLElement $element, $value, $group = null)
     {
-        if (Version::MAJOR_VERSION >= 4 && (string)$this->element['layout'] == '') {
+        if (Version::MAJOR_VERSION >= 4 && empty($element['layout'])) {
             $this->layout = 'joomla.form.field.list-fancy-select';
         }
 
