@@ -21,12 +21,31 @@
  * along with AllediaFramework.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-use Alledia\Installer\AbstractScript;
+namespace Alledia\Framework\Joomla\Form\Field;
+
+use Joomla\CMS\Factory;
+use Joomla\CMS\Form\FormHelper;
+use Joomla\CMS\Version;
 
 defined('_JEXEC') or die();
 
-require_once __DIR__ . '/library/Installer/include.php';
+if (Version::MAJOR_VERSION < 4) {
+    class_alias('JFormFieldList', '\\Joomla\\CMS\\Form\\Field\\ListField');
+    FormHelper::loadFieldClass('List');
+}
 
-class allediaframeworkInstallerScript extends AbstractScript
+class ListField extends \Joomla\CMS\Form\Field\ListField
 {
+    /**
+     * Set list field layout based on Joomla version
+     * Must be called AFTER setup() method of list form field
+     */
+    public function setup(\SimpleXMLElement $element, $value, $group = null)
+    {
+        if (Version::MAJOR_VERSION >= 4 && empty($element['layout'])) {
+            $this->layout = 'joomla.form.field.list-fancy-select';
+        }
+
+        return parent::setup($element, $value, $group);
+    }
 }

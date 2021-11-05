@@ -26,7 +26,6 @@ namespace Alledia\Framework\Joomla\Extension;
 defined('_JEXEC') or die();
 
 use Alledia\Framework\Factory;
-use Alledia\Framework\Joomla\Model\Base as BaseModel;
 use Alledia\Framework\Joomla\Table\Base as BaseTable;
 use Joomla\CMS\MVC\Model\BaseDatabaseModel;
 use Joomla\CMS\Table\Table;
@@ -44,7 +43,7 @@ abstract class AbstractComponent extends Licensed
     protected $controller;
 
     /**
-     * Class constructor that instantiate the free and pro library, if installed
+     * @inheritDoc
      */
     public function __construct($namespace)
     {
@@ -113,7 +112,12 @@ abstract class AbstractComponent extends Licensed
         $this->controller->redirect();
     }
 
-    public function getModel($type)
+    /**
+     * @param string $type
+     *
+     * @return ?BaseDatabaseModel
+     */
+    public function getModel(string $type): ?BaseDatabaseModel
     {
         $class = sprintf(
             'Alledia\\%s\\%s\\Joomla\\Model\\%s',
@@ -125,10 +129,15 @@ abstract class AbstractComponent extends Licensed
             return new $class();
         }
 
-        return BaseModel::getInstance($type, $this->namespace . 'Model');
+        return BaseDatabaseModel::getInstance($type, $this->namespace . 'Model');
     }
 
-    public function getTable($type)
+    /**
+     * @param string $type
+     *
+     * @return ?Table
+     */
+    public function getTable(string $type): ?Table
     {
         $class = sprintf(
             'Alledia\\%s\\%s\\Joomla\\Table\\%s',
