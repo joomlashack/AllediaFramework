@@ -38,7 +38,6 @@ class ListField extends \Joomla\CMS\Form\Field\ListField
 {
     /**
      * Set list field layout based on Joomla version
-     * Must be called AFTER setup() method of list form field
      */
     public function setup(\SimpleXMLElement $element, $value, $group = null)
     {
