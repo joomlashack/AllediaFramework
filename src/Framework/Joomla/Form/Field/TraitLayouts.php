@@ -23,6 +23,7 @@
 
 namespace Alledia\Framework\Joomla\Form\Field;
 
+use Joomla\CMS\Factory;
 use Joomla\CMS\Filesystem\Path;
 use Joomla\CMS\Version;
 
@@ -75,5 +76,15 @@ trait TraitLayouts
         }
 
         return null;
+    }
+
+    /**
+     * @return void
+     */
+    protected function setListLayout()
+    {
+        if (Version::MAJOR_VERSION >= 4) {
+            $this->layout = 'joomla.form.field.list-fancy-select';
+        }
     }
 }

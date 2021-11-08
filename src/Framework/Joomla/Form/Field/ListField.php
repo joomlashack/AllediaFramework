@@ -36,14 +36,14 @@ if (Version::MAJOR_VERSION < 4) {
 
 class ListField extends \Joomla\CMS\Form\Field\ListField
 {
+    use TraitLayouts;
+
     /**
      * Set list field layout based on Joomla version
      */
     public function setup(\SimpleXMLElement $element, $value, $group = null)
     {
-        if (Version::MAJOR_VERSION >= 4 && empty($element['layout'])) {
-            $this->layout = 'joomla.form.field.list-fancy-select';
-        }
+        $this->setListLayout();
 
         return parent::setup($element, $value, $group);
     }
