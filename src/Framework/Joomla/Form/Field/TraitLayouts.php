@@ -80,6 +80,7 @@ trait TraitLayouts
 
     /**
      * @return void
+     * @deprecated v3.3.1
      */
     protected function setListLayout()
     {
