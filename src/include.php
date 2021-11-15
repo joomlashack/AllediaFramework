@@ -7,6 +7,7 @@
  */
 
 use Alledia\Framework\AutoLoader;
+use Joomla\CMS\Form\FormHelper;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Version;
 
@@ -29,6 +30,9 @@ if (!defined('ALLEDIA_FRAMEWORK_LOADED')) {
     if (Version::MAJOR_VERSION < 4) {
         // Add some shims for Joomla 3
         class_alias('JHtmlSidebar', '\\Joomla\\CMS\\HTML\\Helpers\\Sidebar');
+
+        FormHelper::loadFieldClass('List');
+        class_alias('JFormFieldList', '\\Joomla\\CMS\\Form\\Field\\ListField');
     }
 }
 
