@@ -273,4 +273,22 @@ JSCRIPT;
 
         return '';
     }
+
+    /**
+     * @param string $title
+     * @param string $text
+     * @param string $body
+     *
+     * @return string
+     */
+    public static function tooltip(string $title, string $text, string $body): string
+    {
+        HTMLHelper::_('bootstrap.tooltip', '.hasTooltip');
+
+        return sprintf(
+            '<span class="inactive tip-top hasTooltip" title="%s">%s</span>',
+            HTMLHelper::_('tooltipText', $title . ' :: ' . $text),
+            $body
+        );
+    }
 }
