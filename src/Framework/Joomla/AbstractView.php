@@ -57,9 +57,9 @@ abstract class AbstractView extends HtmlView
      */
     public function __construct($config = [])
     {
-        parent::__construct($config);
-
         $this->setup();
+
+        parent::__construct($config);
     }
 
     /**
