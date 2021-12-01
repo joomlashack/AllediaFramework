@@ -26,6 +26,7 @@ namespace Alledia\Framework\Joomla\View\Admin;
 use Alledia\Framework\Extension;
 use Alledia\Framework\Joomla\AbstractView;
 use Joomla\CMS\Filesystem\File;
+use Joomla\CMS\Filesystem\Path;
 use Joomla\CMS\Version;
 
 defined('_JEXEC') or die();
@@ -76,8 +77,21 @@ class AbstractBase extends AbstractView
      */
     public function setLayout($layout)
     {
-        if (Version::MAJOR_VERSION != '4') {
-            $layout .= '.j' . Version::MAJOR_VERSION;
+        $file = $layout;
+        if (Version::MAJOR_VERSION < 4) {
+            $file .= '.j' . Version::MAJOR_VERSION;
+        }
+
+        if ($file != $layout || $file == 'emptystate') {
+            // Verify layout file exists
+            $fileName = $this->_createFileName('template', ['name' => $file]);
+            $path = Path::find($this->_path['template'], $fileName);
+
+            if ($path) {
+                $layout = $file;
+            } else {
+                $layout = ($file == 'emptystate') ? 'default' : $layout;
+            }
         }
 
         return parent::setLayout($layout);
