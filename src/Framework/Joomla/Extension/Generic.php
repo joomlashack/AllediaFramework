@@ -450,30 +450,42 @@ class Generic
      */
     public function getFooterMarkup()
     {
-        // Check if we have a dedicated config.xml file
         $configPath = $this->getExtensionPath() . '/config.xml';
         if (File::exists($configPath)) {
             $config = $this->getConfig();
 
             if (is_object($config)) {
                 $footerElement = $config->xpath('//field[@type="customfooter"]');
+                $footerElement = reset($footerElement);
             }
-        } else {
-            $manifest = $this->getManifestAsSimpleXML();
 
+        }
+
+        if (empty($footerElement)) {
+            $manifest = $this->getManifestAsSimpleXML();
             if (is_object($manifest)) {
-                $footerElement = $manifest->xpath('//field[@type="customfooter"]');
+                if ($footerElement = $manifest->xpath('//field[@type="customfooter"]')) {
+                    $footerElement = reset($footerElement);
+
+                } elseif ($media = (string)$manifest->media['destination']) {
+                    $customField = sprintf(
+                        '<field type="customfooter" name="customfooter" media="%s"/>',
+                        $media
+                    );
+
+                    $footerElement = new SimpleXMLElement($customField);
+                }
             }
         }
 
-        if (!empty($footerElement)) {
+        if (empty($footerElement) == false) {
             if (!class_exists('JFormFieldCustomFooter')) {
                 require_once $this->getExtensionPath() . '/form/fields/customfooter.php';
             }
 
             $field                = new JFormFieldCustomFooter();
             $field->fromInstaller = true;
-            return $field->getInputUsingCustomElement($footerElement[0]);
+            return $field->getInputUsingCustomElement($footerElement);
         }
 
         return '';
