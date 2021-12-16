@@ -272,4 +272,121 @@ JSCRIPT;
 
         return '';
     }
+
+    /**
+     * @param string $text
+     * @param string $modalId
+     * @param array  $params
+     *
+     * @return string
+     */
+    public static function renderLink(string $text, string $modalId, array $params): string
+    {
+        $params = array_merge(
+            [
+                'title'      => 'MODAL!',
+                'height'     => '400px',
+                'width'      => '800px',
+                'bodyHeight' => '70',
+                'modalWidth' => '80'
+            ],
+            $params
+        );
+
+        $html = HTMLHelper::_('bootstrap.renderModal', $modalId, $params);
+
+        $html .= HTMLHelper::_(
+            'link',
+            '#' . $modalId,
+            $text,
+            [
+                'data-toggle'    => 'modal',
+                'data-bs-toggle' => 'modal'
+            ]
+        );
+
+        return $html;
+    }
+
+    /**
+     * @param string    $modalId
+     * @param string    $taskPrefix
+     * @param ?string[] $attribs
+     *
+     * @return string
+     */
+    public static function footerSaveButton(array $attribs = []): string
+    {
+        $attribs = array_merge(
+            [
+                'class'           => 'btn btn-primary',
+                'data-dismiss'    => 'modal',
+                'data-bs-dismiss' => 'modal'
+            ],
+            $attribs
+        );
+
+        return static::footerButton(Text::_('JSAVE'), $attribs);
+    }
+
+    /**
+     * @param ?string[] $attribs
+     *
+     * @return string
+     */
+    public static function footerApplyButton(array $attribs = []): string
+    {
+        $attribs = array_merge(
+            [
+                'class' => 'btn btn-success'
+            ],
+            $attribs
+        );
+
+        return static::footerButton(Text::_('JAPPLY'), $attribs);
+    }
+
+    /**
+     * @param string    $modalId
+     * @param string    $taskPrefix
+     * @param ?string[] $attribs
+     *
+     * @return string
+     */
+    public static function footerCloseButton(array $attribs = []): string
+    {
+        $attribs = array_merge(
+            [
+                'data-dismiss'    => 'modal',
+                'data-bs-dismiss' => 'modal'
+            ],
+            $attribs
+        );
+
+        return static::footerButton(Text::_('JLIB_HTML_BEHAVIOR_CLOSE'), $attribs);
+    }
+
+    /**
+     * @param string $title
+     * @param array  $attribs
+     *
+     * @return string
+     */
+    public static function footerButton(string $title, array $attribs = []): string
+    {
+        $attribs = array_merge(
+            [
+                'role'        => 'button',
+                'class'       => 'btn',
+                'aria-hidden' => 'true'
+            ],
+            $attribs
+        );
+
+        return sprintf(
+            '<a %s>%s</a>',
+            ArrayHelper::toString($attribs),
+            $title
+        );
+    }
 }
