@@ -190,7 +190,7 @@ class Generic
      */
     public function isEnabled()
     {
-        return (bool)$this->enabled;
+        return $this->enabled;
     }
 
     /**
@@ -450,42 +450,45 @@ class Generic
      */
     public function getFooterMarkup()
     {
-        $configPath = $this->getExtensionPath() . '/config.xml';
-        if (File::exists($configPath)) {
-            $config = $this->getConfig();
+        $manifest = $this->getManifestAsSimpleXML();
 
-            if (is_object($config)) {
-                $footerElement = $config->xpath('//field[@type="customfooter"]');
-                $footerElement = reset($footerElement);
+        if ($manifest->alledia) {
+            $configPath = $this->getExtensionPath() . '/config.xml';
+            if (File::exists($configPath)) {
+                $config = $this->getConfig();
+
+                if (is_object($config)) {
+                    $footerElement = $config->xpath('//field[@type="customfooter"]');
+                    $footerElement = reset($footerElement);
+                }
+
             }
 
-        }
+            if (empty($footerElement)) {
+                if (is_object($manifest)) {
+                    if ($footerElement = $manifest->xpath('//field[@type="customfooter"]')) {
+                        $footerElement = reset($footerElement);
 
-        if (empty($footerElement)) {
-            $manifest = $this->getManifestAsSimpleXML();
-            if (is_object($manifest)) {
-                if ($footerElement = $manifest->xpath('//field[@type="customfooter"]')) {
-                    $footerElement = reset($footerElement);
+                    } elseif ($media = (string)$manifest->media['destination']) {
+                        $customField = sprintf(
+                            '<field type="customfooter" name="customfooter" media="%s"/>',
+                            $media
+                        );
 
-                } elseif ($media = (string)$manifest->media['destination']) {
-                    $customField = sprintf(
-                        '<field type="customfooter" name="customfooter" media="%s"/>',
-                        $media
-                    );
-
-                    $footerElement = new SimpleXMLElement($customField);
+                        $footerElement = new SimpleXMLElement($customField);
+                    }
                 }
             }
-        }
 
-        if (empty($footerElement) == false) {
-            if (!class_exists('JFormFieldCustomFooter')) {
-                require_once $this->getExtensionPath() . '/form/fields/customfooter.php';
+            if (empty($footerElement) == false) {
+                if (!class_exists('JFormFieldCustomFooter')) {
+                    require_once $this->getExtensionPath() . '/form/fields/customfooter.php';
+                }
+
+                $field                = new JFormFieldCustomFooter();
+                $field->fromInstaller = true;
+                return $field->getInputUsingCustomElement($footerElement);
             }
-
-            $field                = new JFormFieldCustomFooter();
-            $field->fromInstaller = true;
-            return $field->getInputUsingCustomElement($footerElement);
         }
 
         return '';
