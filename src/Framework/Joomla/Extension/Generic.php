@@ -482,12 +482,17 @@ class Generic
 
             if (empty($footerElement) == false) {
                 if (!class_exists('JFormFieldCustomFooter')) {
-                    require_once $this->getExtensionPath() . '/form/fields/customfooter.php';
+                    $classPath = $this->getExtensionPath() . '/form/fields/customfooter.php';
+                    if (is_file($classPath)) {
+                        require_once $classPath;
+                    }
                 }
 
-                $field                = new JFormFieldCustomFooter();
-                $field->fromInstaller = true;
-                return $field->getInputUsingCustomElement($footerElement);
+                if (class_exists(class_exists('JFormFieldCustomFooter'))) {
+                    $field                = new JFormFieldCustomFooter();
+                    $field->fromInstaller = true;
+                    return $field->getInputUsingCustomElement($footerElement);
+                }
             }
         }
 
