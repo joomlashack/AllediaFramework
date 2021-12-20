@@ -309,13 +309,12 @@ JSCRIPT;
     }
 
     /**
-     * @param string    $modalId
-     * @param string    $taskPrefix
      * @param ?string[] $attribs
+     * @param ?string   $title
      *
      * @return string
      */
-    public static function footerSaveButton(array $attribs = []): string
+    public static function footerSaveButton(array $attribs = [], ?string $title = null): string
     {
         $attribs = array_merge(
             [
@@ -326,15 +325,16 @@ JSCRIPT;
             $attribs
         );
 
-        return static::footerButton(Text::_('JSAVE'), $attribs);
+        return static::footerButton($title ?: Text::_('JSAVE'), $attribs);
     }
 
     /**
      * @param ?string[] $attribs
+     * @param ?string   $title
      *
      * @return string
      */
-    public static function footerApplyButton(array $attribs = []): string
+    public static function footerApplyButton(array $attribs = [], ?string $title = null): string
     {
         $attribs = array_merge(
             [
@@ -343,17 +343,16 @@ JSCRIPT;
             $attribs
         );
 
-        return static::footerButton(Text::_('JAPPLY'), $attribs);
+        return static::footerButton($title ?: Text::_('JAPPLY'), $attribs);
     }
 
     /**
-     * @param string    $modalId
-     * @param string    $taskPrefix
      * @param ?string[] $attribs
+     * @param ?string   $title
      *
      * @return string
      */
-    public static function footerCloseButton(array $attribs = []): string
+    public static function footerCloseButton(array $attribs = [], ?string $title = null): string
     {
         $attribs = array_merge(
             [
@@ -363,7 +362,7 @@ JSCRIPT;
             $attribs
         );
 
-        return static::footerButton(Text::_('JLIB_HTML_BEHAVIOR_CLOSE'), $attribs);
+        return static::footerButton($title ?: Text::_('JLIB_HTML_BEHAVIOR_CLOSE'), $attribs);
     }
 
     /**
