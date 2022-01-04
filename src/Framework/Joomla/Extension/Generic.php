@@ -488,7 +488,7 @@ class Generic
                     }
                 }
 
-                if (class_exists(class_exists('JFormFieldCustomFooter'))) {
+                if (class_exists('JFormFieldCustomFooter')) {
                     $field                = new JFormFieldCustomFooter();
                     $field->fromInstaller = true;
                     return $field->getInputUsingCustomElement($footerElement);
