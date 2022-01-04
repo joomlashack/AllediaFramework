@@ -481,7 +481,7 @@ class Generic
             }
 
             if (empty($footerElement) == false) {
-                if (!class_exists('JFormFieldCustomFooter')) {
+                if (class_exists('JFormFieldCustomFooter') === false) {
                     $classPath = $this->getExtensionPath() . '/form/fields/customfooter.php';
                     if (is_file($classPath)) {
                         require_once $classPath;
@@ -491,6 +491,7 @@ class Generic
                 if (class_exists('JFormFieldCustomFooter')) {
                     $field                = new JFormFieldCustomFooter();
                     $field->fromInstaller = true;
+
                     return $field->getInputUsingCustomElement($footerElement);
                 }
             }
