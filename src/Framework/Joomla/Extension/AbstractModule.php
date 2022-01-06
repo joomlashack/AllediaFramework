@@ -42,11 +42,6 @@ abstract class AbstractModule extends Licensed
     protected static $instance;
 
     /**
-     * @var int
-     */
-    public $id = null;
-
-    /**
      * @var string
      */
     public $title = null;
@@ -79,16 +74,11 @@ abstract class AbstractModule extends Licensed
     /**
      * @var string
      */
-    public $name = null;
-
-    /**
-     * @var string
-     */
     public $style = null;
 
 
     /**
-     * Class constructor that instantiate the free and pro library, if installed
+     * @inheritDoc
      */
     public function __construct($namespace)
     {
@@ -135,14 +125,15 @@ abstract class AbstractModule extends Licensed
         return static::$instance;
     }
 
+    /**
+     * @return void
+     */
     public function init()
     {
         require ModuleHelper::getLayoutPath('mod_' . $this->element, $this->params->get('layout', 'default'));
     }
 
     /**
-     * Method to load the language files
-     *
      * @return void
      */
     public function loadLanguage()

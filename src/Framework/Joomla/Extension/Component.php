@@ -31,14 +31,12 @@ use Joomla\CMS\MVC\Controller\BaseController;
 class Component extends Licensed
 {
     /**
-     * The main controller
-     *
      * @var BaseController
      */
     protected $controller;
 
     /**
-     * Class constructor that instantiate the free and pro library, if installed
+     * @inheritDoc
      */
     public function __construct($namespace)
     {

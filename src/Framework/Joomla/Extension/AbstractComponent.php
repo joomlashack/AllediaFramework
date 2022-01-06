@@ -32,15 +32,15 @@ use Joomla\CMS\Table\Table;
 
 abstract class AbstractComponent extends Licensed
 {
-    // @TODO: convert to protected and remove from the subclasses?
-    private static $instance;
+    /**
+     * @var self
+     */
+    protected static $instance = null;
 
     /**
-     * The main controller
-     *
      * @var object
      */
-    protected $controller;
+    protected $controller = null;
 
     /**
      * @inheritDoc
@@ -56,11 +56,9 @@ abstract class AbstractComponent extends Licensed
     }
 
     /**
-     * Returns the instance of child classes
-     *
      * @param string $namespace
      *
-     * @return Object
+     * @return self
      */
     public static function getInstance($namespace = null)
     {

@@ -55,19 +55,13 @@ class Licensed extends Generic
     protected $libraryPath = null;
 
     /**
-     * Class constructor, set the extension type.
-     *
-     * @param string $namespace The element of the extension
-     * @param string $type      The type of extension
-     * @param string $folder    The folder for plugins (only)
+     * @inheritDoc
      */
     public function __construct($namespace, $type, $folder = '', $basePath = JPATH_SITE)
     {
         parent::__construct($namespace, $type, $folder, $basePath);
 
-        $this->license = strtolower($this->manifest->alledia->license ?? null);
-
-        // Make sure we are using the correct namespace
+        $this->license   = strtolower($this->manifest->alledia->license ?? null);
         $this->namespace = $this->manifest->alledia->namespace ?? null;
 
         $this->getLibraryPath();

@@ -43,28 +43,28 @@ class Generic
      *
      * @var string
      */
-    protected $namespace = null;
+    public $namespace = null;
 
     /**
      * The extension type
      *
      * @var string
      */
-    protected $type = null;
+    public $type = null;
 
     /**
      * The extension id
      *
      * @var int
      */
-    protected $id = null;
+    public $id = null;
 
     /**
      * The extension name
      *
      * @var string
      */
-    protected $name = null;
+    public $name = null;
 
     /**
      * The extension params
@@ -104,21 +104,21 @@ class Generic
      *
      * @var object
      */
-    public $manifest;
+    public $manifest = null;
 
     /**
      * The manifest information as SimpleXMLElement
      *
      * @var SimpleXMLElement
      */
-    public $manifestXml;
+    public $manifestXml = null;
 
     /**
      * The config information
      *
      * @var SimpleXMLElement
      */
-    public $config;
+    public $config = null;
 
     /**
      * Class constructor, set the extension type.
