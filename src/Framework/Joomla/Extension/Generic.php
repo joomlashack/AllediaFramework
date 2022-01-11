@@ -461,7 +461,6 @@ class Generic
                     $footerElement = $config->xpath('//field[@type="customfooter"]');
                     $footerElement = reset($footerElement);
                 }
-
             }
 
             if (empty($footerElement)) {
