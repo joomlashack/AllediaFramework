@@ -37,7 +37,7 @@ class AbstractBase extends AbstractView
     {
         parent::displayFooter();
 
-        $this->displayAdminFooter($extension);
+        echo $this->displayAdminFooter($extension);
     }
 
     /**
@@ -67,7 +67,7 @@ class AbstractBase extends AbstractView
             }
         }
 
-        echo $output ?? '';
+        return $output ?? '';
     }
 
     /**
@@ -85,7 +85,7 @@ class AbstractBase extends AbstractView
         if ($file != $layout || $file == 'emptystate') {
             // Verify layout file exists
             $fileName = $this->_createFileName('template', ['name' => $file]);
-            $path = Path::find($this->_path['template'], $fileName);
+            $path     = Path::find($this->_path['template'], $fileName);
 
             if ($path) {
                 $layout = $file;
