@@ -10,7 +10,8 @@
         "name"           : "Joomlashack Framework",
         "client"         : "site",
         "target-platform": ".*",
-        "package-license": "free"
+        "package-license": "free",
+        "infourl"        : "https://github.com/joomlashack/AllediaFramework/releases"
     },
     "authors"          : [
         {
