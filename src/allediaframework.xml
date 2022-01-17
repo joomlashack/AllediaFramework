@@ -20,6 +20,10 @@
         <filename>include.php</filename>
     </files>
 
+    <media destination="lib_allediaframework" folder="media">
+        <folder>css</folder>
+    </media>
+
     <updateservers>
         <server type="extension" priority="1" name="Joomlashack Framework"><![CDATA[https://deploy.ostraining.com/client/update/free/stable/lib_allediaframework]]></server>
     </updateservers>
