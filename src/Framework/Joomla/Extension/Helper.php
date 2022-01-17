@@ -2,7 +2,7 @@
 /**
  * @package   AllediaFramework
  * @contact   www.joomlashack.com, help@joomlashack.com
- * @copyright 2016-2021 Joomlashack.com. All rights reserved
+ * @copyright 2016-2022 Joomlashack.com. All rights reserved
  * @license   https://www.gnu.org/licenses/gpl.html GNU/GPL
  *
  * This file is part of AllediaFramework.
