@@ -35,16 +35,14 @@ abstract class Helper
     /**
      * Return an array of Alledia extensions
      *
-     * @param string $license
+     * @param ?string $license
      *
      * @return object[]
-     * @todo Move this method for the class Alledia\Framework\Joomla\Extension\Helper, but keep as deprecated
-     *
      */
-    public static function getAllediaExtensions($license = '')
+    public static function getAllediaExtensions(?string $license = ''): array
     {
         // Get the extensions ids
-        $db    = \JFactory::getDbo();
+        $db    = Factory::getDbo();
         $query = $db->getQuery(true)
             ->select([
                 $db->quoteName('extension_id'),
@@ -54,12 +52,12 @@ abstract class Helper
             ])
             ->from('#__extensions')
             ->where([
-                $db->quoteName('custom_data') . " LIKE '%\"author\":\"Alledia\"%'",
-                $db->quoteName('custom_data') . " LIKE '%\"author\":\"OSTraining\"%'",
-                $db->quoteName('custom_data') . " LIKE '%\"author\":\"Joomlashack\"%'",
-                $db->quoteName('manifest_cache') . " LIKE '%\"author\":\"Alledia\"%'",
-                $db->quoteName('manifest_cache') . " LIKE '%\"author\":\"OSTraining\"%'",
-                $db->quoteName('manifest_cache') . " LIKE '%\"author\":\"Joomlashack\"%'"
+                sprintf('%s LIKE %s', $db->quoteName('custom_data'), $db->quote('%"author":"Alledia"%')),
+                sprintf('%s LIKE %s', $db->quoteName('custom_data'), $db->quote('%"author":"OSTraining"%')),
+                sprintf('%s LIKE %s', $db->quoteName('custom_data'), $db->quote('%"author":"Joomlashack"%')),
+                sprintf('%s LIKE %s', $db->quoteName('manifest_cache'), $db->quote('%"author":"Alledia"%')),
+                sprintf('%s LIKE %s', $db->quoteName('manifest_cache'), $db->quote('%"author":"OSTraining"%')),
+                sprintf('%s LIKE %s', $db->quoteName('manifest_cache'), $db->quote('%"author":"Joomlashack"%')),
             ], 'OR')
             ->group($db->quoteName('extension_id'));
 
@@ -96,7 +94,7 @@ abstract class Helper
     /**
      * @return string
      */
-    public static function getJoomlaVersionCssClass()
+    public static function getJoomlaVersionCssClass(): string
     {
         return sprintf('joomla%sx', Version::MAJOR_VERSION);
     }
@@ -108,7 +106,7 @@ abstract class Helper
      *
      * @return mixed
      */
-    public static function callMethod($className, $methodName, $params = [])
+    public static function callMethod(string $className, string $methodName, ?array $params = [])
     {
         $result = true;
 
@@ -139,7 +137,7 @@ abstract class Helper
      *
      * @return Form
      */
-    public static function createForm(string $name)
+    public static function createForm(string $name): Form
     {
         $form = new Form($name);
         $form->load('<?xml version="1.0" encoding="UTF-8"?><form/>');
