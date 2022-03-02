@@ -74,8 +74,6 @@ abstract class Helper
             'type'      => null,
             'name'      => null,
             'group'     => null,
-            'prefix'    => null,
-            'namespace' => null
         ];
 
         $types = [
