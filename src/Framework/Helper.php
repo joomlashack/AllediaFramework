@@ -24,8 +24,12 @@
 namespace Alledia\Framework;
 
 use Alledia\Framework\Joomla\Extension\Helper as ExtensionHelper;
+use ContentModelArticle;
 use Joomla\CMS\Form\Form;
+use Joomla\CMS\MVC\Model\BaseDatabaseModel;
+use Joomla\CMS\Table\Table;
 use Joomla\CMS\Version;
+use Joomla\Component\Content\Site\Model\ArticleModel;
 use ReflectionMethod;
 
 defined('_JEXEC') or die();
@@ -143,5 +147,42 @@ abstract class Helper
         $form->load('<?xml version="1.0" encoding="UTF-8"?><form/>');
 
         return $form;
+    }
+
+    /**
+     * @param string  $name
+     * @param ?string $appName
+     * @param ?array  $options
+     *
+     * @return mixed
+     */
+    public static function getContentModel(string $name, ?string $appName = null, array $options = [])
+    {
+        $defaultApp = 'Site';
+        $appNames   = [$defaultApp, 'Administrator'];
+
+        $appName = ucfirst($appName ?: $defaultApp);
+        $appName = $appNames[$appName] ?? $defaultApp;
+
+        if (Version::MAJOR_VERSION < 4) {
+            $basePath = $appName == 'Administrator' ? JPATH_ADMINISTRATOR : JPATH_SITE;
+
+            $path = $basePath . '/components/com_content';
+            BaseDatabaseModel::addIncludePath($path . '/models');
+            Table::addIncludePath($path . '/tables');
+
+            /** @var ContentModelArticle|ArticleModel $model */
+            $model = BaseDatabaseModel::getInstance(
+                $name,
+                'ContentModel',
+                $options
+            );
+
+        } else {
+            $model = Factory::getApplication()->bootComponent('com_content')
+                ->getMVCFactory()->createModel($name, $appName, $options);
+        }
+
+        return $model;
     }
 }
