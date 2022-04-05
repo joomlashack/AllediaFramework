@@ -162,7 +162,7 @@ abstract class Helper
         $appNames   = [$defaultApp, 'Administrator'];
 
         $appName = ucfirst($appName ?: $defaultApp);
-        $appName = $appNames[$appName] ?? $defaultApp;
+        $appName = in_array($appName, $appNames) ? $appName : $defaultApp;
 
         if (Version::MAJOR_VERSION < 4) {
             $basePath = $appName == 'Administrator' ? JPATH_ADMINISTRATOR : JPATH_SITE;
