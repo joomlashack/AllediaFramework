@@ -158,6 +158,38 @@ abstract class Helper
      */
     public static function getContentModel(string $name, ?string $appName = null, array $options = [])
     {
+        return static::getJoomlaModel($name, 'ContentModel', 'com_content', $appName, $options);
+    }
+
+    /**
+     * @param string  $name
+     * @param ?string $appName
+     * @param ?array  $options
+     *
+     * @return mixed
+     */
+    public static function getCategoryModel(string $name, ?string $appName = null, ?array $options = [])
+    {
+        return static::getJoomlaModel($name, 'CategoriesModel', 'com_categories', $appName, $options);
+    }
+
+    /**
+     * @param string  $name
+     * @param string  $prefix
+     * @param string  $component
+     * @param ?string $appName
+     * @param ?array  $options
+     *
+     * @return mixed
+     * @throws \Exception
+     */
+    public static function getJoomlaModel(
+        string $name,
+        string $prefix,
+        string $component,
+        ?string $appName = null,
+        ?array $options = []
+    ) {
         $defaultApp = 'Site';
         $appNames   = [$defaultApp, 'Administrator'];
 
@@ -167,19 +199,14 @@ abstract class Helper
         if (Version::MAJOR_VERSION < 4) {
             $basePath = $appName == 'Administrator' ? JPATH_ADMINISTRATOR : JPATH_SITE;
 
-            $path = $basePath . '/components/com_content';
+            $path = $basePath . '/components/' . $component;
             BaseDatabaseModel::addIncludePath($path . '/models');
             Table::addIncludePath($path . '/tables');
 
-            /** @var ContentModelArticle|ArticleModel $model */
-            $model = BaseDatabaseModel::getInstance(
-                $name,
-                'ContentModel',
-                $options
-            );
+            $model = BaseDatabaseModel::getInstance($name, $prefix, $options);
 
         } else {
-            $model = Factory::getApplication()->bootComponent('com_content')
+            $model = Factory::getApplication()->bootComponent($component)
                 ->getMVCFactory()->createModel($name, $appName, $options);
         }
 
