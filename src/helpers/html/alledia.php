@@ -62,7 +62,7 @@ abstract class JhtmlAlledia
 
     /**
      * Ensure Fontawesome is loaded
-     * 
+     *
      * @return void
      */
     public function fontawesome()
