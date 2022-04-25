@@ -65,7 +65,7 @@ abstract class JhtmlAlledia
      *
      * @return void
      */
-    public function fontawesome()
+    public static function fontawesome()
     {
         if (Version::MAJOR_VERSION < 4) {
             HTMLHelper::_(
