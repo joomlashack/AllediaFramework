@@ -59,4 +59,20 @@ abstract class JhtmlAlledia
             $body
         );
     }
+
+    /**
+     * Ensure Fontawesome is loaded
+     * 
+     * @return void
+     */
+    public function fontawesome()
+    {
+        if (Version::MAJOR_VERSION < 4) {
+            HTMLHelper::_(
+                'stylesheet',
+                'lib_allediaframework/fontawesome/css/all.min.css',
+                ['relative' => true]
+            );
+        }
+    }
 }
