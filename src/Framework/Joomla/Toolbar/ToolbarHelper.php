@@ -23,6 +23,7 @@
 
 namespace Alledia\Framework\Joomla\Toolbar;
 
+use Alledia\Framework\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Toolbar\Toolbar;
 use Joomla\CMS\Utility\Utility;
@@ -32,6 +33,11 @@ defined('_JEXEC') or die();
 
 abstract class ToolbarHelper extends \Joomla\CMS\Toolbar\ToolbarHelper
 {
+    /**
+     * @var bool
+     */
+    protected static $exportLoaded = false;
+
     /**
      * Create a button that links to an external page
      *
@@ -89,5 +95,37 @@ abstract class ToolbarHelper extends \Joomla\CMS\Toolbar\ToolbarHelper
     public static function shackDocumentation(string $url, string $title)
     {
         static::externalLink($url, $title, 'support', ['class' => 'btn-info']);
+    }
+
+    /**
+     * Export button that ensures the task input field is cleared if
+     * the export does not return to refresh the page
+     *
+     * @param string $task
+     * @param string $alt
+     * @param string $icon
+     *
+     * @return void
+     * @throws \Exception
+     */
+    public static function exportView(string $task, string $alt, string $icon = 'download')
+    {
+        static::custom($task, $icon, null, $alt, false);
+
+        if (static::$exportLoaded == false) {
+            Factory::getApplication()->getDocument()->addScriptDeclaration(<<<JSCRIPT
+Joomla.submitbutton = function(task) {
+    Joomla.submitform(task);
+
+    let taskInput = document.querySelector('input[name="task"]');
+    if (taskInput) {
+        taskInput.value = '';
+    }
+};
+JSCRIPT
+            );
+
+            static::$exportLoaded = true;
+        }
     }
 }
