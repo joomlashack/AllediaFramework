@@ -76,4 +76,18 @@ class Exception extends \Exception
 
         return $stack;
     }
+
+    /**
+     * Allow custom exceptions to be created. Note
+     * that
+     *
+     * @param string $file
+     *
+     * @return void
+     */
+    public function setLocation(string $file, int $line)
+    {
+        $this->file = $file;
+        $this->line = $line;
+    }
 }

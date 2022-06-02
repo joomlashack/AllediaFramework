@@ -24,18 +24,21 @@
 namespace Alledia\Framework;
 
 use Alledia\Framework\Joomla\Extension\Helper as ExtensionHelper;
-use ContentModelArticle;
 use Joomla\CMS\Form\Form;
 use Joomla\CMS\MVC\Model\BaseDatabaseModel;
 use Joomla\CMS\Table\Table;
 use Joomla\CMS\Version;
-use Joomla\Component\Content\Site\Model\ArticleModel;
 use ReflectionMethod;
 
 defined('_JEXEC') or die();
 
 abstract class Helper
 {
+    /**
+     * @var int[]
+     */
+    protected static $errorConstants = null;
+
     /**
      * Return an array of Alledia extensions
      *
@@ -211,5 +214,39 @@ abstract class Helper
         }
 
         return $model;
+    }
+
+    /**
+     * For use by custom error handlers created using
+     * set_error_handler() intended to catch php errors.
+     *
+     * @param int    $number
+     * @param string $message
+     * @param string $file
+     * @param int    $line
+     *
+     * @return Exception
+     */
+    public static function errorToException(int $number, string $message, string $file, int $line): Exception
+    {
+        if (static::$errorConstants === null) {
+            static::$errorConstants = [];
+
+            $allErrors = get_defined_constants(true);
+            foreach ($allErrors['Core'] as $name => $value) {
+                if (strpos($name, 'E_') === 0) {
+                    static::$errorConstants[$name] = $value;
+                }
+            }
+        }
+
+        $error = array_search($number, static::$errorConstants);
+
+        $message = sprintf('%s - %s', $error === false ? $number : $error, $message);
+
+        $exception = new Exception($message, 0);
+        $exception->setLocation($file, $line);
+
+        return $exception;
     }
 }
