@@ -24,10 +24,21 @@
 namespace Alledia\Framework\Joomla\Controller;
 
 use Joomla\CMS\MVC\Controller\BaseController;
+use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
 
 defined('_JEXEC') or die();
 
 class Base extends BaseController
 {
     use TraitController;
+
+    /**
+     * @inheritDoc
+     */
+    public function __construct($config = [], MVCFactoryInterface $factory = null)
+    {
+        parent::__construct($config, $factory);
+
+        $this->customInit();
+    }
 }

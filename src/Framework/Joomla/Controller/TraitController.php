@@ -23,6 +23,8 @@
 
 namespace Alledia\Framework\Joomla\Controller;
 
+use Alledia\Framework\Factory;
+use Joomla\CMS\Application\CMSApplication;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Uri\Uri;
 
@@ -30,6 +32,13 @@ defined('_JEXEC') or die();
 
 trait TraitController
 {
+    /**
+     * @since Joomla v4
+     *
+     * @var CMSApplication
+     */
+    protected $app = null;
+
     /**
      * Standard return to calling url. In order:
      *    - Looks for base64 encoded 'return' URL variable
@@ -92,5 +101,18 @@ trait TraitController
         $this->app->enqueueMessage($message, $type);
 
         $this->app->redirect($referrer);
+    }
+
+    /**
+     * Provide consistency between Joomla 3/Joomla 4 among other possibilities
+     *
+     * @return void
+     * @throws \Exception
+     */
+    protected function customInit()
+    {
+        if (empty($this->app)) {
+            $this->app = Factory::getApplication();
+        }
     }
 }
