@@ -29,5 +29,6 @@ defined('_JEXEC') or die();
 
 class Admin extends AdminController
 {
+    use TraitController;
 
 }

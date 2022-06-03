@@ -29,5 +29,5 @@ defined('_JEXEC') or die();
 
 class Base extends BaseController
 {
-
+    use TraitController;
 }
