@@ -23,7 +23,6 @@
 
 namespace Alledia\Framework\Joomla\Controller;
 
-use Alledia\Framework\Factory;
 use Joomla\CMS\Application\CMSApplication;
 use Joomla\CMS\MVC\Controller\AdminController;
 use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
