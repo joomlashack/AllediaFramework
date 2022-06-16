@@ -64,52 +64,56 @@ abstract class Helper
     }
 
     /**
-     * @param string $element
+     * @param ?string $element
      *
-     * @return array
+     * @return ?array
      */
-    public static function getExtensionInfoFromElement($element)
+    public static function getExtensionInfoFromElement(?string $element): ?array
     {
-        $result = [
-            'type'      => null,
-            'name'      => null,
-            'group'     => null,
-        ];
+        $element = explode('_', $element, 2);
 
-        $types = [
-            'com' => 'component',
-            'plg' => 'plugin',
-            'mod' => 'module',
-            'lib' => 'library',
-            'tpl' => 'template',
-            'cli' => 'cli'
-        ];
+        if (count($element) == 2) {
+            $result = [
+                'type'  => null,
+                'name'  => null,
+                'group' => null,
+            ];
 
-        $element = explode('_', $element);
+            $types = [
+                'com' => 'component',
+                'plg' => 'plugin',
+                'mod' => 'module',
+                'lib' => 'library',
+                'tpl' => 'template',
+                'cli' => 'cli'
+            ];
 
-        $result['prefix'] = $element[0];
+            $result['prefix'] = $element[0];
 
-        if (array_key_exists($result['prefix'], $types)) {
-            $result['type'] = $types[$result['prefix']];
+            if (array_key_exists($result['prefix'], $types)) {
+                $result['type'] = $types[$result['prefix']];
 
-            if ($result['prefix'] === 'plg') {
-                $result['group'] = $element[1];
-                $result['name']  = $element[2];
-            } else {
-                $result['name']  = $element[1];
-                $result['group'] = null;
+                if ($result['prefix'] === 'plg') {
+                    $result['group'] = $element[1];
+                    $result['name']  = $element[2];
+                } else {
+                    $result['name']  = $element[1];
+                    $result['group'] = null;
+                }
             }
+
+            $result['namespace'] = preg_replace_callback(
+                '/^(os[a-z])(.*)/i',
+                function ($matches) {
+                    return strtoupper($matches[1]) . $matches[2];
+                },
+                $result['name']
+            );
+
+            return $result;
         }
 
-        $result['namespace'] = preg_replace_callback(
-            '/^(os[a-z])(.*)/i',
-            function ($matches) {
-                return strtoupper($matches[1]) . $matches[2];
-            },
-            $result['name']
-        );
-
-        return $result;
+        return null;
     }
 
     /**
