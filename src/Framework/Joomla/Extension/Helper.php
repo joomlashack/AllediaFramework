@@ -33,6 +33,20 @@ defined('_JEXEC') or die();
 abstract class Helper
 {
     /**
+     * @var array[]
+     */
+    protected static $extensionInfo = [];
+
+    protected static $extensionTypes = [
+        'com' => 'component',
+        'plg' => 'plugin',
+        'mod' => 'module',
+        'lib' => 'library',
+        'tpl' => 'template',
+        'cli' => 'cli'
+    ];
+
+    /**
      * Build a string representing the element
      *
      * @param string $type
@@ -43,24 +57,21 @@ abstract class Helper
      */
     public static function getFullElementFromInfo($type, $element, $folder = null)
     {
-        $prefixes = [
-            'component' => 'com',
-            'plugin'    => 'plg',
-            'template'  => 'tpl',
-            'library'   => 'lib',
-            'cli'       => 'cli',
-            'module'    => 'mod'
-        ];
+        $prefix = array_search($type, static::$extensionTypes);
+        if ($prefix) {
+            if (strpos($element, $prefix) === 0) {
+                $shortElement = substr($element, strlen($prefix) + 1);
+            }
+            $parts = [
+                $prefix,
+                $type == 'plugin' ? $folder : null,
+                $shortElement ?? $element
+            ];
 
-        $fullElement = $prefixes[$type];
-
-        if ($type === 'plugin') {
-            $fullElement .= '_' . $folder;
+            return join('_', array_filter($parts));
         }
 
-        $fullElement .= '_' . $element;
-
-        return $fullElement;
+        return null;
     }
 
     /**
@@ -70,50 +81,45 @@ abstract class Helper
      */
     public static function getExtensionInfoFromElement(?string $element): ?array
     {
-        $element = explode('_', $element, 2);
+        if (isset(static::$extensionInfo[$element]) == false) {
+            static::$extensionInfo[$element] = false;
 
-        if (count($element) == 2) {
-            $result = [
-                'type'  => null,
-                'name'  => null,
-                'group' => null,
-            ];
+            $parts = explode('_', $element, 3);
+            if (count($parts) > 1) {
+                $prefix = $parts[0];
+                $name   = $parts[2] ?? $parts[1];
+                $group  = empty($parts[2]) ? null : $parts[1];
 
-            $types = [
-                'com' => 'component',
-                'plg' => 'plugin',
-                'mod' => 'module',
-                'lib' => 'library',
-                'tpl' => 'template',
-                'cli' => 'cli'
-            ];
+                $types = [
+                    'com' => 'component',
+                    'plg' => 'plugin',
+                    'mod' => 'module',
+                    'lib' => 'library',
+                    'tpl' => 'template',
+                    'cli' => 'cli'
+                ];
 
-            $result['prefix'] = $element[0];
-
-            if (array_key_exists($result['prefix'], $types)) {
-                $result['type'] = $types[$result['prefix']];
-
-                if ($result['prefix'] === 'plg') {
-                    $result['group'] = $element[1];
-                    $result['name']  = $element[2];
-                } else {
-                    $result['name']  = $element[1];
-                    $result['group'] = null;
+                if (array_key_exists($prefix, $types)) {
+                    $result = [
+                        'prefix'    => $prefix,
+                        'type'      => $types[$prefix],
+                        'name'      => $name,
+                        'group'     => $group,
+                        'namespace' => preg_replace_callback(
+                            '/^(os[a-z])(.*)/i',
+                            function ($matches) {
+                                return strtoupper($matches[1]) . $matches[2];
+                            },
+                            $name
+                        )
+                    ];
                 }
+
+                static::$extensionInfo[$element] = $result;
             }
-
-            $result['namespace'] = preg_replace_callback(
-                '/^(os[a-z])(.*)/i',
-                function ($matches) {
-                    return strtoupper($matches[1]) . $matches[2];
-                },
-                $result['name']
-            );
-
-            return $result;
         }
 
-        return null;
+        return static::$extensionInfo[$element] ?: null;
     }
 
     /**
