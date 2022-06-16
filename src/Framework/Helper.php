@@ -48,7 +48,6 @@ abstract class Helper
      */
     public static function getAllediaExtensions(?string $license = ''): array
     {
-        // Get the extensions ids
         $db    = Factory::getDbo();
         $query = $db->getQuery(true)
             ->select([
@@ -71,28 +70,21 @@ abstract class Helper
         $rows = $db->setQuery($query)->loadObjectList();
 
         $extensions = [];
-
         foreach ($rows as $row) {
-            $fullElement = $row->element;
+            if ($fullElement = ExtensionHelper::getFullElementFromInfo($row->type, $row->element, $row->folder)) {
+                if ($extensionInfo = ExtensionHelper::getExtensionInfoFromElement($fullElement)) {
+                    $extension = new Joomla\Extension\Licensed($extensionInfo['namespace'], $row->type, $row->folder);
 
-            // Fix the element for plugins
-            if ($row->type === 'plugin') {
-                $fullElement = ExtensionHelper::getFullElementFromInfo($row->type, $row->element, $row->folder);
-            }
-
-            $extensionInfo = ExtensionHelper::getExtensionInfoFromElement($fullElement);
-            $extension     = new Joomla\Extension\Licensed($extensionInfo['namespace'], $row->type, $row->folder);
-
-            if (!empty($license)) {
-                if ($license === 'pro' && !$extension->isPro()) {
-                    continue;
-
-                } elseif ($license === 'free' && $extension->isPro()) {
-                    continue;
+                    if (
+                        empty($license)
+                        ||
+                        ($license == 'pro' && $extension->isPro())
+                        || ($license == 'free' && $extension->isFree())
+                    ) {
+                        $extensions[$row->extension_id] = $extension;
+                    }
                 }
             }
-
-            $extensions[$row->extension_id] = $extension;
         }
 
         return $extensions;
