@@ -117,4 +117,12 @@ trait TraitController
             $this->app = Factory::getApplication();
         }
     }
+
+    /**
+     * @return Inflector
+     */
+    protected function getStringInflector(): Inflector
+    {
+        return Inflector::getInstance();
+    }
 }
