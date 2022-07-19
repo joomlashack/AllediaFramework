@@ -27,15 +27,17 @@ use Alledia\Framework\Factory;
 use Joomla\CMS\Application\CMSApplication;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Uri\Uri;
+use Joomla\String\Inflector;
 
 defined('_JEXEC') or die();
 
 trait TraitController
 {
     /**
-     * @since Joomla v4
+     * For consistency between Joomla 3 & 4
      *
      * @var CMSApplication
+     * @since Joomla v4
      */
     protected $app = null;
 
@@ -79,6 +81,7 @@ trait TraitController
         if (is_array($message)) {
             $message = join('<br>', $message);
         }
+
         $this->setRedirect(Route::_((string)$url), $message, $type);
     }
 
@@ -94,7 +97,7 @@ trait TraitController
     {
         $referrer = $this->input->server->getString('HTTP_REFERER');
 
-        if (!Uri::isInternal($referrer)) {
+        if (Uri::isInternal($referrer) == false) {
             $referrer = 'index.php';
         }
 
@@ -107,7 +110,6 @@ trait TraitController
      * Provide consistency between Joomla 3/Joomla 4 among other possibilities
      *
      * @return void
-     * @throws \Exception
      */
     protected function customInit()
     {
