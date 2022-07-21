@@ -109,4 +109,22 @@ abstract class AbstractView extends HtmlView
     {
         // Display custom text
     }
+
+    /**
+     * @param string $name
+     * @param string $layout
+     *
+     * @return string
+     * @throws \Exception
+     */
+    public function loadDefaultTemplate(string $name, ?string $layout = 'default'): string
+    {
+        $currentLayout = $this->setLayout($layout);
+
+        $output = $this->loadTemplate($name);
+
+        $this->setLayout($currentLayout);
+
+        return $output;
+    }
 }
