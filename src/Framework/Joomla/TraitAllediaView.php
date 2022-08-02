@@ -27,6 +27,8 @@ use Alledia\Framework\Extension;
 use Alledia\Framework\Factory;
 use Alledia\Framework\Joomla\Extension\Helper as ExtensionHelper;
 use Joomla\CMS\Application\CMSApplication;
+use Joomla\CMS\Filesystem\Path;
+use Joomla\CMS\Version;
 
 defined('_JEXEC') or die();
 
@@ -48,6 +50,8 @@ trait TraitAllediaView
     protected $initSuccess = null;
 
     /**
+     * To be called before class constructor method by inheriting classes
+     *
      * @return void
      */
     protected function setup()
@@ -74,5 +78,39 @@ trait TraitAllediaView
 
             $this->initSuccess = false;
         }
+    }
+
+    /**
+     * Look for a valid layout file based on Joomla version
+     *
+     * @param string $layout
+     *
+     * @return string
+     * @throws \Exception
+     */
+    protected function getVersionedLayoutName(string $layout): string
+    {
+        if (is_callable([$this, '_createFileName'])) {
+            $file = $layout;
+            if (Version::MAJOR_VERSION < 4) {
+                $file .= '.j' . Version::MAJOR_VERSION;
+            }
+
+            if ($file != $layout || $file == 'emptystate') {
+                // Verify layout file exists
+                $fileName = $this->_createFileName('template', ['name' => $file]);
+                $path     = Path::find($this->_path['template'], $fileName);
+
+                if ($path) {
+                    $layout = $file;
+                } else {
+                    $layout = ($file == 'emptystate') ? 'default' : $layout;
+                }
+            }
+
+            return $layout;
+        }
+
+        throw new \Exception('TraitAllediaView must apply to a Joomla view', 500);
     }
 }
