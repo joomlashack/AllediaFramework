@@ -23,8 +23,8 @@
 
 namespace Alledia\Framework\Joomla\Events;
 
-use Joomla\Event\Dispatcher;
 use Alledia\Framework\Factory;
+use Joomla\Event\Dispatcher;
 
 defined('_JEXEC') or die();
 
@@ -54,22 +54,37 @@ trait TraitObservable
     }
 
     /**
-     * @param ?string|string[] $events
-     * @param ?object          $observable
+     * $events is accepted in these forms:
+     *
+     * ['handler1', 'handler2',...] : array of specific methods to register
+     * 'handler'                    : a single method to register
+     * 'prefix*'                   : all public methods in $observable that begin with 'prefix'
+     * '*string'                   : all public methods in $observable that contain 'string'
+     *
+     * @param string|string[] $events
+     * @param ?object         $observable
      *
      * @return void
      */
-    public function registerEvents($events = null, object $observable = null)
+    public function registerEvents($events, object $observable = null)
     {
         $observable = $observable ?: $this;
 
-        if (empty($events)) {
-            // We'll take a best guess as to registrable event handlers
+        if (is_string($events) && strpos($events, '*') !== false) {
+            $startsWith = strpos($events, '*') !== 0;
+            $event      = preg_replace('/[^a-z\d_]/i', '', $events);
+
+            // Look for methods that match the wildcarded name
             $observableInfo = new \ReflectionClass($observable);
             $methods        = $observableInfo->getMethods(\ReflectionMethod::IS_PUBLIC);
+
             $events = [];
             foreach ($methods as $method) {
-                if (strpos($method->name, 'oscampus') === 0) {
+                $position = strpos($method->name, $event);
+                if (
+                    ($startsWith && $position === 0)
+                    || ($startsWith == false && $position > 0)
+                ) {
                     $events[] = $method->name;
                 }
             }
