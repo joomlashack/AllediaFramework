@@ -56,8 +56,8 @@ trait TraitObservable
     /**
      * $events is accepted in these forms:
      *
-     * ['handler1', 'handler2',...] : array of specific methods to register
-     * 'handler'                    : a single method to register
+     * ['handler1', 'handler2',...]: array of specific methods to register
+     * 'handler'                   : a single method to register
      * 'prefix*'                   : all public methods in $observable that begin with 'prefix'
      * '*string'                   : all public methods in $observable that contain 'string'
      *
