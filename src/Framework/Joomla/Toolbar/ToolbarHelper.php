@@ -55,7 +55,7 @@ abstract class ToolbarHelper extends \Joomla\CMS\Toolbar\ToolbarHelper
         }
 
         $icon                 = $icon ? 'icon-' . $icon : '';
-        $attributes['target'] = $attributes['target'] ?? 'shackdocs';
+        $attributes['target'] = $attributes['target'] ?? '_blank';
         $attributes['class']  = join(
             ' ',
             array_filter(
@@ -94,7 +94,7 @@ abstract class ToolbarHelper extends \Joomla\CMS\Toolbar\ToolbarHelper
      */
     public static function shackDocumentation(string $url, string $title)
     {
-        static::externalLink($url, $title, 'support', ['class' => 'btn-info']);
+        static::externalLink($url, $title, 'support', ['class' => 'btn-info', 'target' => 'shackdocs']);
     }
 
     /**
