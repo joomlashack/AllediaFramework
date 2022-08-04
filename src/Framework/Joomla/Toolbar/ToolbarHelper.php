@@ -41,20 +41,20 @@ abstract class ToolbarHelper extends \Joomla\CMS\Toolbar\ToolbarHelper
     /**
      * Create a button that links to an external page
      *
-     * @param string $url
-     * @param string $title
-     * @param string $icon
-     * @param mixed  $attributes
+     * @param string  $url
+     * @param string  $title
+     * @param ?string $icon
+     * @param ?mixed  $attributes
      *
      * @return void
      */
-    public static function externalLink(string $url, string $title, string $icon, $attributes = [])
+    public static function externalLink(string $url, string $title, ?string $icon = null, $attributes = [])
     {
         if (is_string($attributes)) {
             $attributes = Utility::parseAttributes($attributes);
         }
 
-        $icon                 = $icon ? 'icon-' . $icon : '';
+        $icon                 = 'icon-' . ($icon ? $icon : 'link');
         $attributes['target'] = $attributes['target'] ?? '_blank';
         $attributes['class']  = join(
             ' ',
