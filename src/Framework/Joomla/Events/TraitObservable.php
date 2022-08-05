@@ -31,7 +31,7 @@ defined('_JEXEC') or die();
 trait TraitObservable
 {
     /**
-     * @var JEventDispatcher|Dispatcher
+     * @var \JEventDispatcher|Dispatcher
      */
     protected static $coreDispatcher = null;
 
@@ -41,7 +41,7 @@ trait TraitObservable
     protected static $legacyDispatch = null;
 
     /**
-     * @return JEventDispatcher|Dispatcher
+     * @return \JEventDispatcher|Dispatcher
      */
     protected function getDispatcher()
     {
