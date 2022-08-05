@@ -24,6 +24,7 @@
 namespace Alledia\Framework\Joomla\Events;
 
 use Alledia\Framework\Factory;
+use Joomla\Event\AbstractEvent;
 use Joomla\Event\Dispatcher;
 
 defined('_JEXEC') or die();
@@ -63,10 +64,11 @@ trait TraitObservable
      *
      * @param string|string[] $events
      * @param ?object         $observable
+     * @param ?bool           $legacyListeners
      *
      * @return void
      */
-    public function registerEvents($events, object $observable = null)
+    public function registerEvents($events, object $observable = null, bool $legacyListeners = true)
     {
         $observable = $observable ?: $this;
 
@@ -100,9 +102,48 @@ trait TraitObservable
                 if (is_callable([$dispatcher, 'register'])) {
                     $dispatcher->register($event, $handler);
                 } elseif (is_callable([$dispatcher, 'addListener'])) {
-                    $dispatcher->addListener($event, $handler);
+                    if ($legacyListeners) {
+                        $dispatcher->addListener($event, $this->createLegacyHandler($handler));
+                    } else {
+                        $dispatcher->addListener($event, $handler);
+                    }
                 }
             }
         }
+    }
+
+    /**
+     * @param callable $handler
+     *
+     * @return callable
+     */
+    final protected function createLegacyHandler(callable $handler): callable
+    {
+        return function (AbstractEvent $event) use ($handler) {
+            $arguments = $event->getArguments();
+
+            // Extract any old results; they must not be part of the method call.
+            $allResults = [];
+
+            if (isset($arguments['result'])) {
+                $allResults = $arguments['result'];
+
+                unset($arguments['result']);
+            }
+
+            // Convert to indexed array for unpacking.
+            $arguments = \array_values($arguments);
+
+            $result = $handler(...$arguments);
+
+            // Ignore null results
+            if ($result === null) {
+                return;
+            }
+
+            // Restore the old results and add the new result from our method call
+            $allResults[]    = $result;
+            $event['result'] = $allResults;
+        };
     }
 }
