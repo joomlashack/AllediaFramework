@@ -8,13 +8,14 @@
     <copyright>Copyright 2016-2022 Joomlashack.com</copyright>
     <license>GNU GPL; see LICENSE file</license>
     <description>Shared library for Joomlashack extensions</description>
-    <version>3.5.1b1</version>
-    <creationDate>September 15 2022</creationDate>
+    <version>3.6.0b1</version>
+    <creationDate>September 19 2022</creationDate>
     <variant>FREE</variant>
 
     <files>
         <folder>Framework</folder>
         <folder>helpers</folder>
+        <folder>vendor</folder>
 
         <filename>AllediaPsr4AutoLoader.php</filename>
         <filename>include.php</filename>

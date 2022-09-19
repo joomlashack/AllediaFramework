@@ -35,6 +35,7 @@ if (!defined('ALLEDIA_FRAMEWORK_LOADED')) {
     if (!class_exists('\\Alledia\\Framework\\AutoLoader')) {
         require_once ALLEDIA_FRAMEWORK_PATH . '/Framework/AutoLoader.php';
     }
+    include ALLEDIA_FRAMEWORK_PATH . '/vendor/autoload.php';
 
     AutoLoader::register('\\Alledia\\Framework', ALLEDIA_FRAMEWORK_PATH . '/Framework');
     HTMLHelper::addIncludePath(ALLEDIA_FRAMEWORK_PATH . '/helpers/html');

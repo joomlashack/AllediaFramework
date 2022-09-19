@@ -19,10 +19,17 @@
             "email": "help@joomlashack.com"
         }
     ],
+    "config"           : {
+        "vendor-dir": "src/vendor"
+    },
     "require"          : {
         "php"          : ">=7.2.5",
         "ext-curl"     : "*",
         "ext-simplexml": "*",
-        "ext-json"     : "*"
+        "ext-json"     : "*",
+        "pimple/pimple": "^3.0"
+    },
+    "replace"          : {
+        "psr/container": "*"
     }
 }
