@@ -50,8 +50,10 @@ class AutoLoader
 
     /**
      * @param string $method
+     *
+     * @return void
      */
-    protected static function registerLoader($method)
+    protected static function registerLoader(string $method)
     {
         if (static::$instance === null) {
             static::$instance = new static();
@@ -63,10 +65,10 @@ class AutoLoader
     /**
      * Register a psr4 namespace
      *
-     * @param ?string $prefix   The namespace prefix.
-     * @param ?string $baseDir  A base directory for class files in the
+     * @param ?string $prefix  The namespace prefix.
+     * @param ?string $baseDir A base directory for class files in the
      *                         namespace.
-     * @param ?bool   $prepend  If true, prepend the base directory to the stack
+     * @param ?bool   $prepend If true, prepend the base directory to the stack
      *                         instead of appending it; this causes it to be searched first rather
      *                         than last.
      *
@@ -104,13 +106,13 @@ class AutoLoader
     }
 
     /**
-     * Loads the class file for a given class name.
+     * Loads the namespaced class file for a given class name.
      *
      * @param string $class The fully-qualified class name.
      *
-     * @return null|string The mapped file name on success, or boolean false on failure.
+     * @return ?string The mapped file name on success, or boolean false on failure.
      */
-    protected function loadClass($class)
+    protected function loadClass(string $class): ?string
     {
         $prefixes  = explode('\\', $class);
         $className = '';
@@ -124,8 +126,7 @@ class AutoLoader
             $className = '\\' . $className;
         }
 
-        // never found a mapped file
-        return false;
+        return null;
     }
 
     /**
@@ -134,13 +135,13 @@ class AutoLoader
      * @param string $prefix    The namespace prefix.
      * @param string $className The relative class name.
      *
-     * @return bool|string false if no mapped file can be loaded | path that was loaded
+     * @return ?string false if no mapped file can be loaded | path that was loaded
      */
-    protected function loadMappedFile($prefix, $className)
+    protected function loadMappedFile(string $prefix, string $className): ?string
     {
         // are there any base directories for this namespace prefix?
         if (isset(static::$prefixes[$prefix]) === false) {
-            return false;
+            return null;
         }
 
         // look through base directories for this namespace prefix
@@ -153,8 +154,7 @@ class AutoLoader
             }
         }
 
-        // never found it
-        return false;
+        return null;
     }
 
     /**
@@ -201,9 +201,9 @@ class AutoLoader
      *
      * @param string $class
      *
-     * @return bool|string
+     * @return ?string
      */
-    protected function loadCamelClass($class)
+    protected function loadCamelClass(string $class): ?string
     {
         if (!class_exists($class)) {
             foreach (static::$camelPrefixes as $prefix => $baseDir) {
@@ -221,7 +221,6 @@ class AutoLoader
             }
         }
 
-        // No file found
-        return false;
+        return null;
     }
 }
