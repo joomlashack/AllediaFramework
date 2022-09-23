@@ -63,16 +63,16 @@ class AutoLoader
     /**
      * Register a psr4 namespace
      *
-     * @param string $prefix   The namespace prefix.
-     * @param string $baseDir  A base directory for class files in the
+     * @param ?string $prefix   The namespace prefix.
+     * @param ?string $baseDir  A base directory for class files in the
      *                         namespace.
-     * @param bool   $prepend  If true, prepend the base directory to the stack
+     * @param ?bool   $prepend  If true, prepend the base directory to the stack
      *                         instead of appending it; this causes it to be searched first rather
      *                         than last.
      *
      * @return void
      */
-    public static function register($prefix = null, $baseDir = null, $prepend = false)
+    public static function register(?string $prefix = null, ?string $baseDir = null, ?bool $prepend = false)
     {
         if ($prefix === null || $baseDir === null) {
             // Recognize old-style instantiations for backward compatibility
