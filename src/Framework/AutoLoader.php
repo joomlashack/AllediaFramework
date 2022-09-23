@@ -76,32 +76,36 @@ class AutoLoader
      */
     public static function register(?string $prefix = null, ?string $baseDir = null, ?bool $prepend = false)
     {
-        if ($prefix === null || $baseDir === null) {
-            // Recognize old-style instantiations for backward compatibility
-            return;
-        }
+        if ($prefix !== null && $baseDir !== null && is_dir($baseDir)) {
+            if (count(static::$prefixes) == 0) {
+                // Register function on first call
+                static::registerLoader('loadClass');
+            }
 
-        if (count(static::$prefixes) == 0) {
-            // Register function on first call
-            static::registerLoader('loadClass');
-        }
+            // normalize namespace prefix
+            $prefix = trim($prefix, '\\') . '\\';
 
-        // normalize namespace prefix
-        $prefix = trim($prefix, '\\') . '\\';
+            // normalize the base directory with a trailing separator
+            $baseDir = rtrim($baseDir, '\\/') . '/';
 
-        // normalize the base directory with a trailing separator
-        $baseDir = rtrim($baseDir, '\\/') . '/';
+            // initialise the namespace prefix array
+            if (empty(static::$prefixes[$prefix])) {
+                static::$prefixes[$prefix] = [];
+            }
 
-        // initialise the namespace prefix array
-        if (empty(static::$prefixes[$prefix])) {
-            static::$prefixes[$prefix] = [];
-        }
+            // retain the base directory for the namespace prefix
+            if ($prepend) {
+                $firstDir = static::$prefixes[$prefix][0] ?? null;
+                if ($firstDir != $baseDir) {
+                    array_unshift(static::$prefixes[$prefix], $baseDir);
+                }
 
-        // retain the base directory for the namespace prefix
-        if ($prepend) {
-            array_unshift(static::$prefixes[$prefix], $baseDir);
-        } else {
-            array_push(static::$prefixes[$prefix], $baseDir);
+            } else {
+                $lastDir = static::$prefixes[$prefix][count(static::$prefixes[$prefix]) - 1] ?? null;
+                if ($lastDir != $baseDir) {
+                    static::$prefixes[$prefix][] = $baseDir;
+                }
+            }
         }
     }
 
@@ -178,21 +182,18 @@ class AutoLoader
      * @param string $baseDir
      *
      * @return void
-     * @throws \Exception
      */
-    public static function registerCamelBase($prefix, $baseDir)
+    public static function registerCamelBase(string $prefix, string $baseDir)
     {
-        if (!is_dir($baseDir)) {
-            throw new \Exception("Cannot register '{$prefix}'. The requested base directory does not exist!'");
-        }
+        if (is_dir($baseDir)) {
+            if (count(static::$camelPrefixes) == 0) {
+                // Register function on first call
+                static::registerLoader('loadCamelClass');
+            }
 
-        if (count(static::$camelPrefixes) == 0) {
-            // Register function on first call
-            static::registerLoader('loadCamelClass');
-        }
-
-        if (empty(static::$camelPrefixes[$prefix])) {
-            static::$camelPrefixes[$prefix] = $baseDir;
+            if (empty(static::$camelPrefixes[$prefix])) {
+                static::$camelPrefixes[$prefix] = $baseDir;
+            }
         }
     }
 
