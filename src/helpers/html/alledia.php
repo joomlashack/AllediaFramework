@@ -21,11 +21,8 @@
  * along with AllediaFramework.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-use Alledia\Framework\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
-use Joomla\CMS\Language\Text;
 use Joomla\CMS\Version;
-use Joomla\Utilities\ArrayHelper;
 
 defined('_JEXEC') or die();
 
@@ -74,5 +71,27 @@ abstract class JhtmlAlledia
                 ['relative' => true]
             );
         }
+    }
+
+    /**
+     * Truncate a string on word boundary within limit
+     * Recognize '-' and '_' along with standard whitespace
+     *
+     * @param string  $string
+     * @param int     $limit
+     * @param ?string $continued
+     *
+     * @return string
+     */
+    public static function truncate(string $string, int $limit, ?string $continued = '...')
+    {
+        if (
+            mb_strlen($string) > $limit
+            && mb_ereg('(.*?)[^\s_-]*\w$', trim(mb_substr($string, 0, $limit + 1) . 'a'), $match)
+        ) {
+            return trim(trim($match[1]), '-_') . $continued;
+        }
+
+        return $string;
     }
 }
