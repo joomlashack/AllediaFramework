@@ -54,7 +54,7 @@ abstract class ToolbarHelper extends \Joomla\CMS\Toolbar\ToolbarHelper
             $attributes = Utility::parseAttributes($attributes);
         }
 
-        $icon                 = 'icon-' . ($icon ? $icon : 'link');
+        $icon                 = $icon ?: 'link';
         $attributes['target'] = $attributes['target'] ?? '_blank';
         $attributes['class']  = join(
             ' ',
@@ -72,7 +72,7 @@ abstract class ToolbarHelper extends \Joomla\CMS\Toolbar\ToolbarHelper
         $button = HTMLHelper::_(
             'link',
             $url,
-            sprintf('<span class="%s"></span> %s', $icon, $title),
+            sprintf('<span class="icon-%s"></span> %s', $icon, $title),
             $attributes
         );
 
