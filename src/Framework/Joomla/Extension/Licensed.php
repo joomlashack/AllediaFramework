@@ -61,8 +61,8 @@ class Licensed extends Generic
     {
         parent::__construct($namespace, $type, $folder, $basePath);
 
-        $this->license   = strtolower($this->manifest->alledia->license ?? null);
-        $this->namespace = $this->manifest->alledia->namespace ?? null;
+        $this->license   = strtolower($this->manifest->alledia->license ?? '');
+        $this->namespace = $this->manifest->alledia->namespace ?? '';
 
         $this->getLibraryPath();
         $this->getProLibraryPath();
