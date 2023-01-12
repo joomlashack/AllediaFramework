@@ -87,7 +87,7 @@ abstract class JhtmlAlledia
     {
         if (
             mb_strlen($string) > $limit
-            && mb_ereg('(.*?)[^\s_-]*\w$', trim(mb_substr($string, 0, $limit + 1) . 'a'), $match)
+            && mb_ereg('(.*?)[^\s_-]*\w$', trim(mb_substr($string, 0, $limit - strlen($continued) + 1) . 'a'), $match)
         ) {
             return trim(trim($match[1]), '-_') . $continued;
         }
