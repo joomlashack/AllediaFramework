@@ -27,6 +27,7 @@ use Alledia\Framework\Joomla\Extension\Licensed;
 use JEventDispatcher;
 use Joomla\CMS\Version;
 use Joomla\Event\DispatcherInterface;
+use Joomla\Event\Event;
 
 defined('_JEXEC') or die();
 
@@ -80,5 +81,32 @@ abstract class Factory extends \Joomla\CMS\Factory
         }
 
         return static::getApplication()->getDispatcher();
+    }
+
+    /**
+     * @param string $eventName
+     * @param array  $args
+     *
+     * @return array
+     */
+    public static function triggerEvent(string $eventName, array $args)
+    {
+        try {
+            $dispatcher = static::getDispatcher();
+        } catch (\UnexpectedValueException $exception) {
+            // ignore for now
+            return [];
+        }
+
+        if (Version::MAJOR_VERSION < 4) {
+            $result = $dispatcher->trigger($eventName, $args);
+
+        } else {
+            $event = new Event($eventName, $args);
+            $result = $dispatcher->dispatch($eventName, $event);
+            $result = $result['result'] ?? [];
+        }
+
+        return $result;
     }
 }
