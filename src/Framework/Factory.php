@@ -102,7 +102,7 @@ abstract class Factory extends \Joomla\CMS\Factory
             $result = $dispatcher->trigger($eventName, $args);
 
         } else {
-            $event = new Event($eventName, $args);
+            $event  = new Event($eventName, $args);
             $result = $dispatcher->dispatch($eventName, $event);
             $result = $result['result'] ?? [];
         }
