@@ -26,6 +26,7 @@ namespace Alledia\Framework;
 use Alledia\Framework\Joomla\Extension\Licensed;
 use JEventDispatcher;
 use Joomla\CMS\Version;
+use Joomla\Database\DatabaseDriver;
 use Joomla\Event\DispatcherInterface;
 use Joomla\Event\Event;
 
@@ -65,6 +66,18 @@ abstract class Factory extends \Joomla\CMS\Factory
         }
 
         return static::$extensionInstances[$key];
+    }
+
+    /**
+     * @return \JDatabaseDriver|DatabaseDriver
+     */
+    public static function getDatabase()
+    {
+        if (is_callable([static::class, 'getContainer'])) {
+            return static::getContainer()->get('DatabaseDriver');
+        }
+
+        return static::getDbo();
     }
 
     /**
