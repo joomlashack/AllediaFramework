@@ -22,7 +22,6 @@
  */
 
 use Joomla\CMS\HTML\HTMLHelper;
-use Joomla\CMS\Version;
 
 defined('_JEXEC') or die();
 
@@ -64,13 +63,11 @@ abstract class JhtmlAlledia
      */
     public static function fontawesome()
     {
-        if (Version::MAJOR_VERSION < 4) {
-            HTMLHelper::_(
-                'stylesheet',
-                'lib_allediaframework/fontawesome/css/all.min.css',
-                ['relative' => true]
-            );
-        }
+        HTMLHelper::_(
+            'stylesheet',
+            'lib_allediaframework/fontawesome/css/all.min.css',
+            ['relative' => true]
+        );
     }
 
     /**
