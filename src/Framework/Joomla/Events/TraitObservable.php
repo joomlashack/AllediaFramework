@@ -44,7 +44,7 @@ trait TraitObservable
     /**
      * @return \JEventDispatcher|Dispatcher
      */
-    protected function getDispatcher()
+    public function getDispatcher()
     {
         if (static::$coreDispatcher === null) {
             static::$coreDispatcher = Factory::getDispatcher();
@@ -68,7 +68,7 @@ trait TraitObservable
      *
      * @return void
      */
-    public function registerEvents($events, object $observable = null, bool $legacyListeners = true)
+    public function registerEvents($events, object $observable = null, bool $legacyListeners = true): void
     {
         $observable = $observable ?: $this;
 
