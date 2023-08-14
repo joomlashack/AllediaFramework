@@ -17,7 +17,6 @@
         <folder>helpers</folder>
         <folder>vendor</folder>
 
-        <filename>AllediaPsr4AutoLoader.php</filename>
         <filename>include.php</filename>
     </files>
 

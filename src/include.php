@@ -48,9 +48,4 @@ if (!defined('ALLEDIA_FRAMEWORK_LOADED')) {
     }
 }
 
-// Backward compatibility with the old autoloader. Avoids breaking legacy extensions.
-if (!class_exists('AllediaPsr4AutoLoader')) {
-    require_once 'AllediaPsr4AutoLoader.php';
-}
-
 return defined('ALLEDIA_FRAMEWORK_LOADED');
