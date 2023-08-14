@@ -23,12 +23,17 @@
 
 use Joomla\CMS\HTML\HTMLHelper;
 
+// phpcs:disable PSR1.Files.SideEffects
 defined('_JEXEC') or die();
+// phpcs:enable PSR1.Files.SideEffects
+// phpcs:disable PSR1.Classes.ClassDeclaration.MissingNamespace
 
 abstract class JhtmlAlledia
 {
     /**
      * Joomla version agnostic modal select field rendering
+     *
+     * @param array $options
      *
      * @return string
      * @deprecated v3.3.5: Use AllediaModal::renderSelectField()
@@ -61,7 +66,7 @@ abstract class JhtmlAlledia
      *
      * @return void
      */
-    public static function fontawesome()
+    public static function fontawesome(): void
     {
         HTMLHelper::_(
             'stylesheet',
@@ -80,7 +85,7 @@ abstract class JhtmlAlledia
      *
      * @return string
      */
-    public static function truncate(string $string, int $limit, ?string $continued = '...')
+    public static function truncate(string $string, int $limit, ?string $continued = '...'): string
     {
         if (
             mb_strlen($string) > $limit

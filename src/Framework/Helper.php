@@ -54,7 +54,7 @@ abstract class Helper
                 $db->quoteName('extension_id'),
                 $db->quoteName('type'),
                 $db->quoteName('element'),
-                $db->quoteName('folder')
+                $db->quoteName('folder'),
             ])
             ->from('#__extensions')
             ->where([
