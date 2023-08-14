@@ -188,15 +188,20 @@ abstract class Helper
         $defaultApp = 'Site';
         $appNames   = [$defaultApp, 'Administrator'];
 
-        $appName = ucfirst($appName ?: $defaultApp);
-        $appName = in_array($appName, $appNames) ? $appName : $defaultApp;
+        $appName       = ucfirst($appName ?: $defaultApp);
+        $appName       = in_array($appName, $appNames) ? $appName : $defaultApp;
+        $basePath      = $appName == 'Administrator' ? JPATH_ADMINISTRATOR : JPATH_SITE;
+        $componentPath = $basePath . '/components/' . $component;
+
+        Table::addIncludePath($componentPath . '/tables');
+        Form::addFormPath($componentPath . '/forms');
+        Form::addFormPath($componentPath . '/models/forms');
+        Form::addFieldPath($componentPath . '/models/fields');
+        Form::addFormPath($componentPath . '/model/form');
+        Form::addFieldPath($componentPath . '/model/field');
 
         if (Version::MAJOR_VERSION < 4) {
-            $basePath = $appName == 'Administrator' ? JPATH_ADMINISTRATOR : JPATH_SITE;
-
-            $path = $basePath . '/components/' . $component;
-            BaseDatabaseModel::addIncludePath($path . '/models');
-            Table::addIncludePath($path . '/tables');
+            BaseDatabaseModel::addIncludePath($componentPath . '/models');
 
             $model = BaseDatabaseModel::getInstance($name, $prefix, $options);
 
