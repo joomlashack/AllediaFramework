@@ -27,7 +27,10 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Version;
 use Joomla\Utilities\ArrayHelper;
 
+// phpcs:disable PSR1.Files.SideEffects
 defined('_JEXEC') or die();
+// phpcs:enable PSR1.Files.SideEffects
+// phpcs:disable PSR1.Classes.ClassDeclaration.MissingNamespace
 
 abstract class AllediaModal
 {
