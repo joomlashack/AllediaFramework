@@ -68,7 +68,7 @@ abstract class AbstractList extends AbstractBase
         HTMLHelper::_('stylesheet', $this->option . '/admin-default.css', ['relative' => true]);
 
         if (
-            Version::MAJOR_VERSION == 4
+            Version::MAJOR_VERSION > 3
             && empty($this->items)
             && ($this->isEmptyState = $this->get('IsEmptyState'))
         ) {
