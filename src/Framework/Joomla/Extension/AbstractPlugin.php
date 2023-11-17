@@ -23,10 +23,13 @@
 
 namespace Alledia\Framework\Joomla\Extension;
 
-defined('_JEXEC') or die();
-
 use Alledia\Framework\Factory;
 use Joomla\CMS\Plugin\CMSPlugin;
+use Joomla\CMS\Version;
+
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die();
+// phpcs:enable PSR1.Files.SideEffects
 
 abstract class AbstractPlugin extends CMSPlugin
 {
