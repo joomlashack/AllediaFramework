@@ -28,6 +28,8 @@ use Joomla\CMS\Form\Form;
 use Joomla\CMS\MVC\Model\BaseDatabaseModel;
 use Joomla\CMS\Table\Table;
 use Joomla\CMS\Version;
+use Joomla\Database\DatabaseDriver;
+use Joomla\Database\DatabaseQuery;
 use ReflectionMethod;
 
 defined('_JEXEC') or die();
@@ -96,6 +98,35 @@ abstract class Helper
     public static function getJoomlaVersionCssClass(): string
     {
         return sprintf('joomla%sx', Version::MAJOR_VERSION);
+    }
+
+    /**
+     * Create class alias for classes that may not exist
+     *
+     * @param array $classes
+     *
+     * @return void
+     */
+    public static function createClassAliases(array $classes): void
+    {
+        foreach ($classes as $class => $classAlias) {
+            if (class_exists($classAlias) == false) {
+                class_alias($class, $classAlias);
+            }
+        }
+    }
+
+    /**
+     * Create common database class aliases for classes that don't exist
+     *
+     * @return void
+     */
+    public static function createDatabaseClassAliases(): void
+    {
+        static::createClassAliases([
+            \JDatabaseQuery::class  => DatabaseQuery::class,
+            \JDatabaseDriver::class => DatabaseDriver::class,
+        ]);
     }
 
     /**
