@@ -40,7 +40,7 @@ trait TraitLayouts
      */
     protected function getLayoutPaths()
     {
-        if (is_callable('parent::getLayoutPaths')) {
+        if (is_callable(parent::class . '::getLayoutPaths')) {
             $paths = parent::getLayoutPaths();
 
             $fieldClass    = (new \ReflectionClass($this));
@@ -59,7 +59,7 @@ trait TraitLayouts
      */
     protected function getRenderer($layoutId = 'default')
     {
-        if (is_callable('parent::getRenderer')) {
+        if (is_callable(parent::class . '::getRenderer')) {
             $paths = $this->getLayoutPaths();
 
             if (Version::MAJOR_VERSION < 4) {
