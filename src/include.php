@@ -44,7 +44,9 @@ if (!defined('ALLEDIA_FRAMEWORK_LOADED')) {
 
     if (Version::MAJOR_VERSION < 4) {
         // Add some shims for Joomla 3
-        class_alias('JHtmlSidebar', '\\Joomla\\CMS\\HTML\\Helpers\\Sidebar');
+        if (!class_exists('\\Joomla\\CMS\\HTML\\Helpers\\Sidebar')) {
+            class_alias('JHtmlSidebar', '\\Joomla\\CMS\\HTML\\Helpers\\Sidebar');
+        }
     }
 }
 
