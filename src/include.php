@@ -22,6 +22,8 @@
  */
 
 use Alledia\Framework\AutoLoader;
+use Alledia\Framework\Helper;
+use Joomla\CMS\HTML\Helpers\Sidebar;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Version;
 
@@ -43,8 +45,10 @@ if (!defined('ALLEDIA_FRAMEWORK_LOADED')) {
     class_alias('\\Alledia\\Framework\\Joomla\Extension\Licensed', '\\Alledia\\Framework\\Extension');
 
     if (Version::MAJOR_VERSION < 4) {
-        // Add some shims for Joomla 3
-        class_alias('JHtmlSidebar', '\\Joomla\\CMS\\HTML\\Helpers\\Sidebar');
+        // Add shims for Joomla 3
+        Helper::createClassAliases([
+            JHtmlSidebar::class => Sidebar::class,
+        ]);
     }
 }
 
