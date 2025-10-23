@@ -62,11 +62,11 @@ class AbstractBase extends AbstractView
                 // Use alternative if no custom footer field
                 $layoutPath = $extension->getExtensionPath() . '/views/footer/tmpl/default.php';
 
-                if (!File::exists($layoutPath)) {
+                if (is_file($layoutPath) == false) {
                     $layoutPath = $extension->getExtensionPath() . '/alledia_views/footer/tmpl/default.php';
                 }
 
-                if (File::exists($layoutPath)) {
+                if (is_file($layoutPath)) {
                     ob_start();
                     include $layoutPath;
                     $output = ob_get_contents();

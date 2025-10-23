@@ -305,7 +305,7 @@ class Generic
         if (!isset($this->manifestXml) || $force) {
             $path = $this->getManifestPath();
 
-            if (File::exists($path)) {
+            if (is_file($path)) {
                 $this->manifestXml = simplexml_load_file($path);
             } else {
                 $this->manifestXml = false;
@@ -452,7 +452,7 @@ class Generic
 
         if ($manifest->alledia) {
             $configPath = $this->getExtensionPath() . '/config.xml';
-            if (File::exists($configPath)) {
+            if (is_file($configPath)) {
                 $config = $this->getConfig();
 
                 if (is_object($config)) {
