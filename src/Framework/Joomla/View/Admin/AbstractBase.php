@@ -26,7 +26,6 @@ namespace Alledia\Framework\Joomla\View\Admin;
 
 use Alledia\Framework\Extension;
 use Alledia\Framework\Joomla\AbstractView;
-use Joomla\CMS\Filesystem\File;
 
 // phpcs:disable PSR1.Files.SideEffects
 defined('_JEXEC') or die();
@@ -38,6 +37,7 @@ class AbstractBase extends AbstractView
 {
     /**
      * @inheritDoc
+     * @throws \Throwable
      */
     protected function displayFooter(?Extension $extension = null)
     {
@@ -50,6 +50,7 @@ class AbstractBase extends AbstractView
      * @param ?Extension $extension
      *
      * @return string
+     * @throws \Throwable
      */
     protected function displayAdminFooter(?Extension $extension = null): string
     {
