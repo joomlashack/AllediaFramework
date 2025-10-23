@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package   AllediaFramework
  * @contact   www.joomlashack.com, help@joomlashack.com
@@ -23,19 +24,17 @@
 
 namespace Alledia\Framework\Joomla\Extension;
 
-defined('_JEXEC') or die();
-
 use JFormFieldCustomFooter;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Filesystem\File;
 use Joomla\Registry\Registry;
 use SimpleXMLElement;
 
-/**
- * Generic extension class
- *
- * @todo : Make this class compatible with non-Alledia extensions
- */
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die();
+
+// phpcs:enable PSR1.Files.SideEffects
+
 class Generic
 {
     /**
@@ -156,7 +155,7 @@ class Generic
                 $db->quoteName('extension_id'),
                 $db->quoteName('name'),
                 $db->quoteName('enabled'),
-                $db->quoteName('params')
+                $db->quoteName('params'),
             ])
             ->from('#__extensions')
             ->where($db->quoteName('type') . ' = ' . $db->quote($this->type))
@@ -206,7 +205,7 @@ class Generic
             'template'  => 'templates/',
             'library'   => 'libraries/',
             'cli'       => 'cli/',
-            'module'    => 'modules/'
+            'module'    => 'modules/',
         ];
 
         $basePath = $this->basePath . '/' . $folders[$this->type];
@@ -254,7 +253,7 @@ class Generic
     {
         $prefixes = [
             'component' => 'com_',
-            'module'    => 'mod_'
+            'module'    => 'mod_',
         ];
 
         $fullElement = '';
@@ -417,7 +416,7 @@ class Generic
 
         $updateObject = (object)[
             'params'       => $this->params->toString(),
-            'extension_id' => $this->id
+            'extension_id' => $this->id,
         ];
 
         $db->updateObject('#__extensions', $updateObject, ['extension_id']);
@@ -444,9 +443,8 @@ class Generic
     }
 
     /**
-     * @TODO: Move to the licensed class?
-     *
      * @return string
+     * @throws \Throwable
      */
     public function getFooterMarkup()
     {

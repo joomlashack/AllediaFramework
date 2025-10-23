@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package   AllediaFramework
  * @contact   www.joomlashack.com, help@joomlashack.com
@@ -27,10 +28,13 @@ use Alledia\Framework\Extension;
 use Alledia\Framework\Factory;
 use Alledia\Framework\Joomla\Extension\Helper as ExtensionHelper;
 use Joomla\CMS\Application\CMSApplication;
-use Joomla\CMS\Filesystem\Path;
 use Joomla\CMS\Version;
+use Joomla\Filesystem\Path;
 
+// phpcs:disable PSR1.Files.SideEffects
 defined('_JEXEC') or die();
+
+// phpcs:enable PSR1.Files.SideEffects
 
 trait TraitAllediaView
 {

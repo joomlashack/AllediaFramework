@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package   AllediaFramework
  * @contact   www.joomlashack.com, help@joomlashack.com
@@ -27,7 +28,11 @@ use Alledia\Framework\Extension;
 use Alledia\Framework\Joomla\AbstractView;
 use Joomla\CMS\Filesystem\File;
 
+// phpcs:disable PSR1.Files.SideEffects
 defined('_JEXEC') or die();
+
+// phpcs:enable PSR1.Files.SideEffects
+
 
 class AbstractBase extends AbstractView
 {
