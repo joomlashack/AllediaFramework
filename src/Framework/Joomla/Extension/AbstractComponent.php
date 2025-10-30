@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package   AllediaFramework
  * @contact   www.joomlashack.com, help@joomlashack.com
@@ -23,7 +24,10 @@
 
 namespace Alledia\Framework\Joomla\Extension;
 
+// phpcs:disable PSR1.Files.SideEffects.FoundWithSymbols
 defined('_JEXEC') or die();
+
+// phpcs:enable PSR1.Files.SideEffects.FoundWithSymbols
 
 use Alledia\Framework\Factory;
 use Alledia\Framework\Joomla\AbstractTable;
@@ -63,7 +67,7 @@ abstract class AbstractComponent extends Licensed
      */
     public static function getInstance($namespace = null)
     {
-        if (empty(static::$instance)) {
+        if (static::$instance === null) {
             static::$instance = new static($namespace);
         }
 
@@ -86,15 +90,20 @@ abstract class AbstractComponent extends Licensed
      */
     public function loadController()
     {
-        if (!is_object($this->controller)) {
+        if ($this->controller === null) {
             $app    = Factory::getApplication();
             $client = $app->isClient('administrator') ? 'Admin' : 'Site';
 
-            $controllerClass = 'Alledia\\' . $this->namespace . '\\' . ucfirst($this->license)
-                . '\\Joomla\\Controller\\' . $client;
             require JPATH_COMPONENT . '/controller.php';
 
-            $this->controller = $controllerClass::getInstance($this->namespace);
+            $callable = [
+                '\\Alledia\\' . $this->namespace . '\\' . ucfirst($this->license) . '\\Joomla\\Controller\\' . $client,
+                'getInstance',
+            ];
+
+            $this->controller = is_callable($callable)
+                ? call_user_func($callable, $this->namespace)
+                : null;
         }
     }
 
@@ -104,11 +113,18 @@ abstract class AbstractComponent extends Licensed
      */
     public function executeRedirectTask()
     {
-        $app  = Factory::getApplication();
-        $task = $app->input->getCmd('task');
+        $app = Factory::getApplication();
 
-        $this->controller->execute($task);
-        $this->controller->redirect();
+        if ($this->controller) {
+            $task = $app->input->getCmd('task');
+
+            $this->controller->execute($task);
+            $this->controller->redirect();
+
+        } else {
+            $referer = $app->input->getCmd('referer');
+            $app->redirect($referer);
+        }
     }
 
     /**

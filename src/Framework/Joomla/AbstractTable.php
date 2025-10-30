@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package   AllediaFramework
  * @contact   www.joomlashack.com, help@joomlashack.com
@@ -27,7 +28,10 @@ use Alledia\Framework\Factory;
 use Joomla\CMS\Table\Table;
 use Joomla\CMS\Version;
 
+// phpcs:disable PSR1.Files.SideEffects.FoundWithSymbols
 defined('_JEXEC') or die();
+
+// phpcs:enable PSR1.Files.SideEffects.FoundWithSymbols
 
 abstract class AbstractTable extends Table
 {

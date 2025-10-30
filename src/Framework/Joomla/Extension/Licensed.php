@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package   AllediaFramework
  * @contact   www.joomlashack.com, help@joomlashack.com
@@ -23,9 +24,9 @@
 
 namespace Alledia\Framework\Joomla\Extension;
 
-defined('_JEXEC') or die();
-
 use Alledia\Framework\AutoLoader;
+
+defined('_JEXEC') or die();
 
 
 /**
