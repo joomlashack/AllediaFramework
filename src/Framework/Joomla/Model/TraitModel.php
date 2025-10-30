@@ -76,7 +76,7 @@ trait TraitModel
         if (is_string($fields)) {
             $fields = [$fields];
         }
-        $searchText = Factory::getDbo()->quote('%' . $text . '%');
+        $searchText = Factory::getDatabase()->quote('%' . $text . '%');
 
         $ors = [];
         foreach ($fields as $field) {
@@ -129,7 +129,7 @@ trait TraitModel
         $sourceTable = array_pop($sourceParts);
 
         if ($sourceTable && $sourceField) {
-            $db = Factory::getDbo();
+            $db = Factory::getDatabase();
 
             if (is_string($relations)) {
                 $relations = [$relations];

@@ -24,9 +24,8 @@
 
 namespace Alledia\Framework\Joomla\Extension;
 
+use Alledia\Framework\Factory;
 use JFormFieldCustomFooter;
-use Joomla\CMS\Factory;
-use Joomla\CMS\Filesystem\File;
 use Joomla\Registry\Registry;
 use SimpleXMLElement;
 
@@ -149,7 +148,7 @@ class Generic
         $element = $this->getElementToDb();
 
         // Load the extension info from database
-        $db    = Factory::getDbo();
+        $db    = Factory::getDatabase();
         $query = $db->getQuery(true)
             ->select([
                 $db->quoteName('extension_id'),
@@ -365,7 +364,7 @@ class Generic
      */
     public function getUpdateURL()
     {
-        $db    = Factory::getDbo();
+        $db    = Factory::getDatabase();
         $query = $db->getQuery(true)
             ->select('sites.location')
             ->from('#__update_sites AS sites')
@@ -382,7 +381,7 @@ class Generic
      */
     public function setUpdateURL($url)
     {
-        $db = Factory::getDbo();
+        $db = Factory::getDatabase();
 
         // Get the update site id
         $join  = $db->quoteName('#__update_sites_extensions') . ' AS extensions '
@@ -412,7 +411,7 @@ class Generic
      */
     public function storeParams()
     {
-        $db = Factory::getDbo();
+        $db = Factory::getDatabase();
 
         $updateObject = (object)[
             'params'       => $this->params->toString(),

@@ -50,7 +50,7 @@ abstract class Helper
      */
     public static function getAllediaExtensions(?string $license = ''): array
     {
-        $db    = Factory::getDbo();
+        $db    = Factory::getDatabase();
         $query = $db->getQuery(true)
             ->select([
                 $db->quoteName('extension_id'),

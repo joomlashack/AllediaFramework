@@ -144,7 +144,7 @@ abstract class AbstractComponent extends Licensed
             $type
         );
         if (class_exists($class)) {
-            $db = Factory::getDbo();
+            $db = Factory::getDatabase();
 
             return new $class($db);
         }
