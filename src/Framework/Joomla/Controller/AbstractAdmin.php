@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package   AllediaFramework
  * @contact   www.joomlashack.com, help@joomlashack.com
@@ -23,24 +24,30 @@
 
 namespace Alledia\Framework\Joomla\Controller;
 
-use Joomla\CMS\MVC\Controller\BaseController;
+use Joomla\CMS\Application\CMSApplication;
+use Joomla\CMS\MVC\Controller\AdminController;
 use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
+use Joomla\Input\Input;
 
+// phpcs:disable PSR1.Files.SideEffects.FoundWithSymbols
 defined('_JEXEC') or die();
 
-/**
- * @deprecated v3.8.1
- */
-class Base extends AbstractBase
+// phpcs:enable PSR1.Files.SideEffects.FoundWithSymbols
+
+abstract class AbstractAdmin extends AdminController
 {
     use TraitController;
 
     /**
      * @inheritDoc
      */
-    public function __construct($config = [], MVCFactoryInterface $factory = null)
-    {
-        parent::__construct($config, $factory);
+    public function __construct(
+        $config = [],
+        MVCFactoryInterface $factory = null,
+        ?CMSApplication $app = null,
+        ?Input $input = null
+    ) {
+        parent::__construct($config, $factory, $app, $input);
 
         $this->customInit();
     }

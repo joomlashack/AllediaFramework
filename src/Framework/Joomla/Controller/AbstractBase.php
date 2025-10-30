@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package   AllediaFramework
  * @contact   www.joomlashack.com, help@joomlashack.com
@@ -26,12 +27,12 @@ namespace Alledia\Framework\Joomla\Controller;
 use Joomla\CMS\MVC\Controller\BaseController;
 use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
 
+// phpcs:disable PSR1.Files.SideEffects.FoundWithSymbols
 defined('_JEXEC') or die();
 
-/**
- * @deprecated v3.8.1
- */
-class Base extends AbstractBase
+// phpcs:disable PSR1.Files.SideEffects.FoundWithSymbols
+
+abstract class AbstractBase extends BaseController
 {
     use TraitController;
 

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package   OSCampus
  * @contact   www.joomlashack.com, help@joomlashack.com
@@ -26,12 +27,12 @@ namespace Alledia\Framework\Joomla\Controller;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Response\JsonResponse;
 
+// phpcs:disable PSR1.Files.SideEffects.FoundWithSymbols
 defined('_JEXEC') or die();
 
-/**
- * @deprecated v3.8.1
- */
-abstract class Json extends Base
+// phpcs:enable PSR1.Files.SideEffects.FoundWithSymbols
+
+abstract class AbstractJson extends AbstractBase
 {
     /**
      * @inheritDoc
@@ -67,7 +68,7 @@ abstract class Json extends Base
 
                 $result->data = [
                     'file' => $message->getFile(),
-                    'line' => $message->getLine()
+                    'line' => $message->getLine(),
                 ];
             } else {
                 $result->message = $message;

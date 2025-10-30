@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package   AllediaFramework
  * @contact   www.joomlashack.com, help@joomlashack.com
@@ -24,14 +25,16 @@
 namespace Alledia\Framework\Joomla\Controller;
 
 use Joomla\CMS\Application\CMSApplication;
-use Joomla\CMS\MVC\Controller\FormController;
 use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
 use Joomla\CMS\Router\Route;
 use Joomla\Input\Input;
 
 defined('_JEXEC') or die();
 
-class Form extends FormController
+/**
+ * @deprecated v3.8.1
+ */
+class Form extends AbstractForm
 {
     use TraitController;
 
@@ -68,7 +71,7 @@ class Form extends FormController
 
             $linkQuery = http_build_query([
                 'option' => $this->app->input->getCmd('option'),
-                'view'   => $view
+                'view'   => $view,
             ]);
             $this->setRedirect(Route::_('index.php?' . $linkQuery . $this->getRedirectToListAppend(), false));
 

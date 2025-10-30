@@ -27,6 +27,7 @@ defined('_JEXEC') or die();
 
 use Alledia\Framework\Factory;
 use Alledia\Framework\Joomla\Table\Base as BaseTable;
+use Alledia\Framework\Joomla\Controller\AbstractBase;
 use Joomla\CMS\MVC\Model\BaseDatabaseModel;
 use Joomla\CMS\Table\Table;
 
@@ -38,7 +39,7 @@ abstract class AbstractComponent extends Licensed
     protected static $instance = null;
 
     /**
-     * @var object
+     * @var ?AbstractBase
      */
     protected $controller = null;
 

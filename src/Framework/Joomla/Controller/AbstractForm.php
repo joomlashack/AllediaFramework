@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package   AllediaFramework
  * @contact   www.joomlashack.com, help@joomlashack.com
@@ -24,15 +25,17 @@
 namespace Alledia\Framework\Joomla\Controller;
 
 use Joomla\CMS\Application\CMSApplication;
+use Joomla\CMS\MVC\Controller\FormController;
 use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
+use Joomla\CMS\Router\Route;
 use Joomla\Input\Input;
 
+// phpcs:disable PSR1.Files.SideEffects.FoundWithSymbols
 defined('_JEXEC') or die();
 
-/**
- * @deprecated v3.8.1
- */
-class Admin extends AbstractAdmin
+// phpcs:enable PSR1.Files.SideEffects.FoundWithSymbols
+
+abstract class AbstractForm extends FormController
 {
     use TraitController;
 
@@ -48,5 +51,34 @@ class Admin extends AbstractAdmin
         parent::__construct($config, $factory, $app, $input);
 
         $this->customInit();
+    }
+
+
+    /**
+     * @inheritDoc
+     * @throws \Exception
+     */
+    public function batch($model = null)
+    {
+        $this->checkToken();
+
+        $inflector = $this->getStringInflector();
+        $view      = $this->app->input->getCmd('view', $this->default_view);
+
+        if ($inflector->isPlural($view)) {
+            $modelName = $inflector->toSingular($view);
+
+            $model = $this->getModel($modelName, '', []);
+
+            $linkQuery = http_build_query([
+                'option' => $this->app->input->getCmd('option'),
+                'view'   => $view,
+            ]);
+            $this->setRedirect(Route::_('index.php?' . $linkQuery . $this->getRedirectToListAppend(), false));
+
+            return parent::batch($model);
+        }
+
+        return null;
     }
 }
