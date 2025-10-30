@@ -26,7 +26,7 @@ namespace Alledia\Framework\Joomla\Extension;
 defined('_JEXEC') or die();
 
 use Alledia\Framework\Factory;
-use Alledia\Framework\Joomla\Table\Base as BaseTable;
+use Alledia\Framework\Joomla\AbstractTable;
 use Alledia\Framework\Joomla\Controller\AbstractBase;
 use Joomla\CMS\MVC\Model\BaseDatabaseModel;
 use Joomla\CMS\Table\Table;
@@ -150,6 +150,6 @@ abstract class AbstractComponent extends Licensed
             return new $class($db);
         }
 
-        return BaseTable::getInstance($type, $this->namespace . 'Table');
+        return AbstractTable::getInstance($type, $this->namespace . 'Table');
     }
 }
