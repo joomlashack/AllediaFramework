@@ -35,6 +35,8 @@ defined('_JEXEC') or die();
 
 abstract class AdminModel extends MVC\Model\AdminModel
 {
+    use TraitModel;
+
     /**
      * @inheritDoc
      */

@@ -27,9 +27,11 @@ namespace Alledia\Framework\Joomla\Model;
 use Alledia\Framework\Factory;
 use Joomla\CMS\Application\CMSApplication;
 use Joomla\CMS\User\User;
+use Joomla\Database\DatabaseInterface;
 
 // phpcs:disable PSR1.Files.SideEffects
 defined('_JEXEC') or die();
+
 // phpcs:enable PSR1.Files.SideEffects
 
 trait TraitModel
@@ -161,5 +163,17 @@ trait TraitModel
                 }
             }
         }
+    }
+
+    /**
+     * @return DatabaseInterface|\JDatabaseDriver
+     */
+    public function getDbo()
+    {
+        if (method_exists($this, 'getDatabase')) {
+            return $this->getDatabase();
+        }
+
+        return parent::getDbo();
     }
 }
