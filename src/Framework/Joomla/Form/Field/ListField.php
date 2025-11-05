@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package   AllediaFramework
  * @contact   www.joomlashack.com, help@joomlashack.com
@@ -23,16 +24,18 @@
 
 namespace Alledia\Framework\Joomla\Form\Field;
 
-use Joomla\CMS\Factory;
 use Joomla\CMS\Form\FormHelper;
 use Joomla\CMS\Version;
 
+// phpcs:disable PSR1.Files.SideEffects.FoundWithSymbols
 defined('_JEXEC') or die();
 
 if (Version::MAJOR_VERSION < 4) {
-    class_alias('JFormFieldList', '\\Joomla\\CMS\\Form\\Field\\ListField');
     FormHelper::loadFieldClass('List');
+    class_alias(\JFormFieldList::class, \Joomla\CMS\Form\Field\ListField::class);
 }
+
+// phpcs:enable PSR1.Files.SideEffects.FoundWithSymbols
 
 class ListField extends \Joomla\CMS\Form\Field\ListField
 {
@@ -43,7 +46,9 @@ class ListField extends \Joomla\CMS\Form\Field\ListField
      */
     public function setup(\SimpleXMLElement $element, $value, $group = null)
     {
-        $this->setListLayout();
+        if (Version::MAJOR_VERSION >= 4) {
+            $this->layout = 'joomla.form.field.list-fancy-select';
+        }
 
         return parent::setup($element, $value, $group);
     }

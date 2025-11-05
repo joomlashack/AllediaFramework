@@ -80,15 +80,4 @@ trait TraitLayouts
 
         return null;
     }
-
-    /**
-     * @return void
-     * @deprecated v3.3.1
-     */
-    protected function setListLayout()
-    {
-        if (Version::MAJOR_VERSION >= 4) {
-            $this->layout = 'joomla.form.field.list-fancy-select';
-        }
-    }
 }
