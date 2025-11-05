@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package   AllediaFramework
  * @contact   www.joomlashack.com, help@joomlashack.com
@@ -26,14 +27,17 @@ namespace Alledia\Framework;
 use Exception;
 use Joomla\CMS\Log\Log;
 
+// phpcs:disable PSR1.Files.SideEffects.FoundWithSymbols
 defined('_JEXEC') or die();
+
+// phpcs:enable PSR1.Files.SideEffects.FoundWithSymbols
 
 abstract class Loader
 {
     /**
      * @var bool
      */
-    protected static $logRegistered = false;
+    protected static bool $logRegistered = false;
 
     /**
      * Safelly include a PHP file, making sure it exists before import.
@@ -46,9 +50,9 @@ abstract class Loader
      * @return bool True, if the file exists and was loaded well.
      * @throws Exception
      */
-    public static function includeFile($path)
+    public static function includeFile(string $path): bool
     {
-        if (!static::$logRegistered) {
+        if (static::$logRegistered == false) {
             Log::addLogger(
                 ['text_file' => 'allediaframework.loader.errors.php'],
                 Log::ALL,
@@ -59,25 +63,13 @@ abstract class Loader
         }
 
         // Check if the file doesn't exist
-        if (!is_file($path)) {
-            $logMsg = 'Required file is missed: ' . $path;
-
-            // Generate a backtrace to know from where the request cames
-            if (version_compare(phpversion(), '5.4', '<')) {
-                $backtrace = debug_backtrace();
-            } else {
-                $backtrace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS);
-            }
-
-            if (!empty($backtrace)) {
-                $logMsg .= sprintf(
-                    ' (%s:%s)',
-                    $backtrace[0]['file'],
-                    $backtrace[0]['line']
-                );
-            }
+        if (is_file($path) == false) {
+            $backtrace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS);
+            $file      = $backtrace[0]['file'] ?? null;
+            $line      = $backtrace[0]['line'] ?? null;
 
             // Register the log
+            $logMsg = sprintf('Required file is missing: %s (%s:%s)', $path, $file, $line);
             Log::add($logMsg, Log::ERROR, 'allediaframework');
 
             // Warn admin users
@@ -97,7 +89,7 @@ abstract class Loader
             return false;
         }
 
-        include_once($path);
+        include_once $path;
 
         return true;
     }
