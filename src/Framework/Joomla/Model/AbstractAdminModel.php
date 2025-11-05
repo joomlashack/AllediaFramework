@@ -24,7 +24,7 @@
 
 namespace Alledia\Framework\Joomla\Model;
 
-use Joomla\CMS\MVC;
+use Joomla\CMS\MVC\Model\AdminModel;
 use Joomla\CMS\Object\CMSObject;
 use Joomla\Registry\Registry;
 
@@ -33,7 +33,7 @@ defined('_JEXEC') or die();
 
 // phpcs:enable PSR1.Files.SideEffects
 
-abstract class AdminModel extends MVC\Model\AdminModel
+abstract class AbstractAdminModel extends AdminModel
 {
     use TraitModel;
 
