@@ -189,6 +189,39 @@ abstract class Helper
 
     /**
      * @param string  $name
+     * @param ?string $source
+     * @param array   $options
+     * @param bool    $clear
+     * @param ?string $xpath
+     *
+     * @return Form
+     * @see: Also Alledia\Installer\TraitFramework
+     */
+    final protected function getJoomlaForm(
+        string $name,
+        string $source = null,
+        array $options = [],
+        bool $clear = true,
+        ?string $xpath = null
+    ): Form {
+        /** @var Form $form */
+        if (Version::MAJOR_VERSION < 4) {
+            $form = Form::getInstance($name, $source, $options, $clear, $xpath);
+
+        } else {
+            $form = Factory::getContainer()->get(FormFactoryInterface::class)->createForm($name);
+            if ($source[0] == '<') {
+                $form->load($source, $clear, $xpath);
+            } else {
+                $form->loadFile($source, $clear, $xpath);
+            }
+        }
+
+        return $form;
+    }
+
+    /**
+     * @param string  $name
      * @param ?string $appName
      * @param ?array  $options
      *
@@ -243,6 +276,41 @@ abstract class Helper
         }
 
         return $model;
+    }
+
+    /**
+     * @param string  $name
+     * @param ?string $prefix
+     * @param array   $config
+     * @param ?string $component
+     *
+     * @return Table
+     * @throws \Exception
+     * @see: Also Alledia\Installer\TraitFramework
+     */
+    final public static function getJoomlaTable(
+        string $name,
+        ?string $prefix = null,
+        array $config = [],
+        ?string $component = null
+    ): Table {
+        if (Version::MAJOR_VERSION < 4) {
+            $table = Table::getInstance($name, $prefix ?: Table::class, $config);
+
+        } elseif ($component) {
+            $table = \Alledia\Framework\Factory::getApplication()->bootComponent($component)
+                ->getMVCFactory()->createTable($name, $prefix ?: Table::class, $config);
+
+        } else {
+            $className = ($prefix ? '' : '\\Joomla\\CMS\\Table\\') . $name;
+            $table     = class_exists($className) ? new $className() : null;
+        }
+
+        if ($table) {
+            return $table;
+        }
+
+        throw new \Exception('No Table: ' . ($className ?? ($prefix . $name)));
     }
 
     /**
