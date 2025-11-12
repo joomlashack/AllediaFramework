@@ -37,9 +37,9 @@ defined('_JEXEC') or die();
 abstract class Helper
 {
     /**
-     * @var int[]
+     * @var ?int[]
      */
-    protected static $errorConstants = null;
+    protected static ?array $errorConstants = null;
 
     /**
      * Return an array of Alledia extensions
@@ -48,7 +48,7 @@ abstract class Helper
      *
      * @return object[]
      */
-    public static function getAllediaExtensions(?string $license = ''): array
+    final public static function getAllediaExtensions(?string $license = ''): array
     {
         $db    = Factory::getDatabase();
         $query = $db->getQuery(true)
@@ -95,7 +95,7 @@ abstract class Helper
     /**
      * @return string
      */
-    public static function getJoomlaVersionCssClass(): string
+    final public static function getJoomlaVersionCssClass(): string
     {
         return sprintf('joomla%sx', Version::MAJOR_VERSION);
     }
@@ -107,7 +107,7 @@ abstract class Helper
      *
      * @return void
      */
-    public static function createClassAliases(array $classes): void
+    final public static function createClassAliases(array $classes): void
     {
         foreach ($classes as $class => $classAlias) {
             if (class_exists($classAlias) == false) {
@@ -121,7 +121,7 @@ abstract class Helper
      *
      * @return void
      */
-    public static function createDatabaseClassAliases(): void
+    final public static function createDatabaseClassAliases(): void
     {
         static::createClassAliases([
             \JDatabaseQuery::class  => DatabaseQuery::class,
@@ -136,7 +136,7 @@ abstract class Helper
      *
      * @return mixed
      */
-    public static function callMethod(string $className, string $methodName, ?array $params = [])
+    final public static function callMethod(string $className, string $methodName, ?array $params = [])
     {
         $result = true;
 
@@ -167,7 +167,7 @@ abstract class Helper
      *
      * @return Form
      */
-    public static function createForm(string $name): Form
+    final public static function createForm(string $name): Form
     {
         $form = new Form($name);
         $form->load('<?xml version="1.0" encoding="UTF-8"?><form/>');
@@ -182,7 +182,7 @@ abstract class Helper
      *
      * @return mixed
      */
-    public static function getContentModel(string $name, ?string $appName = null, array $options = [])
+    final public static function getContentModel(string $name, ?string $appName = null, array $options = [])
     {
         return static::getJoomlaModel($name, 'ContentModel', 'com_content', $appName, $options);
     }
@@ -194,7 +194,7 @@ abstract class Helper
      *
      * @return mixed
      */
-    public static function getCategoryModel(string $name, ?string $appName = null, ?array $options = [])
+    final public static function getCategoryModel(string $name, ?string $appName = null, ?array $options = [])
     {
         return static::getJoomlaModel($name, 'CategoriesModel', 'com_categories', $appName, $options);
     }
@@ -208,8 +208,9 @@ abstract class Helper
      *
      * @return mixed
      * @throws \Exception
+     * @see: Also Alledia\Installer\TraitFramework
      */
-    public static function getJoomlaModel(
+    final public static function getJoomlaModel(
         string $name,
         string $prefix,
         string $component,
