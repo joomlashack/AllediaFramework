@@ -324,7 +324,7 @@ abstract class Helper
      *
      * @return Exception
      */
-    public static function errorToException(int $number, string $message, string $file, int $line): Exception
+    final public static function errorToException(int $number, string $message, string $file, int $line): Exception
     {
         if (static::$errorConstants === null) {
             static::$errorConstants = [];

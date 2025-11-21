@@ -39,6 +39,8 @@ abstract class AbstractAdminModel extends AdminModel
 
     /**
      * @inheritDoc
+     *
+     * @return object
      */
     public function getItem($pk = null)
     {
