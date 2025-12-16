@@ -27,6 +27,7 @@ use Alledia\Framework\Helper;
 use Joomla\CMS\HTML\Helpers\Sidebar;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Version;
+use Joomla\Component\Content\Site\Helper\RouteHelper;
 
 // phpcs:disable PSR1.Files.SideEffects.FoundWithSymbols
 defined('_JEXEC') or die();
@@ -47,9 +48,12 @@ if (!defined('ALLEDIA_FRAMEWORK_LOADED')) {
     class_alias('\\Alledia\\Framework\\Joomla\Extension\Licensed', '\\Alledia\\Framework\\Extension');
 
     if (Version::MAJOR_VERSION < 4) {
+        JLoader::register(ContentHelperRoute::class, JPATH_SITE . '/components/com_content/helpers/route.php');
+
         // Add shims for Joomla 3
         Helper::createClassAliases([
-            JHtmlSidebar::class => Sidebar::class,
+            JHtmlSidebar::class       => Sidebar::class,
+            ContentHelperRoute::class => RouteHelper::class,
         ]);
     }
 }
