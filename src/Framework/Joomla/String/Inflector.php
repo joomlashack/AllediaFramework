@@ -1,99 +1,87 @@
 <?php
 
 /**
- * @package   AllediaFramework
+ * @package   OSCampus
  * @contact   www.joomlashack.com, help@joomlashack.com
- * @copyright 2025 Joomlashack.com. All rights reserved
+ * @copyright 2015-2024 Joomlashack.com. All rights reserved
  * @license   https://www.gnu.org/licenses/gpl.html GNU/GPL
  *
- * This file is part of AllediaFramework.
+ * This file is part of OSCampus.
  *
- * AllediaFramework is free software: you can redistribute it and/or modify
+ * OSCampus is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 2 of the License, or
  * (at your option) any later version.
  *
- * AllediaFramework is distributed in the hope that it will be useful,
+ * OSCampus is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with AllediaFramework.  If not, see <https://www.gnu.org/licenses/>.
+ * along with OSCampus.  If not, see <https://www.gnu.org/licenses/>.
  */
+
+// phpcs:disable PSR1.Files.SideEffects.FoundWithSymbols
 
 namespace Alledia\Framework\Joomla\String;
 
+use Doctrine\Inflector\Inflector as DoctrineInflector;
 use Doctrine\Inflector\InflectorFactory;
-use Doctrine\Inflector\Rules\Patterns;
-use Doctrine\Inflector\Rules\Ruleset;
-use Doctrine\Inflector\Rules\Substitution;
-use Doctrine\Inflector\Rules\Substitutions;
-use Doctrine\Inflector\Rules\Transformations;
-use Doctrine\Inflector\Rules\Word;
+use Joomla\String\Inflector as JoomlaInflector;
 
-// phpcs:disable PSR1.Files.SideEffects
 defined('_JEXEC') or die();
 
-// phpcs:enable PSR1.Files.SideEffects
-
-/**
- * Provide Joomla version agnostic Inflector
- */
 class Inflector
 {
-    /**
-     * @var string[]
-     */
-    protected array $methods = [
-        'pluralize'   => 'toPlural',
-        'singularize' => 'toSingular',
+    protected array $customRules = [
+        'course'      => 'courses',
+        'lesson'      => 'lessons',
+        'pathway'     => 'pathways',
+        'tag'         => 'tags',
+        'teacher'     => 'teachers',
+        'certificate' => 'certificates',
     ];
 
     /**
-     * @var \Doctrine\Inflector\Inflector|\Joomla\String\Inflector
+     * @var DoctrineInflector|JoomlaInflector
      */
-    protected $coreInflector;
+    protected $inflector;
 
-    public function __construct(array $customWords = [])
+    /**
+     * @var Inflector
+     */
+    protected static Inflector $instance;
+
+    /**
+     * @throws \Exception
+     */
+    protected function __construct()
     {
-        if (class_exists(InflectorFactory::class)) {
-            $inflector = InflectorFactory::create();
-            if ($customWords) {
-                $singles = $this->buildSubstitutions($customWords);
-                $plurals = $this->buildSubstitutions(array_flip($customWords));
-                $inflector
-                    ->withSingularRules(
-                        new Ruleset(
-                            new Transformations(),
-                            new Patterns(),
-                            new Substitutions(...$singles)
-                        )
-                    );
-            }
-            $this->coreInflector = $inflector->build();
+        if (class_exists(DoctrineInflector::class)) {
+            $this->inflector = InflectorFactory::create()->build();
 
-        } else {
-            $this->coreInflector = \Joomla\String\Inflector::getInstance(true);
-            foreach ($customWords as $singular => $plural) {
-                $this->coreInflector->addWord($singular, $plural);
+        } elseif (class_exists(JoomlaInflector::class)) {
+            $this->inflector = JoomlaInflector::getInstance();
+
+            foreach ($this->customRules as $singular => $plural) {
+                $this->inflector->addWord($singular, $plural);
             }
+        } else {
+            throw new \Exception('Missing String Inflector class');
         }
     }
 
     /**
-     * @param string[] $words
-     *
-     * @return Substitution[]
+     * @return Inflector
      */
-    protected function buildSubstitutions(array $words): array
+    public static function getInstance(): Inflector
     {
-        $substitutions = [];
-        foreach ($words as $source => $target) {
-            $substitutions[] = new Substitution(new Word($source), new Word($target));
+        if (empty(static::$instance)) {
+            static::$instance = new Inflector();
         }
 
-        return $substitutions;
+        return static::$instance;
     }
 
     /**
@@ -101,51 +89,78 @@ class Inflector
      * @param array  $arguments
      *
      * @return mixed
+     * @throws \Exception
      */
     public function __call(string $name, array $arguments)
     {
-        $method = is_callable([$this->coreInflector, $name])
-            ? $name
-            : ($this->methods[$name] ?? null);
-
-        if (is_callable([$this->coreInflector, $method])) {
-            return call_user_func_array([$this->coreInflector, $method], $arguments);
+        if (method_exists($this->inflector, $name)) {
+            return call_user_func_array([$this->inflector, $name], $arguments);
         }
 
-        throw new \Error(
-            sprintf('Call to undefined method %s::%s()', get_class($this), $name)
-        );
+        throw new \Exception('Call to undefined method ' . __CLASS__ . '::' . $name . '()');
     }
 
     /**
+     * Imitate DoctrineInflector method for JoomlaInflector
+     *
+     * @param string $word
+     *
+     * @return string
+     */
+    public function pluralize(string $word): string
+    {
+        if (is_callable([$this->inflector, 'toPlural'])) {
+            return $this->inflector->toPlural($word);
+        }
+
+        return $this->inflector->pluralize($word);
+    }
+
+    /**
+     * Imitate DoctrineInflector method for JoomlaInflector
+     *
+     * @param string $word
+     *
+     * @return string
+     */
+    public function singularize(string $word): string
+    {
+        if (is_callable([$this->inflector, 'toSingular'])) {
+            return $this->inflector->toSingular($word);
+        }
+
+        return $this->inflector->singularize($word);
+    }
+
+    /**
+     * Imitate JoomlaInflector method for DoctrineInflector
+     *
      * @param string $word
      *
      * @return bool
      */
     public function isPlural(string $word): bool
     {
-        if (is_callable([$this->coreInflector, 'isPlural'])) {
-            return call_user_func([$this->coreInflector, 'isPlural'], $word);
+        if (is_callable([$this->inflector, 'isPlural'])) {
+            return $this->inflector->isPlural($word);
         }
 
-        $pluralWord = $this->coreInflector->pluralize($word);
-
-        return $pluralWord === $word;
+        return $this->inflector->pluralize($word) == $word;
     }
 
     /**
+     * Imitate JoomlaInflector method for DoctrineInflector
+     *
      * @param string $word
      *
      * @return bool
      */
     public function isSingular(string $word): bool
     {
-        if (is_callable([$this->coreInflector, 'isSingular'])) {
-            return call_user_func([$this->coreInflector, 'isSingular'], $word);
+        if (is_callable([$this->inflector, 'isSingular'])) {
+            return $this->inflector->isSingular($word);
         }
 
-        $singularWord = $this->coreInflector->singularize($word);
-
-        return $singularWord === $word;
+        return $this->inflector->singularize($word) == $word;
     }
 }
