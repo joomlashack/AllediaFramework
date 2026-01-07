@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package   AllediaFramework
  * @contact   www.joomlashack.com, help@joomlashack.com
@@ -25,6 +26,7 @@ namespace Alledia\Framework;
 
 use Alledia\Framework\Joomla\Extension\Helper as ExtensionHelper;
 use Joomla\CMS\Form\Form;
+use Joomla\CMS\Form\FormFactoryInterface;
 use Joomla\CMS\MVC\Model\BaseDatabaseModel;
 use Joomla\CMS\Table\Table;
 use Joomla\CMS\Version;
@@ -32,7 +34,10 @@ use Joomla\Database\DatabaseDriver;
 use Joomla\Database\DatabaseQuery;
 use ReflectionMethod;
 
+// phpcs:disable PSR1.Files.SideEffects.FoundWithSymbols
 defined('_JEXEC') or die();
+
+// phpcs:enable PSR1.Files.SideEffects.FoundWithSymbols
 
 abstract class Helper
 {
@@ -132,7 +137,7 @@ abstract class Helper
     /**
      * @param string $className
      * @param string $methodName
-     * @param array  $params
+     * @param ?array $params
      *
      * @return mixed
      */
@@ -181,6 +186,7 @@ abstract class Helper
      * @param ?array  $options
      *
      * @return mixed
+     * @throws \Exception
      */
     final public static function getContentModel(string $name, ?string $appName = null, array $options = [])
     {
@@ -199,7 +205,7 @@ abstract class Helper
      */
     final protected function getJoomlaForm(
         string $name,
-        string $source = null,
+        ?string $source = null,
         array $options = [],
         bool $clear = true,
         ?string $xpath = null
@@ -226,6 +232,7 @@ abstract class Helper
      * @param ?array  $options
      *
      * @return mixed
+     * @throws \Exception
      */
     final public static function getCategoryModel(string $name, ?string $appName = null, ?array $options = [])
     {
@@ -298,7 +305,7 @@ abstract class Helper
             $table = Table::getInstance($name, $prefix ?: Table::class, $config);
 
         } elseif ($component) {
-            $table = \Alledia\Framework\Factory::getApplication()->bootComponent($component)
+            $table = Factory::getApplication()->bootComponent($component)
                 ->getMVCFactory()->createTable($name, $prefix ?: Table::class, $config);
 
         } else {

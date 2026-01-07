@@ -22,15 +22,16 @@
  * along with OSCampus.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-// phpcs:disable PSR1.Files.SideEffects.FoundWithSymbols
-
 namespace Alledia\Framework\Joomla\String;
 
 use Doctrine\Inflector\Inflector as DoctrineInflector;
 use Doctrine\Inflector\InflectorFactory;
 use Joomla\String\Inflector as JoomlaInflector;
 
+// phpcs:disable PSR1.Files.SideEffects.FoundWithSymbols
 defined('_JEXEC') or die();
+
+// phpcs:enable PSR1.Files.SideEffects.FoundWithSymbols
 
 class Inflector
 {
