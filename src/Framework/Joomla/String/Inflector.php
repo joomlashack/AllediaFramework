@@ -35,15 +35,6 @@ defined('_JEXEC') or die();
 
 class Inflector
 {
-    protected array $customRules = [
-        'course'      => 'courses',
-        'lesson'      => 'lessons',
-        'pathway'     => 'pathways',
-        'tag'         => 'tags',
-        'teacher'     => 'teachers',
-        'certificate' => 'certificates',
-    ];
-
     /**
      * @var DoctrineInflector|JoomlaInflector
      */
@@ -52,37 +43,26 @@ class Inflector
     /**
      * @var Inflector
      */
-    protected static Inflector $instance;
+    protected Inflector $instance;
 
     /**
      * @throws \Exception
      */
-    protected function __construct()
+    public function __construct(array $customRules = [])
     {
         if (class_exists(DoctrineInflector::class)) {
+            // @TODO: Implement custom rules for Doctrine Inflector
             $this->inflector = InflectorFactory::create()->build();
 
         } elseif (class_exists(JoomlaInflector::class)) {
             $this->inflector = JoomlaInflector::getInstance();
 
-            foreach ($this->customRules as $singular => $plural) {
+            foreach ($customRules as $singular => $plural) {
                 $this->inflector->addWord($singular, $plural);
             }
         } else {
             throw new \Exception('Missing String Inflector class');
         }
-    }
-
-    /**
-     * @return Inflector
-     */
-    public static function getInstance(): Inflector
-    {
-        if (empty(static::$instance)) {
-            static::$instance = new Inflector();
-        }
-
-        return static::$instance;
     }
 
     /**
