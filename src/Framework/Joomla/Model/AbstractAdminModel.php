@@ -38,6 +38,8 @@ abstract class AbstractAdminModel extends AdminModel
     use TraitModel;
 
     /**
+     * Provide consistency of return with Joomla 3
+     *
      * @inheritDoc
      *
      * @return object
