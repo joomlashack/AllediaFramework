@@ -173,7 +173,7 @@ trait TraitModel
         if (method_exists($this, 'getDatabase')) {
             return $this->getDatabase();
 
-        } elseif (is_callable(['parent', 'getDbo'])) {
+        } elseif (is_callable(parent::class . 'getDbo')) {
             return parent::getDbo();
         }
 

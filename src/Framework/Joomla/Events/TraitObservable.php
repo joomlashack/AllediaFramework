@@ -68,7 +68,7 @@ trait TraitObservable
      *
      * @return void
      */
-    public function registerEvents($events, object $observable = null, bool $legacyListeners = true): void
+    public function registerEvents($events, ?object $observable = null, bool $legacyListeners = true): void
     {
         $observable = $observable ?: $this;
 
