@@ -32,6 +32,10 @@ use Joomla\Database\DatabaseInterface;
 // phpcs:disable PSR1.Files.SideEffects
 defined('_JEXEC') or die();
 
+if (interface_exists(DatabaseInterface::class) == false) {
+    class_alias(\JDatabaseDriver::class, DatabaseInterface::class);
+}
+
 // phpcs:enable PSR1.Files.SideEffects
 
 trait TraitModel
@@ -170,10 +174,17 @@ trait TraitModel
      */
     public function getDbo()
     {
-        if (method_exists($this, 'getDatabase')) {
-            return $this->getDatabase();
+        return $this->getDatabase();
+    }
 
-        } elseif (is_callable(parent::class . 'getDbo')) {
+    /**
+     * @return DatabaseInterface
+     */
+    public function getDatabase(): DatabaseInterface
+    {
+        if (is_callable(parent::class . '::getDatabase')) {
+            return parent::getDatabase();
+        } elseif (is_callable(parent::class . '::getDbo')) {
             return parent::getDbo();
         }
 
