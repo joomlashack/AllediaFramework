@@ -24,6 +24,7 @@
 
 namespace Alledia\Framework\Joomla\Form\Field;
 
+use Joomla\CMS\Form\Field\TextField as JoomlaTextField;
 use Joomla\CMS\Form\FormHelper;
 use Joomla\CMS\Version;
 
@@ -32,12 +33,12 @@ defined('_JEXEC') or die();
 
 if (Version::MAJOR_VERSION < 4) {
     FormHelper::loadFieldClass('Text');
-    class_alias(\JFormFieldText::class, \Joomla\CMS\Form\Field\TextField::class);
+    class_alias(\JFormFieldText::class, JoomlaTextField::class);
 }
 // phpcs:enable PSR1.Files.SideEffects
 // phpcs:disable PSR1.Classes.ClassDeclaration.MissingNamespace
 
-class TextField extends \Joomla\CMS\Form\Field\TextField
+class TextField extends JoomlaTextField
 {
     use TraitLayouts;
 }

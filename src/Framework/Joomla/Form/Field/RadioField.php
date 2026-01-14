@@ -24,6 +24,7 @@
 
 namespace Alledia\Framework\Joomla\Form\Field;
 
+use Joomla\CMS\Form\Field\RadioField as JoomlaRadioField;
 use Joomla\CMS\Form\FormHelper;
 use Joomla\CMS\Version;
 
@@ -32,12 +33,12 @@ defined('_JEXEC') or die();
 
 if (Version::MAJOR_VERSION < 4) {
     FormHelper::loadFieldClass('radio');
-    class_alias(\JFormFieldRadio::class, \Joomla\CMS\Form\Field\RadioField::class);
+    class_alias(\JFormFieldRadio::class, JoomlaRadioField::class);
 }
 // phpcs:enable PSR1.Files.SideEffects
 // phpcs:disable PSR1.Classes.ClassDeclaration.MissingNamespace
 
-class RadioField extends \Joomla\CMS\Form\Field\RadioField
+class RadioField extends JoomlaRadioField
 {
 
 }

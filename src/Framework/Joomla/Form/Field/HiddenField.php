@@ -24,6 +24,7 @@
 
 namespace Alledia\Framework\Joomla\Form\Field;
 
+use Joomla\CMS\Form\Field\HiddenField as JoomlaHiddenField;
 use Joomla\CMS\Form\FormHelper;
 use Joomla\CMS\Version;
 
@@ -32,12 +33,12 @@ defined('_JEXEC') or die();
 
 if (Version::MAJOR_VERSION < 4) {
     FormHelper::loadFieldClass('Hidden');
-    class_alias(\JFormFieldHidden::class, \Joomla\CMS\Form\Field\HiddenField::class);
+    class_alias(\JFormFieldHidden::class, JoomlaHiddenField::class);
 }
-// phpcs:enable PSR1.Files.SideEffects
-// phpcs:disable PSR1.Classes.ClassDeclaration.MissingNamespace
 
-class HiddenField extends \Joomla\CMS\Form\Field\HiddenField
+// phpcs:enable PSR1.Files.SideEffects
+
+class HiddenField extends JoomlaHiddenField
 {
     use TraitLayouts;
 }

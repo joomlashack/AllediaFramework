@@ -24,6 +24,7 @@
 
 namespace Alledia\Framework\Joomla\Form\Field;
 
+use Joomla\CMS\Form\Field\ListField as JoomlaListField;
 use Joomla\CMS\Form\FormHelper;
 use Joomla\CMS\Version;
 
@@ -32,22 +33,22 @@ defined('_JEXEC') or die();
 
 if (Version::MAJOR_VERSION < 4) {
     FormHelper::loadFieldClass('List');
-    class_alias(\JFormFieldList::class, \Joomla\CMS\Form\Field\ListField::class);
+    class_alias(\JFormFieldList::class, JoomlaListField::class);
 }
 
 // phpcs:enable PSR1.Files.SideEffects.FoundWithSymbols
 
-class ListField extends \Joomla\CMS\Form\Field\ListField
+class ListField extends JoomlaListField
 {
     use TraitLayouts;
 
     /**
-     * Set list field layout based on Joomla version
+     * @inheritDoc
      */
     public function setup(\SimpleXMLElement $element, $value, $group = null)
     {
         if (Version::MAJOR_VERSION >= 4) {
-            $this->layout = 'joomla.form.field.list-fancy-select';
+            $this->layout = (string)$element['layout'] ?: 'joomla.form.field.list-fancy-select';
         }
 
         return parent::setup($element, $value, $group);
