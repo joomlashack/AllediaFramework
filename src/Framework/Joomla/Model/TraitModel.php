@@ -172,14 +172,6 @@ trait TraitModel
     /**
      * @return DatabaseInterface|\JDatabaseDriver
      */
-    public function getDbo()
-    {
-        return $this->getDatabase();
-    }
-
-    /**
-     * @return DatabaseInterface
-     */
     public function getDatabase(): DatabaseInterface
     {
         if (is_callable(parent::class . '::getDatabase')) {

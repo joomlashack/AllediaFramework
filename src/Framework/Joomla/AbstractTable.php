@@ -71,15 +71,6 @@ abstract class AbstractTable extends Table
     }
 
     /**
-     * @inheritDoc
-     * @deprecated
-     */
-    public function getDbo()
-    {
-        return $this->getDatabase();
-    }
-
-    /**
      * @inheritDoc Joomla 4+)
      * @return DatabaseInterface
      */
