@@ -125,10 +125,11 @@ trait TraitModel
     /**
      * @param string          $source
      * @param string|string[] $relations
+     * @param string          $prefix
      *
      * @return void
      */
-    protected function garbageCollect(string $source, $relations)
+    protected function garbageCollect(string $source, $relations, string $prefix = '#__'): void
     {
         $sourceParts = explode('.', $source);
         $sourceField = array_pop($sourceParts);
@@ -148,13 +149,13 @@ trait TraitModel
 
                 if ($targetTable && $targetField) {
                     $query = $db->getQuery(true)
-                        ->delete($db->quoteName('#__oscampus_' . $targetTable))
+                        ->delete($db->quoteName($prefix . $targetTable))
                         ->where(
                             sprintf(
                                 '%s NOT IN (SELECT %s FROM %s)',
                                 $db->quoteName($targetField),
                                 $db->quoteName($sourceField),
-                                $db->quoteName('#__oscampus_' . $sourceTable)
+                                $db->quoteName($prefix . $sourceTable)
                             )
                         );
                 }
