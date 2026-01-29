@@ -1,9 +1,10 @@
 <?php
+
 /**
  * @package   AllediaFramework
  * @contact   www.joomlashack.com, help@joomlashack.com
  * @copyright 2026 Joomlashack.com. All rights reserved
- * @license   https://www.gnu.org/licenses/gpl.html GNU/GPL 
+ * @license   https://www.gnu.org/licenses/gpl.html GNU/GPL
  *
  * This file is part of AllediaFramework.
  *
@@ -21,9 +22,23 @@
  * along with AllediaFramework.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-// phpcs:disable PSR1.Files.SideEffects
+namespace Alledia\Framework\Joomla\Form\Field;
+
+use Joomla\CMS\Form\Field\CalendarField as JoomlaCalendarField;
+use Joomla\CMS\Form\FormHelper;
+use Joomla\CMS\Version;
+
+/// phpcs:disable PSR1.Files.SideEffects
 defined('_JEXEC') or die();
+
+if (Version::MAJOR_VERSION < 4) {
+    FormHelper::loadFieldClass('Calendar');
+    class_alias(\JFormFieldCalendar::class, JoomlaCalendarField::class);
+}
+
 // phpcs:enable PSR1.Files.SideEffects
-// phpcs:disable PSR1.Classes.ClassDeclaration.MissingNamespace
 
-
+class CalendarField extends JoomlaCalendarField
+{
+    use TraitLayouts;
+}
