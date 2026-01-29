@@ -27,12 +27,13 @@ namespace Alledia\Framework\Joomla\Toolbar;
 use Alledia\Framework\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Toolbar\Toolbar;
+use Joomla\CMS\Toolbar\ToolbarHelper as JoomlaToolbarHelper;
 use Joomla\CMS\Utility\Utility;
 use Joomla\CMS\Version;
 
 defined('_JEXEC') or die();
 
-abstract class ToolbarHelper extends \Joomla\CMS\Toolbar\ToolbarHelper
+abstract class ToolbarHelper extends JoomlaToolbarHelper
 {
     /**
      * @var bool
