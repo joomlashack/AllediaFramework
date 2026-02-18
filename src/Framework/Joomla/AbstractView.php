@@ -27,7 +27,7 @@ namespace Alledia\Framework\Joomla;
 use Joomla\CMS\Form\Form;
 use Joomla\CMS\MVC\Model\BaseDatabaseModel;
 use Joomla\CMS\MVC\View\HtmlView;
-use Joomla\CMS\Object\CMSObject;
+use Joomla\Registry\Registry;
 
 defined('_JEXEC') or die();
 
@@ -48,7 +48,7 @@ abstract class AbstractView extends HtmlView
     protected $form = null;
 
     /**
-     * @var CMSObject
+     * @var Registry
      */
     protected $state = null;
 

@@ -41,9 +41,9 @@ if (interface_exists(DatabaseInterface::class) == false) {
 trait TraitModel
 {
     /**
-     * @var CMSApplication
+     * @var ?CMSApplication
      */
-    protected $app = null;
+    protected ?CMSApplication $app = null;
 
     /**
      * @var string[]
