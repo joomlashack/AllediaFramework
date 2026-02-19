@@ -56,7 +56,7 @@ abstract class ToolbarHelper extends JoomlaToolbarHelper
     {
         if (empty(static::$toolbar)) {
             if (Version::MAJOR_VERSION < 5) {
-                static::$toolbar = new Toolbar();
+                static::$toolbar = Toolbar::getInstance();
 
             } else {
                 $document        = $document ?: Factory::getApplication()->getDocument();
