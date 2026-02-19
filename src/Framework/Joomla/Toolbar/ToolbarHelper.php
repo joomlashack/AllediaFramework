@@ -25,6 +25,7 @@
 namespace Alledia\Framework\Joomla\Toolbar;
 
 use Alledia\Framework\Factory;
+use Joomla\CMS\Document\Document;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Toolbar\Toolbar;
 use Joomla\CMS\Toolbar\ToolbarHelper as JoomlaToolbarHelper;
@@ -36,9 +37,35 @@ defined('_JEXEC') or die();
 abstract class ToolbarHelper extends JoomlaToolbarHelper
 {
     /**
+     * @var Toolbar
+     */
+    protected static Toolbar $toolbar;
+
+    /**
      * @var bool
      */
-    protected static $exportLoaded = false;
+    protected static bool $exportLoaded = false;
+
+    /**
+     * @param ?Document $document
+     *
+     * @return Toolbar
+     * @throws \Exception
+     */
+    public static function getToolbar(?Document $document = null): Toolbar
+    {
+        if (empty(static::$toolbar)) {
+            if (Version::MAJOR_VERSION < 5) {
+                static::$toolbar = new Toolbar();
+
+            } else {
+                $document        = $document ?: Factory::getApplication()->getDocument();
+                static::$toolbar = $document->getToolbar();
+            }
+        }
+
+        return static::$toolbar;
+    }
 
     /**
      * Create a button that links to an external page
@@ -65,7 +92,7 @@ abstract class ToolbarHelper extends JoomlaToolbarHelper
                     explode(' ', $attributes['class'] ?? ''),
                     [
                         'btn',
-                        'btn-small'
+                        'btn-small',
                     ]
                 )
             )
@@ -82,8 +109,7 @@ abstract class ToolbarHelper extends JoomlaToolbarHelper
             $button = sprintf('<joomla-toolbar-button>%s</joomla-toolbar-button>', $button);
         }
 
-        $bar = Toolbar::getInstance();
-        $bar->appendButton('Custom', $button, $icon);
+        static::getToolbar()->appendButton('Custom', $button, $icon);
     }
 
     /**
