@@ -39,9 +39,13 @@ abstract class AbstractBase extends BaseController
     /**
      * @inheritDoc
      */
-    public function __construct($config = [], ?MVCFactoryInterface $factory = null)
+    public function __construct(
+        $config = [],
+        ?MVCFactoryInterface $factory = null,
+        ?CMSApplicationInterface $app = null,
+        ?Input $input = null)
     {
-        parent::__construct($config, $factory);
+        parent::__construct($config, $factory, $app, $input);
 
         $this->customInit();
     }
