@@ -64,7 +64,7 @@ trait TraitAllediaView
             $this->app      = Factory::getApplication();
             $this->document = Factory::getDocument();
 
-            $this->option = $this->app->input->get('option');
+            $this->option = Factory::getInput($this->app)->get('option');
 
             $info = ExtensionHelper::getExtensionInfoFromElement($this->option);
 

@@ -26,7 +26,7 @@ namespace Alledia\Framework\Joomla\Extension;
 
 defined('_JEXEC') or die();
 
-use Joomla\CMS\Factory;
+use Alledia\Framework\Factory;
 use Joomla\CMS\MVC\Controller\BaseController;
 
 class Component extends Licensed

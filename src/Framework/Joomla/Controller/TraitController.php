@@ -57,23 +57,23 @@ trait TraitController
      */
     protected function callerReturn($message = null, ?string $type = null, ?string $return = null)
     {
-        $url = $return ?: $this->app->input->getBase64('return');
+        $url = $return ?: $this->input->getBase64('return');
         if ($url) {
             $url = base64_decode($url);
 
         } else {
             $url = new Uri('index.php');
 
-            if ($itemId = $this->app->input->getInt('Itemid')) {
+            if ($itemId = $this->input->getInt('Itemid')) {
                 $url->setVar('Itemid', $itemId);
 
-            } elseif ($option = $this->app->input->getCmd('option')) {
+            } elseif ($option = $this->input->getCmd('option')) {
                 $url->setVar('option', $option);
             }
 
-            if ($view = $this->app->input->getCmd('view')) {
+            if ($view = $this->input->getCmd('view')) {
                 $url->setVar('view', $view);
-                if ($layout = $this->app->input->getCmd('layout')) {
+                if ($layout = $this->input->getCmd('layout')) {
                     $url->setVar('layout', $layout);
                 }
             }

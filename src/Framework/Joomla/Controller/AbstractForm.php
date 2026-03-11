@@ -24,6 +24,7 @@
 
 namespace Alledia\Framework\Joomla\Controller;
 
+use Alledia\Framework\Factory;
 use Joomla\CMS\Application\CMSApplication;
 use Joomla\CMS\MVC\Controller\FormController;
 use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
@@ -63,7 +64,7 @@ abstract class AbstractForm extends FormController
         $this->checkToken();
 
         $inflector = $this->getStringInflector();
-        $view      = $this->app->input->getCmd('view', $this->default_view);
+        $view      = $this->input->getCmd('view', $this->default_view);
 
         if ($inflector->isPlural($view)) {
             $modelName = $inflector->toSingular($view);
@@ -71,7 +72,7 @@ abstract class AbstractForm extends FormController
             $model = $this->getModel($modelName, '', []);
 
             $linkQuery = http_build_query([
-                'option' => $this->app->input->getCmd('option'),
+                'option' => $this->input->getCmd('option'),
                 'view'   => $view,
             ]);
             $this->setRedirect(Route::_('index.php?' . $linkQuery . $this->getRedirectToListAppend(), false));

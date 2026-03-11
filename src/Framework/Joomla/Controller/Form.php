@@ -62,7 +62,7 @@ class Form extends AbstractForm
         $this->checkToken();
 
         $inflector = $this->getStringInflector();
-        $view      = $this->app->input->getCmd('view', $this->default_view);
+        $view      = $this->input->getCmd('view', $this->default_view);
 
         if ($inflector->isPlural($view)) {
             $modelName = $inflector->toSingular($view);
@@ -70,7 +70,7 @@ class Form extends AbstractForm
             $model = $this->getModel($modelName, '', []);
 
             $linkQuery = http_build_query([
-                'option' => $this->app->input->getCmd('option'),
+                'option' => $this->input->getCmd('option'),
                 'view'   => $view,
             ]);
             $this->setRedirect(Route::_('index.php?' . $linkQuery . $this->getRedirectToListAppend(), false));

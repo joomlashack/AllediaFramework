@@ -43,7 +43,7 @@ abstract class AbstractComponent extends Licensed
     protected static $instance = null;
 
     /**
-     * @var ?AbstractBase
+     * @var AbstractBase|false|null
      */
     protected $controller = null;
 
@@ -103,7 +103,7 @@ abstract class AbstractComponent extends Licensed
 
             $this->controller = is_callable($callable)
                 ? call_user_func($callable, $this->namespace)
-                : null;
+                : false;
         }
     }
 
@@ -114,15 +114,16 @@ abstract class AbstractComponent extends Licensed
     public function executeRedirectTask()
     {
         $app = Factory::getApplication();
+        $input = Factory::getInput($app);
 
         if ($this->controller) {
-            $task = $app->input->getCmd('task');
+            $task = $input->getCmd('task');
 
             $this->controller->execute($task);
             $this->controller->redirect();
 
         } else {
-            $referer = $app->input->getCmd('referer');
+            $referer = $input->getCmd('referer');
             $app->redirect($referer);
         }
     }
