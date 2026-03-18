@@ -26,12 +26,11 @@ namespace Alledia\Framework\Joomla\Form\Field;
 
 use Joomla\CMS\Form\Field\TextField as JoomlaTextField;
 use Joomla\CMS\Form\FormHelper;
-use Joomla\CMS\Version;
 
 // phpcs:disable PSR1.Files.SideEffects
 defined('_JEXEC') or die();
 
-if (Version::MAJOR_VERSION < 4) {
+if (class_exists(JoomlaTextField::class) == false) {
     FormHelper::loadFieldClass('Text');
     class_alias(\JFormFieldText::class, JoomlaTextField::class);
 }

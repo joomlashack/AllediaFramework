@@ -31,7 +31,7 @@ use Joomla\CMS\Version;
 // phpcs:disable PSR1.Files.SideEffects.FoundWithSymbols
 defined('_JEXEC') or die();
 
-if (Version::MAJOR_VERSION < 4) {
+if (class_exists(JoomlaListField::class) == false) {
     FormHelper::loadFieldClass('List');
     class_alias(\JFormFieldList::class, JoomlaListField::class);
 }
@@ -47,7 +47,7 @@ class ListField extends JoomlaListField
      */
     public function setup(\SimpleXMLElement $element, $value, $group = null)
     {
-        if (Version::MAJOR_VERSION >= 4) {
+        if (Version::MAJOR_VERSION > 3) {
             $this->layout = (string)$element['layout'] ?: 'joomla.form.field.list-fancy-select';
         }
 

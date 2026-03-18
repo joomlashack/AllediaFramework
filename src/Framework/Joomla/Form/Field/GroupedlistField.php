@@ -31,7 +31,7 @@ use Joomla\CMS\Version;
 // phpcs:disable PSR1.Files.SideEffects
 defined('_JEXEC') or die();
 
-if (Version::MAJOR_VERSION < 4) {
+if (class_exists(JoomlaGroupedlistField::class) == false) {
     FormHelper::loadFieldClass('Groupedlist');
     class_alias(\JFormFieldGroupedList::class, JoomlaGroupedlistField::class);
 }
@@ -47,7 +47,7 @@ class GroupedlistField extends JoomlaGroupedlistField
      */
     public function setup(\SimpleXMLElement $element, $value, $group = null)
     {
-        if (Version::MAJOR_VERSION >= 4) {
+        if (Version::MAJOR_VERSION > 3) {
             $this->layout = (string)$element['layout'] ?: 'joomla.form.field.groupedlist-fancy-select';
         }
 

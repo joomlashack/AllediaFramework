@@ -26,12 +26,11 @@ namespace Alledia\Framework\Joomla\Form\Field;
 
 use Joomla\CMS\Form\Field\UrlField as JoomlaUrlField;
 use Joomla\CMS\Form\FormHelper;
-use Joomla\CMS\Version;
 
 // phpcs:disable PSR1.Files.SideEffects
 defined('_JEXEC') or die();
 
-if (Version::MAJOR_VERSION < 4) {
+if (class_exists(JoomlaUrlField::class) == false) {
     FormHelper::loadFieldClass('url');
     class_alias(\JFormFieldUrl::class, JoomlaUrlField::class);
 }

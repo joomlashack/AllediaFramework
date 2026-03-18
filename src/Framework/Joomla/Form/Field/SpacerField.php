@@ -24,14 +24,13 @@
 
 namespace Alledia\Framework\Joomla\Form\Field;
 
-// phpcs:disable PSR1.Files.SideEffects
 use Joomla\CMS\Form\Field\SpacerField as JoomlaSpacerField;
 use Joomla\CMS\Form\FormHelper;
-use Joomla\CMS\Version;
 
+// phpcs:disable PSR1.Files.SideEffects
 defined('_JEXEC') or die();
 
-if (Version::MAJOR_VERSION < 4) {
+if (class_exists(JoomlaSpacerField::class) == false) {
     FormHelper::loadFieldClass('Spacer');
     class_alias(\JFormFieldSpacer::class, JoomlaSpacerField::class);
 }

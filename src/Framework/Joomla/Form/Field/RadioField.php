@@ -26,12 +26,11 @@ namespace Alledia\Framework\Joomla\Form\Field;
 
 use Joomla\CMS\Form\Field\RadioField as JoomlaRadioField;
 use Joomla\CMS\Form\FormHelper;
-use Joomla\CMS\Version;
 
 // phpcs:disable PSR1.Files.SideEffects
 defined('_JEXEC') or die();
 
-if (Version::MAJOR_VERSION < 4) {
+if (class_exists(JoomlaRadioField::class) == false) {
     FormHelper::loadFieldClass('radio');
     class_alias(\JFormFieldRadio::class, JoomlaRadioField::class);
 }
@@ -40,5 +39,5 @@ if (Version::MAJOR_VERSION < 4) {
 
 class RadioField extends JoomlaRadioField
 {
-
+    use TraitLayouts;
 }

@@ -26,12 +26,11 @@ namespace Alledia\Framework\Joomla\Form\Field;
 
 use Joomla\CMS\Form\Field\CalendarField as JoomlaCalendarField;
 use Joomla\CMS\Form\FormHelper;
-use Joomla\CMS\Version;
 
 /// phpcs:disable PSR1.Files.SideEffects
 defined('_JEXEC') or die();
 
-if (Version::MAJOR_VERSION < 4) {
+if (class_exists(JoomlaCalendarField::class) == false) {
     FormHelper::loadFieldClass('Calendar');
     class_alias(\JFormFieldCalendar::class, JoomlaCalendarField::class);
 }

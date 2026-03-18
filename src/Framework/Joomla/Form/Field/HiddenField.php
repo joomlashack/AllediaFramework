@@ -26,12 +26,11 @@ namespace Alledia\Framework\Joomla\Form\Field;
 
 use Joomla\CMS\Form\Field\HiddenField as JoomlaHiddenField;
 use Joomla\CMS\Form\FormHelper;
-use Joomla\CMS\Version;
 
 // phpcs:disable PSR1.Files.SideEffects
 defined('_JEXEC') or die();
 
-if (Version::MAJOR_VERSION < 4) {
+if (class_exists(JoomlaHiddenField::class) == false) {
     FormHelper::loadFieldClass('Hidden');
     class_alias(\JFormFieldHidden::class, JoomlaHiddenField::class);
 }
