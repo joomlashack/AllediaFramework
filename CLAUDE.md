@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## What this is
 
-The Joomlashack Framework (`lib_allediaframework`): a Joomla **library** extension that other Joomlashack extensions (components, modules, plugins) depend on. It is not runnable on its own. Code only executes inside a Joomla site (every PHP file starts with `defined('_JEXEC') or die();`). A single codebase supports **Joomla 3.9+ and Joomla 4/5**, on PHP 7.4+ (composer.json). The manifest's `<phpminimum>` still says 7.2.5.
+The Joomlashack Framework (`lib_allediaframework`): a Joomla **library** extension that other Joomlashack extensions (components, modules, plugins) depend on. It is not runnable on its own. Code only executes inside a Joomla site (every PHP file starts with `defined('_JEXEC') or die();`). A single codebase supports **Joomla 3.9+ and Joomla 4/5/6**, on PHP 7.4+ (`composer.json` and the manifest's `<phpminimum>`).
 
 ## Build / tooling
 
@@ -12,7 +12,8 @@ The Joomlashack Framework (`lib_allediaframework`): a Joomla **library** extensi
 - Packaging uses Phing via the external **ShackBuilder** project. `build.xml` only imports `${builder.path}/src/build.xml`. Copy `build.dist.properties` to `build.properties` (gitignored) and set `builder.path`. Then run `phing` from the repo root. Zips land in `packages/` (gitignored).
 - Composer installs into `src/vendor` (`config.vendor-dir`), and `src/vendor` **is committed** because it ships in the package. Its only runtime dependency is `pimple/pimple`. `psr/container` is `replace`d because Joomla provides it.
 - Releases: bump `<version>` and `<creationDate>` in `src/allediaframework.xml`. Dev versions use a `bN` suffix (e.g. `3.8.12b1`), and the release commit sets the final version ("Release vX.Y.Z"). Work happens on `development`, and `main` is the release branch.
-- `_scratch/` is local scratch space and is not part of the package.
+- The manifest's `<files>` and `<media>` blocks are whitelists. A new folder under `src/` or `src/media/` is neither packaged nor installed until it is listed there. Media installs to `media/lib_allediaframework/` and is referenced by relative paths such as `lib_allediaframework/fontawesome/css/all.min.css` (see `helpers/html/alledia.php`).
+- `_scratch/` is local scratch space. It is not in the manifest, so it never ships, but it is also not gitignored.
 
 ## Architecture
 
