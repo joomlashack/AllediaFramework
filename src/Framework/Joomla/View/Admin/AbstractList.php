@@ -24,7 +24,9 @@
 
 namespace Alledia\Framework\Joomla\View\Admin;
 
+// phpcs:disable PSR1.Files.SideEffects
 defined('_JEXEC') or die();
+// phpcs:enable PSR1.Files.SideEffects
 
 use Joomla\CMS\Form\Form;
 use Joomla\CMS\HTML\HTMLHelper;
@@ -79,4 +81,3 @@ abstract class AbstractList extends AbstractBase
         parent::display($tpl);
     }
 }
-

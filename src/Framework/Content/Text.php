@@ -26,7 +26,9 @@ namespace Alledia\Framework\Content;
 
 use Alledia\Framework\Base;
 
+// phpcs:disable PSR1.Files.SideEffects
 defined('_JEXEC') or die();
+// phpcs:enable PSR1.Files.SideEffects
 
 class Text extends Base
 {

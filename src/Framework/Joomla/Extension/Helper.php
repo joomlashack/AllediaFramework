@@ -26,7 +26,9 @@ namespace Alledia\Framework\Joomla\Extension;
 
 use Alledia\Framework\Factory;
 
+// phpcs:disable PSR1.Files.SideEffects
 defined('_JEXEC') or die();
+// phpcs:enable PSR1.Files.SideEffects
 
 /**
  * Generic extension helper class

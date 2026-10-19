@@ -33,7 +33,9 @@ use Joomla\Event\DispatcherInterface;
 use Joomla\Event\Event;
 use Joomla\Input\Input;
 
+// phpcs:disable PSR1.Files.SideEffects
 defined('_JEXEC') or die();
+// phpcs:enable PSR1.Files.SideEffects
 
 abstract class Factory extends \Joomla\CMS\Factory
 {
@@ -116,7 +118,6 @@ abstract class Factory extends \Joomla\CMS\Factory
 
         if (Version::MAJOR_VERSION < 4) {
             $result = $dispatcher->trigger($eventName, $args);
-
         } else {
             $event  = new Event($eventName, $args);
             $result = $dispatcher->dispatch($eventName, $event);

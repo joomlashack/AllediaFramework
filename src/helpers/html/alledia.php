@@ -96,7 +96,6 @@ abstract class JhtmlAlledia
                 [],
                 ['jquery']
             );
-
         } else {
             HTMLHelper::_('jquery.framework');
             HTMLHelper::_('script', 'lib_allediaframework/jquery.validate.js', ['relative' => true]);

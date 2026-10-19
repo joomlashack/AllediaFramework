@@ -30,8 +30,10 @@ use JhtmlAlledia;
 
 class HtmlAllediaTest extends Unit
 {
-    protected function _before()
+    protected function setUp(): void
     {
+        parent::setUp();
+
         require_once ALLEDIA_FRAMEWORK_SRC . '/helpers/html/alledia.php';
     }
 

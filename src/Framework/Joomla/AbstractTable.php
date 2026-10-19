@@ -54,14 +54,12 @@ abstract class AbstractTable extends Table
         if (Version::MAJOR_VERSION < 4) {
             Table::addIncludePath(JPATH_ADMINISTRATOR . '/components/' . $component . '/tables');
             $table = Table::getInstance($name, $prefix);
-
         } else {
             try {
                 $table = Factory::getApplication()
                     ->bootComponent($component)
                     ->getMVCFactory()
                     ->createTable($name, 'Administrator');
-
             } catch (\Throwable $error) {
                 // Ignore
             }
@@ -78,7 +76,6 @@ abstract class AbstractTable extends Table
     {
         if (is_callable(parent::class . '::getDatabase')) {
             return parent::getDatabase();
-
         } elseif (is_callable(parent::class . '::getDbo')) {
             return parent::getDbo();
         }

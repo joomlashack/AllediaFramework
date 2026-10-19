@@ -770,6 +770,23 @@ composer test        # same as: vendor/bin/codecept run -c ..
 - Classes that need Joomla CMS classes (`Factory`, extension objects, MVC bases, form fields, HTML helpers other than
   `truncate()`) aren't covered by unit tests.
 
+### Coding standard
+
+Code in `src` and `tests` follows [PSR-12](https://www.php-fig.org/psr/psr-12/). PHP_CodeSniffer is installed with
+the test tooling. From the repository root:
+
+```sh
+composer lint        # report violations
+composer lint:fix    # fix what phpcbf can fix automatically
+```
+
+Both skip `src/vendor`, `tests/vendor` and generated test files. Wrap the `defined('_JEXEC') or die();` guard, and
+any other side effect that must come before a class declaration, in
+`// phpcs:disable PSR1.Files.SideEffects` … `// phpcs:enable PSR1.Files.SideEffects`.
+
+In tests, put fixture classes in their own files under `tests/Support/Fixtures` (namespace `Tests\Support\Fixtures`).
+Use `setUp()` rather than Codeception's `_before()`, because PSR-12 forbids method names starting with an underscore.
+
 ### Updating test dependencies
 
 - **Update from `tests/`**, never from the root:

@@ -162,7 +162,6 @@ trait TraitModel
 
                 try {
                     $db->setQuery($query)->execute();
-
                 } catch (\Throwable $error) {
                     $this->app->enqueueMessage($error->getMessage() . '<br>' . $query, 'error');
                 }

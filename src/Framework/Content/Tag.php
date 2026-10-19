@@ -27,7 +27,9 @@ namespace Alledia\Framework\Content;
 use Alledia\Framework\Base;
 use Joomla\Registry\Registry;
 
+// phpcs:disable PSR1.Files.SideEffects
 defined('_JEXEC') or die();
+// phpcs:enable PSR1.Files.SideEffects
 
 class Tag extends Base
 {

@@ -150,12 +150,10 @@ abstract class Helper
 
             if ($method->isStatic()) {
                 $result = call_user_func_array("{$className}::{$methodName}", $params);
-
             } else {
                 // Check if we have a singleton class
                 if (method_exists($className, 'getInstance')) {
                     $instance = $className::getInstance();
-
                 } else {
                     $instance = new $className();
                 }
@@ -213,7 +211,6 @@ abstract class Helper
         /** @var Form $form */
         if (Version::MAJOR_VERSION < 4) {
             $form = Form::getInstance($name, $source, $options, $clear, $xpath);
-
         } else {
             $form = Factory::getContainer()->get(FormFactoryInterface::class)->createForm($name);
             if ($source[0] == '<') {
@@ -276,7 +273,6 @@ abstract class Helper
             BaseDatabaseModel::addIncludePath($componentPath . '/models');
 
             $model = BaseDatabaseModel::getInstance($name, $prefix, $options);
-
         } else {
             $model = Factory::getApplication()->bootComponent($component)
                 ->getMVCFactory()->createModel($name, $appName, $options);
@@ -303,11 +299,9 @@ abstract class Helper
     ): Table {
         if (Version::MAJOR_VERSION < 4) {
             $table = Table::getInstance($name, $prefix ?: Table::class, $config);
-
         } elseif ($component) {
             $table = Factory::getApplication()->bootComponent($component)
                 ->getMVCFactory()->createTable($name, $prefix ?: Table::class, $config);
-
         } else {
             $className = ($prefix ? '' : '\\Joomla\\CMS\\Table\\') . $name;
             $table     = class_exists($className) ? new $className() : null;

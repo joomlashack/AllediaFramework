@@ -28,7 +28,9 @@ use Alledia\Framework\Factory;
 use Joomla\Event\AbstractEvent;
 use Joomla\Event\Dispatcher;
 
+// phpcs:disable PSR1.Files.SideEffects
 defined('_JEXEC') or die();
+// phpcs:enable PSR1.Files.SideEffects
 
 trait TraitObservable
 {
@@ -91,7 +93,6 @@ trait TraitObservable
                     $events[] = $method->name;
                 }
             }
-
         } elseif (is_string($events)) {
             $events = [$events];
         }

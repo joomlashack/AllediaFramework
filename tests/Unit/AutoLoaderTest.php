@@ -35,8 +35,10 @@ class AutoLoaderTest extends Unit
 {
     protected string $dataPath;
 
-    protected function _before()
+    protected function setUp(): void
     {
+        parent::setUp();
+
         $this->dataPath = codecept_data_dir('AutoLoader');
     }
 

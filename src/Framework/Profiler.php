@@ -24,7 +24,9 @@
 
 namespace Alledia\Framework;
 
+// phpcs:disable PSR1.Files.SideEffects
 defined('_JEXEC') or die();
+// phpcs:enable PSR1.Files.SideEffects
 
 class Profiler
 {
@@ -129,7 +131,6 @@ class Profiler
             $length += strlen($label) + 2;
 
             echo str_repeat('=', $this->maxLength - $length);
-
         } else {
             $this->printSeparator();
         }

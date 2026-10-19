@@ -26,9 +26,10 @@ namespace Alledia\Framework\Exception;
 
 use Alledia\Framework\Exception;
 
+// phpcs:disable PSR1.Files.SideEffects
 defined('_JEXEC') or die();
+// phpcs:enable PSR1.Files.SideEffects
 
 class NotFound extends Exception
 {
-
 }

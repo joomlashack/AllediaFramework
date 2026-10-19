@@ -27,6 +27,7 @@ namespace Tests\Unit;
 use Alledia\Framework\Base;
 use Alledia\Framework\Exception;
 use Codeception\Test\Unit;
+use Tests\Support\Fixtures\BaseFixture;
 
 class BaseTest extends Unit
 {
@@ -146,19 +147,5 @@ class BaseTest extends Unit
     public function testStringConversionReturnsClassName()
     {
         $this->assertSame(BaseFixture::class, (string)new BaseFixture());
-    }
-}
-
-class BaseFixture extends Base
-{
-    public $id;
-
-    public $title;
-
-    protected $secret = 'protected';
-
-    public function getComputed(): string
-    {
-        return 'computed value';
     }
 }

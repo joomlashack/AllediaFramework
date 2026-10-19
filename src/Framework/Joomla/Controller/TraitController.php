@@ -30,7 +30,9 @@ use Joomla\CMS\Router\Route;
 use Joomla\CMS\Uri\Uri;
 use Joomla\String\Inflector;
 
+// phpcs:disable PSR1.Files.SideEffects
 defined('_JEXEC') or die();
+// phpcs:enable PSR1.Files.SideEffects
 
 trait TraitController
 {
@@ -60,13 +62,11 @@ trait TraitController
         $url = $return ?: $this->input->getBase64('return');
         if ($url) {
             $url = base64_decode($url);
-
         } else {
             $url = new Uri('index.php');
 
             if ($itemId = $this->input->getInt('Itemid')) {
                 $url->setVar('Itemid', $itemId);
-
             } elseif ($option = $this->input->getCmd('option')) {
                 $url->setVar('option', $option);
             }

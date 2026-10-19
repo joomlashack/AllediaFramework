@@ -172,7 +172,6 @@ class Generic
             $this->name    = $row->name;
             $this->enabled = (bool)$row->enabled;
             $this->params  = new Registry($row->params);
-
         } else {
             $this->id      = null;
             $this->name    = null;
@@ -464,7 +463,6 @@ class Generic
                 if (is_object($manifest)) {
                     if ($footerElement = $manifest->xpath('//field[@type="customfooter"]')) {
                         $footerElement = reset($footerElement);
-
                     } elseif ($media = (string)$manifest->media['destination']) {
                         $customField = sprintf(
                             '<field type="customfooter" name="customfooter" media="%s"/>',

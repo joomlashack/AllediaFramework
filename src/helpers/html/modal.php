@@ -79,7 +79,7 @@ abstract class AllediaModal
                 'hint'       => Text::_('JGLOBAL_SELECT_AN_OPTION'),
                 'button'     => [
                     'select' => Text::_('JSELECT'),
-                    'clear'  => Text::_('JCLEAR')
+                    'clear'  => Text::_('JCLEAR'),
                 ],
                 'close'      => Text::_('JLIB_HTML_BEHAVIOR_CLOSE'),
                 'value'      => null,
@@ -112,13 +112,11 @@ abstract class AllediaModal
 
         if (Version::MAJOR_VERSION < 4) {
             HTMLHelper::_('script', 'system/modal-fields.js', ['version' => 'auto', 'relative' => true]);
-
         } elseif ($doc = Factory::getDocument()) {
             if (is_callable([$doc, 'getWebAssetManager'])) {
                 $wa = $doc->getWebAssetManager();
                 $wa->useScript('field.modal-fields');
             }
-
         } else {
             return 'Unable to initialize Modal window';
         }
@@ -147,7 +145,7 @@ JSCRIPT;
             'value'    => $options['hint'],
             'class'    => 'input-medium form-control',
             'readonly' => 'readonly',
-            'size'     => 35
+            'size'     => 35,
         ];
         $html        .= sprintf('<input %s/>', ArrayHelper::toString($nameAttribs));
 
@@ -158,7 +156,7 @@ JSCRIPT;
             'name'          => $name,
             'value'         => $options['value'],
             'data-required' => (int)(bool)$options['required'],
-            'data-text'     => $title
+            'data-text'     => $title,
         ];
         if ($options['required']) {
             $idAttribs['class'] = 'required modal-value';
@@ -193,10 +191,10 @@ JSCRIPT;
                 'width'      => '800px',
                 'bodyHeight' => '70',
                 'modalWidth' => '80',
+                // phpcs:ignore Generic.Files.LineLength.TooLong
                 'footer'     => '<a role="button" class="btn" data-dismiss="modal" data-bs-dismiss="modal" aria-hidden="true">'
                     . Text::_('JLIB_HTML_BEHAVIOR_CLOSE')
-                    . '</a>'
-                ,
+                    . '</a>',
             ]
         );
 
@@ -292,7 +290,7 @@ JSCRIPT;
                 'height'     => '400px',
                 'width'      => '800px',
                 'bodyHeight' => '70',
-                'modalWidth' => '80'
+                'modalWidth' => '80',
             ],
             $params
         );
@@ -305,7 +303,7 @@ JSCRIPT;
             $text,
             [
                 'data-toggle'    => 'modal',
-                'data-bs-toggle' => 'modal'
+                'data-bs-toggle' => 'modal',
             ]
         );
 
@@ -324,7 +322,7 @@ JSCRIPT;
             [
                 'class'           => 'btn btn-primary',
                 'data-dismiss'    => 'modal',
-                'data-bs-dismiss' => 'modal'
+                'data-bs-dismiss' => 'modal',
             ],
             $attribs
         );
@@ -342,7 +340,7 @@ JSCRIPT;
     {
         $attribs = array_merge(
             [
-                'class' => 'btn btn-success'
+                'class' => 'btn btn-success',
             ],
             $attribs
         );
@@ -361,7 +359,7 @@ JSCRIPT;
         $attribs = array_merge(
             [
                 'data-dismiss'    => 'modal',
-                'data-bs-dismiss' => 'modal'
+                'data-bs-dismiss' => 'modal',
             ],
             $attribs
         );
@@ -381,7 +379,7 @@ JSCRIPT;
             [
                 'role'        => 'button',
                 'class'       => 'btn',
-                'aria-hidden' => 'true'
+                'aria-hidden' => 'true',
             ],
             $attribs
         );

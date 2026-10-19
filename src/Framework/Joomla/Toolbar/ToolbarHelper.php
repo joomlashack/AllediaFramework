@@ -32,7 +32,9 @@ use Joomla\CMS\Toolbar\ToolbarHelper as JoomlaToolbarHelper;
 use Joomla\CMS\Utility\Utility;
 use Joomla\CMS\Version;
 
+// phpcs:disable PSR1.Files.SideEffects
 defined('_JEXEC') or die();
+// phpcs:enable PSR1.Files.SideEffects
 
 abstract class ToolbarHelper extends JoomlaToolbarHelper
 {
@@ -57,7 +59,6 @@ abstract class ToolbarHelper extends JoomlaToolbarHelper
         if (empty(static::$toolbar)) {
             if (Version::MAJOR_VERSION < 5) {
                 static::$toolbar = Toolbar::getInstance();
-
             } else {
                 $document        = $document ?: Factory::getApplication()->getDocument();
                 static::$toolbar = $document->getToolbar();

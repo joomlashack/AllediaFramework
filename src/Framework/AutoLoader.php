@@ -24,7 +24,9 @@
 
 namespace Alledia\Framework;
 
+// phpcs:disable PSR1.Files.SideEffects
 defined('_JEXEC') or die();
+// phpcs:enable PSR1.Files.SideEffects
 
 class AutoLoader
 {
@@ -100,7 +102,6 @@ class AutoLoader
                 if ($firstDir != $baseDir) {
                     array_unshift(static::$prefixes[$prefix], $baseDir);
                 }
-
             } else {
                 $lastDir = static::$prefixes[$prefix][count(static::$prefixes[$prefix]) - 1] ?? null;
                 if ($lastDir != $baseDir) {

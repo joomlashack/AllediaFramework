@@ -72,7 +72,6 @@ trait TraitAllediaView
             $this->extension->loadLibrary();
 
             $this->initSuccess = true;
-
         } catch (\Throwable $error) {
             if ($this->app) {
                 $this->app->enqueueMessage($error->getMessage(), 'error');

@@ -53,7 +53,6 @@ class Inflector
         if (class_exists(DoctrineInflector::class)) {
             // @TODO: Implement custom rules for Doctrine Inflector
             $this->inflector = InflectorFactory::create()->build();
-
         } elseif (class_exists(JoomlaInflector::class)) {
             $this->inflector = JoomlaInflector::getInstance();
 

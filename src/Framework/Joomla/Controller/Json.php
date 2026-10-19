@@ -27,7 +27,9 @@ namespace Alledia\Framework\Joomla\Controller;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Response\JsonResponse;
 
+// phpcs:disable PSR1.Files.SideEffects
 defined('_JEXEC') or die();
+// phpcs:enable PSR1.Files.SideEffects
 
 /**
  * @deprecated v3.8.1

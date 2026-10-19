@@ -35,8 +35,10 @@ class InflectorTest extends Unit
 {
     protected Inflector $inflector;
 
-    protected function _before()
+    protected function setUp(): void
     {
+        parent::setUp();
+
         $this->inflector = new Inflector();
     }
 

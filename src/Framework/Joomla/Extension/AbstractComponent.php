@@ -121,7 +121,6 @@ abstract class AbstractComponent extends Licensed
 
             $this->controller->execute($task);
             $this->controller->redirect();
-
         } else {
             $referer = $input->getCmd('referer');
             $app->redirect($referer);

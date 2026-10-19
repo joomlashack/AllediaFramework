@@ -24,6 +24,8 @@
 
 use Alledia\Framework\AutoLoader;
 
+// phpcs:disable PSR1.Files.SideEffects
+
 // Framework files exit unless loaded from within Joomla
 define('_JEXEC', 1);
 

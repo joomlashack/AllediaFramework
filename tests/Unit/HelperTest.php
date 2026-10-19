@@ -27,6 +27,9 @@ namespace Tests\Unit;
 use Alledia\Framework\Exception;
 use Alledia\Framework\Helper;
 use Codeception\Test\Unit;
+use Tests\Support\Fixtures\AliasSource;
+use Tests\Support\Fixtures\CallTarget;
+use Tests\Support\Fixtures\SingletonCallTarget;
 
 class HelperTest extends Unit
 {
@@ -84,37 +87,5 @@ class HelperTest extends Unit
         $exception = Helper::errorToException(3, 'Odd error', '/path/file.php', 1);
 
         $this->assertSame('3 - Odd error', $exception->getMessage());
-    }
-}
-
-class AliasSource
-{
-}
-
-class CallTarget
-{
-    public static function staticMethod(string $a, string $b): string
-    {
-        return "static:{$a}:{$b}";
-    }
-
-    public function instanceMethod(string $value): string
-    {
-        return "instance:{$value}";
-    }
-}
-
-class SingletonCallTarget
-{
-    protected static ?self $instance = null;
-
-    public static function getInstance(): self
-    {
-        return static::$instance ?: (static::$instance = new static());
-    }
-
-    public function whoAmI(): int
-    {
-        return spl_object_id($this);
     }
 }

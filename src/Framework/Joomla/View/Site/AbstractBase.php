@@ -27,7 +27,9 @@ namespace Alledia\Framework\Joomla\View\Site;
 use Alledia\Framework\Joomla\AbstractView;
 use Joomla\Registry\Registry;
 
+// phpcs:disable PSR1.Files.SideEffects
 defined('_JEXEC') or die();
+// phpcs:enable PSR1.Files.SideEffects
 
 class AbstractBase extends AbstractView
 {
