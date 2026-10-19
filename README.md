@@ -512,6 +512,7 @@ The bootstrap adds `src/helpers/html` to `HTMLHelper`'s include paths.
 | Call                                                          | Description                                              |
 |---------------------------------------------------------------|----------------------------------------------------------|
 | `HTMLHelper::_('alledia.fontawesome')`                        | Loads the bundled Font Awesome CSS                       |
+| `HTMLHelper::_('alledia.jqueryValidate')`                     | Loads jQuery and the bundled [jQuery Validation](https://jqueryvalidation.org/) plugin (minified unless site debug is on) |
 | `HTMLHelper::_('alledia.tooltip', $title, $text, $body)`      | Bootstrap tooltip span                                   |
 | `HTMLHelper::_('alledia.truncate', $string, $limit, '...')`   | Multibyte-safe truncation on a word boundary             |
 | `HTMLHelper::_('alledia.modal.renderSelectField', $options)`  | Modal "select item" field that works on any Joomla version |

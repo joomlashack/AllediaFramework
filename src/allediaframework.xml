@@ -22,6 +22,7 @@
 
     <media destination="lib_allediaframework" folder="media">
         <folder>css</folder>
+        <folder>js</folder>
     </media>
 
     <updateservers>

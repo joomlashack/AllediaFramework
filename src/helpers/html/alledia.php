@@ -22,6 +22,7 @@
  * along with AllediaFramework.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 
 // phpcs:disable PSR1.Files.SideEffects
@@ -74,6 +75,32 @@ abstract class JhtmlAlledia
             'lib_allediaframework/fontawesome/css/all.min.css',
             ['relative' => true]
         );
+    }
+
+    /**
+     * Ensure the jQuery Validation plugin is loaded, along with jQuery
+     *
+     * @return void
+     * @throws Exception
+     */
+    public static function jqueryValidate(): void
+    {
+        $app      = Factory::getApplication();
+        $document = is_callable([$app, 'getDocument']) ? $app->getDocument() : Factory::getDocument();
+
+        if (is_callable([$document, 'getWebAssetManager'])) {
+            $document->getWebAssetManager()->registerAndUseScript(
+                'lib_allediaframework.jquery-validate',
+                'lib_allediaframework/jquery.validate.js',
+                [],
+                [],
+                ['jquery']
+            );
+
+        } else {
+            HTMLHelper::_('jquery.framework');
+            HTMLHelper::_('script', 'lib_allediaframework/jquery.validate.js', ['relative' => true]);
+        }
     }
 
     /**
