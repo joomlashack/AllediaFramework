@@ -32,5 +32,14 @@
     },
     "replace"          : {
         "psr/container": "*"
+    },
+    "scripts"          : {
+        "test": [
+            "@composer --working-dir=tests install --no-interaction --quiet",
+            "@php tests/vendor/codeception/codeception/codecept run"
+        ]
+    },
+    "scripts-descriptions": {
+        "test": "Install test dependencies into tests/vendor and run the Codeception suite"
     }
 }

@@ -746,6 +746,14 @@ The test tooling has its own `tests/composer.json`, installed into a gitignored 
 dependencies out of the shipped `src/vendor`. Besides Codeception, it installs the standalone `joomla/string`,
 `joomla/registry` and `doctrine/inflector` packages, which some framework classes use.
 
+From the repository root:
+
+```sh
+composer test        # installs tests/vendor if needed, then runs the suite
+```
+
+Or from `tests/`:
+
 ```sh
 cd tests
 composer install
@@ -755,13 +763,36 @@ composer test        # same as: vendor/bin/codecept run -c ..
 `codeception.yml` is at the repository root. `tests/bootstrap.php` defines `_JEXEC` and registers the framework's own
 `AutoLoader` for `Alledia\Framework`. Fixtures live in `tests/Support/Data`.
 
-- The tests need PHP 8.2+ (Codeception 5.3), so they don't run on PHP 7.4. `tests/composer.json` sets
-  `config.platform.php` to 8.2.0, so `composer update` locks packages that work on every PHP version from 8.2 up,
-  whatever PHP you run it with. Keep that pin, or a lock resolved on a newer PHP will fail to parse on older ones.
+- The tests need PHP 8.2+ (Codeception 5.3), so they don't run on PHP 7.4.
 - For data providers, use Codeception's `#[Codeception\Attribute\DataProvider('method')]`. Codeception ignores
   PHPUnit's `#[DataProvider]` attribute.
 - Classes that need Joomla CMS classes (`Factory`, extension objects, MVC bases, form fields, HTML helpers other than
   `truncate()`) aren't covered by unit tests.
+
+### Updating test dependencies
+
+- **Update from `tests/`**, never from the root:
+
+  ```sh
+  composer --working-dir=tests update    # or: cd tests && composer update
+  ```
+
+  Running `composer update` in the repository root updates the framework's runtime dependencies instead. That
+  rewrites the committed `src/vendor`, which ships in the package.
+- **Keep the PHP platform pin.** `tests/composer.json` sets `config.platform.php` to `8.2.0`. Composer then resolves
+  packages for PHP 8.2 whatever PHP version runs it, so the lock works on 8.2 and every later version. Without the
+  pin, a lock built on a newer PHP can pull in packages that fail to parse on older versions. Raise the pin only when
+  you deliberately drop an older PHP version for running tests.
+- **The pin also chooses the Joomla package versions.** `joomla/string` and `joomla/registry` 4.x require PHP 8.3+,
+  so with the 8.2 pin Composer installs 3.x, the versions Joomla 5 ships. To test against 4.x, raise the pin to
+  `8.3.0`.
+- **Keep `doctrine/inflector` as a direct dependency.** `Inflector` uses Doctrine when it is installed and falls back
+  to Joomla's inflector otherwise. Removing it would change which backend `InflectorTest` exercises.
+- **Commit `tests/composer.lock`.** `tests/vendor` is gitignored, so the lock file is what gives everyone the same
+  versions.
+- **Run `composer test` after every update.** After a Codeception or PHPUnit major upgrade, also confirm that the
+  data-provider tests still receive their data. A test failing with `ArgumentCountError: Too few arguments` means
+  the providers aren't being applied.
 
 ### Manual testing
 
