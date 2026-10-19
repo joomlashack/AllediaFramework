@@ -1,0 +1,27 @@
+{
+    "name"       : "alledia/allediaframework-tests",
+    "description": "Test suite for the Joomlashack Framework",
+    "type"       : "project",
+    "license"    : "GPL-2.0-or-later",
+    "authors"    : [
+        {
+            "name" : "Joomlashack",
+            "email": "help@joomlashack.com"
+        }
+    ],
+    "require-dev": {
+        "codeception/codeception"  : "^5.3",
+        "codeception/module-asserts": "^3.3",
+        "doctrine/inflector"       : "^2.1",
+        "joomla/registry"          : "^3.0 || ^4.0",
+        "joomla/string"            : "^3.0 || ^4.0"
+    },
+    "config"     : {
+        "platform": {
+            "php": "8.2.0"
+        }
+    },
+    "scripts"    : {
+        "test": "codecept run -c .."
+    }
+}

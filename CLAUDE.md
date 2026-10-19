@@ -8,7 +8,7 @@ The Joomlashack Framework (`lib_allediaframework`): a Joomla **library** extensi
 
 ## Build / tooling
 
-- There are no tests, linter config or CI in this repo.
+- Unit tests use Codeception: `cd tests && composer install && composer test`. Test tooling has its own `tests/composer.json` and gitignored `tests/vendor`, so it never touches the shipped `src/vendor`. `codeception.yml` is at the repo root, and `tests/bootstrap.php` defines `_JEXEC` and registers the framework `AutoLoader`. Only classes that don't need Joomla CMS classes are unit tested. Use `Codeception\Attribute\DataProvider` because Codeception ignores PHPUnit's attribute. There is no linter config or CI.
 - Packaging uses Phing via the external **ShackBuilder** project. `build.xml` only imports `${builder.path}/src/build.xml`. Copy `build.dist.properties` to `build.properties` (gitignored) and set `builder.path`. Then run `phing` from the repo root. Zips land in `packages/` (gitignored).
 - Composer installs into `src/vendor` (`config.vendor-dir`), and `src/vendor` **is committed** because it ships in the package. Its only runtime dependency is `pimple/pimple`. `psr/container` is `replace`d because Joomla provides it.
 - Releases: bump `<version>` and `<creationDate>` in `src/allediaframework.xml`. Dev versions use a `bN` suffix (e.g. `3.8.12b1`), and the release commit sets the final version ("Release vX.Y.Z"). Work happens on `development`, and `main` is the release branch.

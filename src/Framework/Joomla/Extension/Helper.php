@@ -60,7 +60,7 @@ abstract class Helper
     {
         $prefix = array_search($type, static::$extensionTypes);
         if ($prefix) {
-            if (strpos($element, $prefix) === 0) {
+            if (strpos($element, $prefix . '_') === 0) {
                 $shortElement = substr($element, strlen($prefix) + 1);
             }
             $parts = [
@@ -114,9 +114,9 @@ abstract class Helper
                             $name
                         )
                     ];
-                }
 
-                static::$extensionInfo[$element] = $result;
+                    static::$extensionInfo[$element] = $result;
+                }
             }
         }
 

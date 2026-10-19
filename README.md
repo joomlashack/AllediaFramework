@@ -736,9 +736,37 @@ Release process
 Testing
 -------
 
-There are no automated tests, linter configuration or CI in this repository. Test changes manually by installing the
-built package on real Joomla sites with at least one dependent Joomlashack extension. Cover every supported major
-version your change could affect:
+### Unit tests
+
+Unit tests use [Codeception](https://codeception.com/) and live in `tests/`. They cover the classes that don't need a
+running Joomla site: `AutoLoader`, `Base`, `Color`, `Content\Text`/`Tag`, `Exception`, `Inflector`, the element parsing
+in `Joomla\Extension\Helper`, parts of `Helper`, and `JhtmlAlledia::truncate()`.
+
+The test tooling has its own `tests/composer.json`, installed into a gitignored `tests/vendor`. This keeps dev
+dependencies out of the shipped `src/vendor`. Besides Codeception, it installs the standalone `joomla/string`,
+`joomla/registry` and `doctrine/inflector` packages, which some framework classes use.
+
+```sh
+cd tests
+composer install
+composer test        # same as: vendor/bin/codecept run -c ..
+```
+
+`codeception.yml` is at the repository root. `tests/bootstrap.php` defines `_JEXEC` and registers the framework's own
+`AutoLoader` for `Alledia\Framework`. Fixtures live in `tests/Support/Data`.
+
+- The tests need PHP 8.2+ (Codeception 5.3), so they don't run on PHP 7.4. `tests/composer.json` sets
+  `config.platform.php` to 8.2.0, so `composer update` locks packages that work on every PHP version from 8.2 up,
+  whatever PHP you run it with. Keep that pin, or a lock resolved on a newer PHP will fail to parse on older ones.
+- For data providers, use Codeception's `#[Codeception\Attribute\DataProvider('method')]`. Codeception ignores
+  PHPUnit's `#[DataProvider]` attribute.
+- Classes that need Joomla CMS classes (`Factory`, extension objects, MVC bases, form fields, HTML helpers other than
+  `truncate()`) aren't covered by unit tests.
+
+### Manual testing
+
+Everything else must be tested manually. Install the built package on real Joomla sites with at least one dependent
+Joomlashack extension. Cover every supported major version your change could affect:
 
 - Joomla 3.9/3.10
 - Joomla 4.x

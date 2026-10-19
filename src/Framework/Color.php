@@ -232,7 +232,7 @@ abstract class Color
         $color = array_map('hexdec', $color);
 
         foreach ($color as &$value) {
-            $value = $value * ($percent / 100);
+            $value = min(255, max(0, $value * ($percent / 100)));
         }
 
         $color = array_map(
@@ -286,7 +286,7 @@ abstract class Color
             }
 
             $hexType = StringHelper::strlen($hex);
-            if (in_array($hexType, [3, 6]) && preg_match('/[0-9a-fA-F]/', $hex)) {
+            if (in_array($hexType, [3, 6]) && preg_match('/^[0-9a-fA-F]+$/', $hex)) {
                 // Valid hex code in short or full form
                 switch ($hexType) {
                     case 3:
@@ -311,9 +311,9 @@ abstract class Color
                     )
                 );
             }
-
-            return null;
         }
+
+        return null;
     }
 
     /**
@@ -323,16 +323,12 @@ abstract class Color
      */
     public static function nameToHex(string $name): ?string
     {
-        $hex = null;
+        if (strpos($name, '#') === 0) {
+            return $name;
+        }
 
-        $hashtag = strpos($name, '#');
-        if ($hashtag === false) {
-            $hex = static::$colorNames[strtolower($name)] ?? $hex;
-
-        } elseif ($hashtag === 0) {
-            $hex = $name;
-
-        } elseif (in_array(strlen($name), [3, 6])) {
+        $hex = static::$colorNames[strtolower($name)] ?? null;
+        if ($hex === null && preg_match('/^([0-9a-f]{3}){1,2}$/i', $name)) {
             $hex = '#' . $name;
         }
 
