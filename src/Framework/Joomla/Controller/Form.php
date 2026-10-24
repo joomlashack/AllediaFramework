@@ -45,7 +45,7 @@ class Form extends AbstractForm
      */
     public function __construct(
         $config = [],
-        MVCFactoryInterface $factory = null,
+        ?MVCFactoryInterface $factory = null,
         ?CMSApplication $app = null,
         ?Input $input = null
     ) {

@@ -44,7 +44,7 @@ class Admin extends AbstractAdmin
      */
     public function __construct(
         $config = [],
-        MVCFactoryInterface $factory = null,
+        ?MVCFactoryInterface $factory = null,
         ?CMSApplication $app = null,
         ?Input $input = null
     ) {
