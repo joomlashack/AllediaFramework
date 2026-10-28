@@ -8,8 +8,8 @@
     <copyright>Copyright 2016-2026 Joomlashack.com</copyright>
     <license>GNU GPL; see LICENSE file</license>
     <description>Shared library for Joomlashack extensions</description>
-    <version>3.8.14</version>
-    <creationDate>October 26, 2026</creationDate>
+    <version>3.8.15b1</version>
+    <creationDate>October 27, 2026</creationDate>
     <variant>FREE</variant>
 
     <files>
