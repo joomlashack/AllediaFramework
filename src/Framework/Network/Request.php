@@ -83,7 +83,9 @@ class Request
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 
         $contents = curl_exec($ch);
-        curl_close($ch);
+
+        // curl_close() has had no effect since PHP 8.0 and is deprecated in 8.5
+        unset($ch);
 
         return $contents;
     }
