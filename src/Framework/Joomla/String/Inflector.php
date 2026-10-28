@@ -22,6 +22,8 @@
  * along with AllediaFramework.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+// PHP only reserves 'string' as a class name, not as a namespace segment
+// phpcs:ignore PHPCompatibility.Keywords.ForbiddenNames.stringFound
 namespace Alledia\Framework\Joomla\String;
 
 use Doctrine\Inflector\Inflector as DoctrineInflector;
