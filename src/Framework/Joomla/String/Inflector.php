@@ -103,6 +103,7 @@ class Inflector
     protected function addDoctrineRules(LanguageInflectorFactory $factory, array $customRules): void
     {
         $irregular        = [];
+        $flipped          = [];
         $pluralWords      = [];
         $singularWords    = [];
         $uncountableWords = [];
@@ -115,26 +116,26 @@ class Inflector
                 $uncountableWords[] = new Pattern(preg_quote($singular, '/'));
             } else {
                 $irregular[]     = new Substitution(new Word($singular), new Word($plural));
+                $flipped[]       = new Substitution(new Word($plural), new Word($singular));
                 $pluralWords[]   = new Pattern(preg_quote($plural, '/'));
                 $singularWords[] = new Pattern(preg_quote($singular, '/'));
             }
         }
 
-        $irregular = new Substitutions(...$irregular);
-
+        // Substitutions::getFlippedSubstitutions() fails on an empty set, so flip here instead
         $factory
             ->withPluralRules(
                 new Ruleset(
                     new Transformations(),
                     new Patterns(...$pluralWords, ...$uncountableWords),
-                    $irregular
+                    new Substitutions(...$irregular)
                 )
             )
             ->withSingularRules(
                 new Ruleset(
                     new Transformations(),
                     new Patterns(...$singularWords, ...$uncountableWords),
-                    $irregular->getFlippedSubstitutions()
+                    new Substitutions(...$flipped)
                 )
             );
     }

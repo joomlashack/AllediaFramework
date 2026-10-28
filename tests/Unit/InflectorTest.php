@@ -116,6 +116,25 @@ class InflectorTest extends Unit
         $this->assertSame('category', $inflector->singularize('categories'));
     }
 
+    public static function uncountableProvider(): array
+    {
+        return [
+            'null'      => [null],
+            'empty'     => [''],
+            'same word' => ['equipment'],
+        ];
+    }
+
+    #[DataProvider('uncountableProvider')]
+    public function testOnlyUncountableCustomRules(?string $plural)
+    {
+        $inflector = new Inflector(['equipment' => $plural]);
+
+        $this->assertSame('equipment', $inflector->pluralize('equipment'));
+        $this->assertSame('equipment', $inflector->singularize('equipment'));
+        $this->assertSame('items', $inflector->pluralize('item'));
+    }
+
     public function testLegacyBackendReturnsWordWhenNoInflection()
     {
         $this->setBackend(new LegacyInflector());
