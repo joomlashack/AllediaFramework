@@ -26,6 +26,14 @@ namespace Alledia\Framework\Joomla\String;
 
 use Doctrine\Inflector\Inflector as DoctrineInflector;
 use Doctrine\Inflector\InflectorFactory;
+use Doctrine\Inflector\LanguageInflectorFactory;
+use Doctrine\Inflector\Rules\Pattern;
+use Doctrine\Inflector\Rules\Patterns;
+use Doctrine\Inflector\Rules\Ruleset;
+use Doctrine\Inflector\Rules\Substitution;
+use Doctrine\Inflector\Rules\Substitutions;
+use Doctrine\Inflector\Rules\Transformations;
+use Doctrine\Inflector\Rules\Word;
 use Joomla\String\Inflector as JoomlaInflector;
 
 // phpcs:disable PSR1.Files.SideEffects.FoundWithSymbols
@@ -46,13 +54,31 @@ class Inflector
     protected Inflector $instance;
 
     /**
+     * JoomlaInflector's default countable words
+     *
+     * @var string[]
+     */
+    protected array $countable = [
+        'id',
+        'hits',
+        'clicks',
+    ];
+
+    /**
+     * @param array $customRules Pairs of singular => plural. A null plural marks an uncountable word
+     *
      * @throws \Exception
      */
     public function __construct(array $customRules = [])
     {
         if (class_exists(DoctrineInflector::class)) {
-            // @TODO: Implement custom rules for Doctrine Inflector
-            $this->inflector = InflectorFactory::create()->build();
+            $factory = InflectorFactory::create();
+
+            if ($customRules) {
+                $this->addDoctrineRules($factory, $customRules);
+            }
+
+            $this->inflector = $factory->build();
         } elseif (class_exists(JoomlaInflector::class)) {
             $this->inflector = JoomlaInflector::getInstance();
 
@@ -62,6 +88,55 @@ class Inflector
         } else {
             throw new \Exception('Missing String Inflector class');
         }
+    }
+
+    /**
+     * Imitate JoomlaInflector::addWord() for DoctrineInflector. Each word is also
+     * left as is when it's already in the target form, so isPlural()/isSingular()
+     * recognise both forms the way JoomlaInflector does
+     *
+     * @param LanguageInflectorFactory $factory
+     * @param array                    $customRules
+     *
+     * @return void
+     */
+    protected function addDoctrineRules(LanguageInflectorFactory $factory, array $customRules): void
+    {
+        $irregular        = [];
+        $pluralWords      = [];
+        $singularWords    = [];
+        $uncountableWords = [];
+
+        foreach ($customRules as $singular => $plural) {
+            $singular = strtolower((string)$singular);
+            $plural   = strtolower((string)$plural);
+
+            if ($plural === '' || $plural === $singular) {
+                $uncountableWords[] = new Pattern(preg_quote($singular, '/'));
+            } else {
+                $irregular[]     = new Substitution(new Word($singular), new Word($plural));
+                $pluralWords[]   = new Pattern(preg_quote($plural, '/'));
+                $singularWords[] = new Pattern(preg_quote($singular, '/'));
+            }
+        }
+
+        $irregular = new Substitutions(...$irregular);
+
+        $factory
+            ->withPluralRules(
+                new Ruleset(
+                    new Transformations(),
+                    new Patterns(...$pluralWords, ...$uncountableWords),
+                    $irregular
+                )
+            )
+            ->withSingularRules(
+                new Ruleset(
+                    new Transformations(),
+                    new Patterns(...$singularWords, ...$uncountableWords),
+                    $irregular->getFlippedSubstitutions()
+                )
+            );
     }
 
     /**
@@ -90,7 +165,8 @@ class Inflector
     public function pluralize(string $word): string
     {
         if (is_callable([$this->inflector, 'toPlural'])) {
-            return $this->inflector->toPlural($word);
+            // JoomlaInflector returns false when no rule applies or the word is already plural
+            return $this->inflector->toPlural($word) ?: $word;
         }
 
         return $this->inflector->pluralize($word);
@@ -106,10 +182,51 @@ class Inflector
     public function singularize(string $word): string
     {
         if (is_callable([$this->inflector, 'toSingular'])) {
-            return $this->inflector->toSingular($word);
+            // JoomlaInflector returns false when no rule applies or the word is already singular
+            return $this->inflector->toSingular($word) ?: $word;
         }
 
         return $this->inflector->singularize($word);
+    }
+
+    /**
+     * Imitate JoomlaInflector method for DoctrineInflector
+     *
+     * @param string $word
+     *
+     * @return string
+     */
+    public function toPlural(string $word): string
+    {
+        return $this->pluralize($word);
+    }
+
+    /**
+     * Imitate JoomlaInflector method for DoctrineInflector
+     *
+     * @param string $word
+     *
+     * @return string
+     */
+    public function toSingular(string $word): string
+    {
+        return $this->singularize($word);
+    }
+
+    /**
+     * Imitate JoomlaInflector method for DoctrineInflector
+     *
+     * @param string $word
+     *
+     * @return bool
+     */
+    public function isCountable(string $word): bool
+    {
+        if (is_callable([$this->inflector, 'isCountable'])) {
+            return $this->inflector->isCountable($word);
+        }
+
+        return in_array($word, $this->countable);
     }
 
     /**

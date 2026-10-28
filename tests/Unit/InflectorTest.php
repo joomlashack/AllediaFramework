@@ -27,6 +27,7 @@ namespace Tests\Unit;
 use Alledia\Framework\Joomla\String\Inflector;
 use Codeception\Attribute\DataProvider;
 use Codeception\Test\Unit;
+use Tests\Support\Fixtures\LegacyInflector;
 
 /**
  * Runs against the Doctrine inflector backend, which is what Joomla 4+ ships
@@ -71,6 +72,76 @@ class InflectorTest extends Unit
     {
         $this->assertTrue($this->inflector->isSingular($singular), "'{$singular}' should be singular");
         $this->assertFalse($this->inflector->isSingular($plural), "'{$plural}' should not be singular");
+    }
+
+    #[DataProvider('wordProvider')]
+    public function testJoomlaMethodNames(string $singular, string $plural)
+    {
+        $this->assertSame($plural, $this->inflector->toPlural($singular));
+        $this->assertSame($singular, $this->inflector->toSingular($plural));
+    }
+
+    public function testIsCountable()
+    {
+        $this->assertTrue($this->inflector->isCountable('id'));
+        $this->assertTrue($this->inflector->isCountable('hits'));
+        $this->assertFalse($this->inflector->isCountable('item'));
+    }
+
+    public function testCustomRules()
+    {
+        $inflector = new Inflector([
+            'bonus' => 'bonuses',
+            'Ox'    => 'Oxen',
+            'news'  => null,
+        ]);
+
+        $this->assertSame('bonuses', $inflector->pluralize('bonus'));
+        $this->assertSame('bonus', $inflector->singularize('bonuses'));
+        $this->assertSame('bonuses', $inflector->pluralize('bonuses'));
+        $this->assertSame('bonus', $inflector->singularize('bonus'));
+        $this->assertTrue($inflector->isPlural('bonuses'));
+        $this->assertFalse($inflector->isPlural('bonus'));
+        $this->assertTrue($inflector->isSingular('bonus'));
+        $this->assertFalse($inflector->isSingular('bonuses'));
+
+        $this->assertSame('oxen', $inflector->pluralize('ox'));
+        $this->assertSame('Oxen', $inflector->pluralize('Ox'));
+        $this->assertSame('ox', $inflector->singularize('oxen'));
+
+        $this->assertSame('news', $inflector->pluralize('news'));
+        $this->assertSame('news', $inflector->singularize('news'));
+
+        $this->assertSame('items', $inflector->pluralize('item'));
+        $this->assertSame('category', $inflector->singularize('categories'));
+    }
+
+    public function testLegacyBackendReturnsWordWhenNoInflection()
+    {
+        $this->setBackend(new LegacyInflector());
+
+        $this->assertSame('items', $this->inflector->pluralize('item'));
+        $this->assertSame('item', $this->inflector->singularize('items'));
+
+        $this->assertSame('items', $this->inflector->pluralize('items'));
+        $this->assertSame('item', $this->inflector->singularize('item'));
+        $this->assertSame('items', $this->inflector->toPlural('items'));
+        $this->assertSame('item', $this->inflector->toSingular('item'));
+    }
+
+    public function testLegacyBackendIsCountable()
+    {
+        $this->setBackend(new LegacyInflector());
+
+        $this->assertTrue($this->inflector->isCountable('legacy'));
+        $this->assertFalse($this->inflector->isCountable('id'));
+    }
+
+    protected function setBackend(object $backend): void
+    {
+        $property = new \ReflectionProperty($this->inflector, 'inflector');
+        $property->setAccessible(true);
+        $property->setValue($this->inflector, $backend);
     }
 
     public function testPassesThroughBackendMethods()

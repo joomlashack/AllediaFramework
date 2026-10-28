@@ -25,10 +25,10 @@
 namespace Alledia\Framework\Joomla\Controller;
 
 use Alledia\Framework\Factory;
+use Alledia\Framework\Joomla\String\Inflector;
 use Joomla\CMS\Application\CMSApplication;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Uri\Uri;
-use Joomla\String\Inflector;
 
 // phpcs:disable PSR1.Files.SideEffects
 defined('_JEXEC') or die();
@@ -121,9 +121,10 @@ trait TraitController
 
     /**
      * @return Inflector
+     * @throws \Exception
      */
     protected function getStringInflector(): Inflector
     {
-        return Inflector::getInstance();
+        return new Inflector();
     }
 }
