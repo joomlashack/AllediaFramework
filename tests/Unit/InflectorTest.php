@@ -159,7 +159,6 @@ class InflectorTest extends Unit
     protected function setBackend(object $backend): void
     {
         $property = new \ReflectionProperty($this->inflector, 'inflector');
-        $property->setAccessible(true);
         $property->setValue($this->inflector, $backend);
     }
 

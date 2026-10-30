@@ -765,6 +765,8 @@ composer test        # same as: vendor/bin/codecept run -c ..
 `AutoLoader` for `Alledia\Framework`. Fixtures live in `tests/Support/Data`.
 
 - The tests need PHP 8.2+ (Codeception 5.3), so they don't run on PHP 7.4.
+- `codeception.yml` turns every PHP error, deprecations included, into a test failure. Run the tests on the newest
+  PHP version too, so deprecations show up before sites upgrade.
 - For data providers, use Codeception's `#[Codeception\Attribute\DataProvider('method')]`. Codeception ignores
   PHPUnit's `#[DataProvider]` attribute.
 - Classes that need Joomla CMS classes (`Factory`, extension objects, MVC bases, form fields, HTML helpers other than
