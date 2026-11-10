@@ -25,13 +25,14 @@
 namespace Alledia\Framework\Joomla\Form\Field;
 
 use Joomla\CMS\Form\Field\ImagelistField as JoomlaImagelistField;
-use Joomla\CMS\Form\FormHelper;
 
 // phpcs:disable PSR1.Files.SideEffects
 defined('_JEXEC') or die();
 
 if (class_exists(JoomlaImagelistField::class) == false) {
-    FormHelper::loadFieldClass('Imagelist');
+    // Not FormHelper::loadFieldClass(): it searches extension field paths too, and could load
+    // an extension's own imagelist.php that extends this class before the class exists
+    require_once JPATH_LIBRARIES . '/joomla/form/fields/imagelist.php';
 
     class_alias(\JFormFieldImageList::class, JoomlaImagelistField::class);
 }

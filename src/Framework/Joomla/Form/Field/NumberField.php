@@ -26,12 +26,13 @@ namespace Alledia\Framework\Joomla\Form\Field;
 
 // phpcs:disable PSR1.Files.SideEffects
 use Joomla\CMS\Form\Field\NumberField as JoomlaNumberField;
-use Joomla\CMS\Form\FormHelper;
 
 defined('_JEXEC') or die();
 
 if (class_exists(JoomlaNumberField::class) == false) {
-    FormHelper::loadFieldClass('Number');
+    // Not FormHelper::loadFieldClass(): it searches extension field paths too, and could load
+    // an extension's own number.php that extends this class before the class exists
+    require_once JPATH_LIBRARIES . '/joomla/form/fields/number.php';
     class_alias(\JFormFieldNumber::class, JoomlaNumberField::class);
 }
 

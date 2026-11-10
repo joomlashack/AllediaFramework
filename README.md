@@ -645,7 +645,7 @@ Adding a form field shim
 ------------------------
 
 Copy an existing shim such as `src/Framework/Joomla/Form/Field/FilelistField.php`. Then change the class names and the
-`loadFieldClass()` argument:
+Joomla 3 core file it loads:
 
 ```php
 <?php
@@ -654,13 +654,14 @@ Copy an existing shim such as `src/Framework/Joomla/Form/Field/FilelistField.php
 namespace Alledia\Framework\Joomla\Form\Field;
 
 use Joomla\CMS\Form\Field\EmailField as JoomlaEmailField;
-use Joomla\CMS\Form\FormHelper;
 
 // phpcs:disable PSR1.Files.SideEffects
 defined('_JEXEC') or die();
 
 if (class_exists(JoomlaEmailField::class) == false) {
-    FormHelper::loadFieldClass('Email');
+    // Not FormHelper::loadFieldClass(): it searches extension field paths too, and could load
+    // an extension's own email.php that extends this class before the class exists
+    require_once JPATH_LIBRARIES . '/joomla/form/fields/email.php';
 
     class_alias(\JFormFieldEMail::class, JoomlaEmailField::class);
 }
@@ -674,6 +675,11 @@ class EmailField extends JoomlaEmailField
 
 Check the legacy J3 class name against Joomla 3 core. Some names have unusual casing, such as `JFormFieldEMail` and
 `JFormfieldPredefinedlist`.
+
+Load the core file directly instead of calling `FormHelper::loadFieldClass()`. On Joomla 3 that method searches every
+registered field path for `<type>.php`, extension folders included. An extension field with the same file name that
+extends the shim, such as a `radio.php` extending `RadioField`, would then be loaded while the shim itself is being
+autoloaded, and PHP fails with a class not found error.
 
 Backward compatibility rules
 ----------------------------

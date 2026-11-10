@@ -25,13 +25,14 @@
 namespace Alledia\Framework\Joomla\Form\Field;
 
 use Joomla\CMS\Form\Field\RadioField as JoomlaRadioField;
-use Joomla\CMS\Form\FormHelper;
 
 // phpcs:disable PSR1.Files.SideEffects
 defined('_JEXEC') or die();
 
 if (class_exists(JoomlaRadioField::class) == false) {
-    FormHelper::loadFieldClass('radio');
+    // Not FormHelper::loadFieldClass(): it searches extension field paths too, and could load
+    // an extension's own radio.php that extends this class before the class exists
+    require_once JPATH_LIBRARIES . '/joomla/form/fields/radio.php';
     class_alias(\JFormFieldRadio::class, JoomlaRadioField::class);
 }
 // phpcs:enable PSR1.Files.SideEffects

@@ -25,13 +25,14 @@
 namespace Alledia\Framework\Joomla\Form\Field;
 
 use Joomla\CMS\Form\Field\CalendarField as JoomlaCalendarField;
-use Joomla\CMS\Form\FormHelper;
 
 /// phpcs:disable PSR1.Files.SideEffects
 defined('_JEXEC') or die();
 
 if (class_exists(JoomlaCalendarField::class) == false) {
-    FormHelper::loadFieldClass('Calendar');
+    // Not FormHelper::loadFieldClass(): it searches extension field paths too, and could load
+    // an extension's own calendar.php that extends this class before the class exists
+    require_once JPATH_LIBRARIES . '/joomla/form/fields/calendar.php';
     class_alias(\JFormFieldCalendar::class, JoomlaCalendarField::class);
 }
 

@@ -25,14 +25,15 @@
 namespace Alledia\Framework\Joomla\Form\Field;
 
 use Joomla\CMS\Form\Field\ListField as JoomlaListField;
-use Joomla\CMS\Form\FormHelper;
 use Joomla\CMS\Version;
 
 // phpcs:disable PSR1.Files.SideEffects.FoundWithSymbols
 defined('_JEXEC') or die();
 
 if (class_exists(JoomlaListField::class) == false) {
-    FormHelper::loadFieldClass('List');
+    // Not FormHelper::loadFieldClass(): it searches extension field paths too, and could load
+    // an extension's own list.php that extends this class before the class exists
+    require_once JPATH_LIBRARIES . '/joomla/form/fields/list.php';
     class_alias(\JFormFieldList::class, JoomlaListField::class);
 }
 

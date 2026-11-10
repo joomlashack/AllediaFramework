@@ -25,13 +25,14 @@
 namespace Alledia\Framework\Joomla\Form\Field;
 
 use Joomla\CMS\Form\Field\TextField as JoomlaTextField;
-use Joomla\CMS\Form\FormHelper;
 
 // phpcs:disable PSR1.Files.SideEffects
 defined('_JEXEC') or die();
 
 if (class_exists(JoomlaTextField::class) == false) {
-    FormHelper::loadFieldClass('Text');
+    // Not FormHelper::loadFieldClass(): it searches extension field paths too, and could load
+    // an extension's own text.php that extends this class before the class exists
+    require_once JPATH_LIBRARIES . '/joomla/form/fields/text.php';
     class_alias(\JFormFieldText::class, JoomlaTextField::class);
 }
 // phpcs:enable PSR1.Files.SideEffects

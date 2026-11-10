@@ -25,13 +25,14 @@
 namespace Alledia\Framework\Joomla\Form\Field;
 
 use Joomla\CMS\Form\Field\CheckboxField as JoomlaCheckboxField;
-use Joomla\CMS\Form\FormHelper;
 
 // phpcs:disable PSR1.Files.SideEffects
 defined('_JEXEC') or die();
 
 if (class_exists(JoomlaCheckboxField::class) == false) {
-    FormHelper::loadFieldClass('checkbox');
+    // Not FormHelper::loadFieldClass(): it searches extension field paths too, and could load
+    // an extension's own checkbox.php that extends this class before the class exists
+    require_once JPATH_LIBRARIES . '/joomla/form/fields/checkbox.php';
     class_alias(\JFormFieldCheckbox::class, JoomlaCheckboxField::class);
 }
 // phpcs:enable PSR1.Files.SideEffects

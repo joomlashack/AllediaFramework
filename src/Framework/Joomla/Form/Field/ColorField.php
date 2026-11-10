@@ -25,13 +25,14 @@
 namespace Alledia\Framework\Joomla\Form\Field;
 
 use Joomla\CMS\Form\Field\ColorField as JoomlaColorField;
-use Joomla\CMS\Form\FormHelper;
 
 // phpcs:disable PSR1.Files.SideEffects
 defined('_JEXEC') or die();
 
 if (class_exists(JoomlaColorField::class) == false) {
-    FormHelper::loadFieldClass('Color');
+    // Not FormHelper::loadFieldClass(): it searches extension field paths too, and could load
+    // an extension's own color.php that extends this class before the class exists
+    require_once JPATH_LIBRARIES . '/joomla/form/fields/color.php';
     class_alias(\JFormFieldColor::class, JoomlaColorField::class);
 }
 

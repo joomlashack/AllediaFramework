@@ -25,13 +25,14 @@
 namespace Alledia\Framework\Joomla\Form\Field;
 
 use Joomla\CMS\Form\Field\PredefinedlistField as JoomlaPredefinedlistField;
-use Joomla\CMS\Form\FormHelper;
 
 // phpcs:disable PSR1.Files.SideEffects
 defined('_JEXEC') or die();
 
 if (class_exists(JoomlaPredefinedlistField::class) == false) {
-    FormHelper::loadFieldClass('predefinedlist');
+    // Not FormHelper::loadFieldClass(): it searches extension field paths too, and could load
+    // an extension's own predefinedlist.php that extends this class before the class exists
+    require_once JPATH_LIBRARIES . '/joomla/form/fields/predefinedlist.php';
     class_alias(\JFormfieldPredefinedlist::class, JoomlaPredefinedlistField::class);
 }
 

@@ -25,13 +25,14 @@
 namespace Alledia\Framework\Joomla\Form\Field;
 
 use Joomla\CMS\Form\Field\SpacerField as JoomlaSpacerField;
-use Joomla\CMS\Form\FormHelper;
 
 // phpcs:disable PSR1.Files.SideEffects
 defined('_JEXEC') or die();
 
 if (class_exists(JoomlaSpacerField::class) == false) {
-    FormHelper::loadFieldClass('Spacer');
+    // Not FormHelper::loadFieldClass(): it searches extension field paths too, and could load
+    // an extension's own spacer.php that extends this class before the class exists
+    require_once JPATH_LIBRARIES . '/joomla/form/fields/spacer.php';
     class_alias(\JFormFieldSpacer::class, JoomlaSpacerField::class);
 }
 // phpcs:enable PSR1.Files.SideEffects
